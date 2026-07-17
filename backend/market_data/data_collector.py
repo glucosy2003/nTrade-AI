@@ -84,6 +84,22 @@ class MT5DataCollector:
             return []
         return self.service.get_positions()
 
+    def get_tick_info(self, symbol: str) -> Optional[dict]:
+        """Return the latest tick metadata for a symbol."""
+        if not self.is_connected and not self.connect():
+            return None
+        return self.service.tick_info(symbol)
+
+    def get_symbol_snapshot(self, symbol: str) -> Optional[dict]:
+        """Return combined symbol and tick details for inspection."""
+        if not self.is_connected and not self.connect():
+            return None
+        return self.service.symbol_snapshot(symbol)
+
+    def health_check(self) -> dict:
+        """Return a compact MT5 readiness summary."""
+        return self.service.health_check()
+
 
 # Global MT5 data collector instance
 mt5_collector = MT5DataCollector()

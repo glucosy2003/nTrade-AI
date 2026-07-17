@@ -25,5 +25,5 @@ def test_engineer_price_features_adds_indicator_columns():
 
     engineered = engineer_price_features(data)
 
-    assert {"ema_fast_10", "ema_slow_30", "atr_14", "returns", "log_returns"}.issubset(engineered.columns)
+    assert {"ema_5", "ema_20", "ema_50", "atr_14", "returns", "log_returns"}.issubset(engineered.columns)
     assert engineered["time"].is_monotonic_increasing

@@ -5,7 +5,7 @@ nTrade AI Trading System - Main Entry Point.
 This is the main entry point for the nTrade AI system.
 It initializes all components and starts the trading engine.
 
-Current focus: Windows migration, MT5 core connection, and data pipeline groundwork
+Current focus: MT5 inspection tooling, core connection, and data pipeline groundwork
 Next focus: Gold data pipeline and backtesting framework
 
 Usage:

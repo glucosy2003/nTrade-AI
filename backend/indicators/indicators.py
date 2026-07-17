@@ -33,10 +33,18 @@ class MovingAverages:
         Returns:
             Array of SMA values
         """
+        if period <= 0:
+            raise ValueError("period must be positive")
+
         if isinstance(data, pd.Series):
-            data = data.values
-        
-        return np.convolve(data, np.ones(period) / period, mode='valid')
+            series = data.copy()
+        else:
+            series = pd.Series(data)
+
+        if len(series) == 0:
+            return np.array([], dtype=float)
+
+        return series.rolling(window=period, min_periods=period).mean().to_numpy()
 
     @staticmethod
     def ema(data: IndicatorInput, period: int) -> np.ndarray:
@@ -50,9 +58,15 @@ class MovingAverages:
         Returns:
             Array of EMA values
         """
+        if period <= 0:
+            raise ValueError("period must be positive")
+
         if isinstance(data, pd.Series):
             data = data.values
-        
+
+        if len(data) == 0:
+            return np.array([], dtype=float)
+
         ema = np.zeros(len(data))
         ema[0] = data[0]
         multiplier = 2 / (period + 1)
@@ -177,26 +191,34 @@ class VolatilityIndicators:
         Returns:
             Array of ATR values
         """
+        if period <= 0:
+            raise ValueError("period must be positive")
+
         if isinstance(high, pd.Series):
             high = high.values
         if isinstance(low, pd.Series):
             low = low.values
         if isinstance(close, pd.Series):
             close = close.values
-        
-        # Calculate True Range
-        tr1 = high - low
-        tr2 = np.abs(high - np.roll(close, 1))
-        tr3 = np.abs(low - np.roll(close, 1))
-        tr = np.maximum(tr1, np.maximum(tr2, tr3))
-        
-        # Calculate ATR as EMA of True Range
-        atr = np.zeros(len(tr))
+
+        if len(high) == 0:
+            return np.array([], dtype=float)
+
+        tr = np.zeros(len(high), dtype=float)
+        tr[0] = high[0] - low[0]
+
+        for i in range(1, len(high)):
+            tr1 = high[i] - low[i]
+            tr2 = abs(high[i] - close[i - 1])
+            tr3 = abs(low[i] - close[i - 1])
+            tr[i] = max(tr1, tr2, tr3)
+
+        atr = np.zeros(len(tr), dtype=float)
         atr[0] = tr[0]
-        
+
         for i in range(1, len(tr)):
             atr[i] = (atr[i - 1] * (period - 1) + tr[i]) / period
-        
+
         return atr
 
     @staticmethod
@@ -216,27 +238,25 @@ class VolatilityIndicators:
         Returns:
             Tuple of (upper_band, middle_band, lower_band)
         """
+        if period <= 0:
+            raise ValueError("period must be positive")
+
         if isinstance(data, pd.Series):
-            data = data.values
-        
-        # Calculate middle band (SMA)
-        middle = MovingAverages.sma(data, period)
-        
-        # Calculate standard deviation
-        std = np.zeros(len(data))
-        for i in range(period - 1, len(data)):
-            std[i] = np.std(data[i - period + 1:i + 1])
-        
-        # Calculate bands
-        upper = middle + (std_dev * std[period - 1:])
-        lower = middle - (std_dev * std[period - 1:])
-        
-        # Pad to match input length
-        middle_padded = np.concatenate([np.full(period - 1, np.nan), middle])
-        upper_padded = np.concatenate([np.full(period - 1, np.nan), upper])
-        lower_padded = np.concatenate([np.full(period - 1, np.nan), lower])
-        
-        return upper_padded, middle_padded, lower_padded
+            series = data.copy()
+        else:
+            series = pd.Series(data)
+
+        if len(series) == 0:
+            empty = np.array([], dtype=float)
+            return empty, empty, empty
+
+        rolling = series.rolling(window=period, min_periods=period)
+        middle = rolling.mean().to_numpy()
+        std = rolling.std(ddof=0).to_numpy()
+        upper = middle + (std_dev * std)
+        lower = middle - (std_dev * std)
+
+        return upper, middle, lower
 
 
 class VolumeIndicators:

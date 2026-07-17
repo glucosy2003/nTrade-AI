@@ -23,6 +23,9 @@ from backend.market_data.data_collector import mt5_collector
 from database.database_manager import db_manager
 
 
+__test__ = False
+
+
 logger = setup_logger(__name__)
 
 
@@ -42,10 +45,10 @@ def test_mt5_connection() -> bool:
     account_info = mt5_collector.get_account_info()
     if account_info:
         logger.info("Account Information:")
-        logger.info(f"  Balance: {account_info['balance']:.2f} {account_info['currency']}")
-        logger.info(f"  Equity: {account_info['equity']:.2f}")
-        logger.info(f"  Free Margin: {account_info['free_margin']:.2f}")
-        logger.info(f"  Margin Level: {account_info['margin_level']:.2f}%")
+        logger.info(f"  Balance: {account_info.get('balance', 0.0):.2f} {account_info.get('currency', '')}")
+        logger.info(f"  Equity: {account_info.get('equity', 0.0):.2f}")
+        logger.info(f"  Free Margin: {account_info.get('free_margin', 0.0):.2f}")
+        logger.info(f"  Margin Level: {account_info.get('margin_level', 0.0):.2f}%")
     
     return True
 
@@ -119,7 +122,7 @@ def test_database() -> bool:
 def main():
     """Main test execution."""
     logger.info("\n" + "=" * 60)
-    logger.info("nTrade AI - Phase 0 Validation Test")
+    logger.info("nTrade AI - Phase 4 MT5 Validation Test")
     logger.info("=" * 60)
     
     try:
@@ -139,9 +142,9 @@ def main():
         logger.info("✓ All validation tests passed!")
         logger.info("=" * 60)
         logger.info("\nNext Steps:")
-        logger.info("1. Copy .env.example to .env")
-        logger.info("2. Fill in MT5 credentials in .env")
-        logger.info("3. Run: python main.py")
+        logger.info("1. Run: python scripts\\mt5_inspect.py")
+        logger.info("2. Run: python main.py --sync-history")
+        logger.info("3. Run: python main.py --build-features")
         
         return True
         

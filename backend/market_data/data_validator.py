@@ -35,6 +35,17 @@ class MarketDataValidator:
         timeframe: Optional[int | str] = None,
     ) -> PriceValidationResult:
         """Return a validation summary for a price DataFrame."""
+        if data is None:
+            return PriceValidationResult(
+                is_valid=False,
+                input_rows=0,
+                cleaned_rows=0,
+                duplicate_rows=0,
+                invalid_rows=0,
+                missing_columns=sorted(REQUIRED_PRICE_COLUMNS),
+                warnings=["No price data provided"],
+            )
+
         missing_columns = sorted(REQUIRED_PRICE_COLUMNS - set(data.columns))
         if missing_columns:
             return PriceValidationResult(

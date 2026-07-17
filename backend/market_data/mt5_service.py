@@ -145,6 +145,39 @@ class MT5Service:
         info = mt5.symbol_info(symbol)
         return info._asdict() if info is not None else None
 
+    def tick_info(self, symbol: str) -> Optional[dict[str, Any]]:
+        """Return the latest tick metadata for a symbol."""
+        if not self.validate_symbol(symbol) or mt5 is None:
+            return None
+
+        tick = mt5.symbol_info_tick(symbol)
+        return tick._asdict() if tick is not None else None
+
+    def symbol_snapshot(self, symbol: str) -> Optional[dict[str, Any]]:
+        """Return combined symbol, tick, and price details."""
+        symbol_info = self.symbol_info(symbol)
+        if symbol_info is None:
+            return None
+
+        tick_info = self.tick_info(symbol)
+        live_price = self.get_live_price(symbol)
+        snapshot: dict[str, Any] = {
+            "symbol": symbol,
+            "available": True,
+            "live_price": live_price,
+            "symbol_info": symbol_info,
+            "tick_info": tick_info,
+        }
+
+        if tick_info is not None:
+            snapshot["bid"] = tick_info.get("bid")
+            snapshot["ask"] = tick_info.get("ask")
+            snapshot["last"] = tick_info.get("last")
+            snapshot["spread"] = tick_info.get("spread")
+            snapshot["time"] = tick_info.get("time")
+
+        return snapshot
+
     def validate_symbol(self, symbol: str) -> bool:
         """Ensure a symbol exists and is visible in MT5."""
         if not self.connect() or mt5 is None:

@@ -64,7 +64,7 @@ Focus:
 
 Deliverables:
 - Stable Windows MT5 connection
-- Account and symbol inspection tools
+- Terminal, account, and symbol inspection tools
 - Candle and tick retrieval helpers
 - A clear integration boundary for the rest of the system
 
@@ -259,6 +259,7 @@ python main.py --build-features --symbol XAUUSD_i
 python main.py --train-model --symbol XAUUSD_i
 python scripts\\setup_db.py
 python scripts\\setup_db.py --migrate
+python scripts\\mt5_inspect.py
 python scripts\\mt5_connector_test.py
 python scripts\\sync_gold_history.py
 python scripts\\build_feature_dataset.py
@@ -303,4 +304,4 @@ The application uses Python logging for both console and file output.
 - Platform: Windows-only
 - Workflow: Single project folder
 - Active roadmap: Phase 4 onward
-- Main near-term goal: finish MT5 core and data pipeline groundwork
+- Main near-term goal: finish MT5 inspection tooling and data pipeline groundwork

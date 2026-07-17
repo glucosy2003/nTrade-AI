@@ -150,9 +150,21 @@ class TradingApplication:
 
         default_symbol = self.settings.default_symbol
         if self.market_data.validate_symbol(default_symbol):
-            current_price = self.market_data.get_current_price(default_symbol)
-            if current_price is not None:
-                self.logger.info("MT5 %s live price: %s", default_symbol, current_price)
+            symbol_snapshot = self.market_data.get_symbol_snapshot(default_symbol)
+            if symbol_snapshot:
+                self.logger.info("MT5 %s live price: %s", default_symbol, symbol_snapshot.get("live_price"))
+                self.logger.info(
+                    "MT5 %s quote: bid=%s ask=%s spread=%s time=%s",
+                    default_symbol,
+                    symbol_snapshot.get("bid"),
+                    symbol_snapshot.get("ask"),
+                    symbol_snapshot.get("spread"),
+                    symbol_snapshot.get("time"),
+                )
+            else:
+                current_price = self.market_data.get_current_price(default_symbol)
+                if current_price is not None:
+                    self.logger.info("MT5 %s live price: %s", default_symbol, current_price)
         else:
             self.logger.warning("Default symbol %s is not available", default_symbol)
 

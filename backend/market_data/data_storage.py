@@ -8,8 +8,10 @@ from datetime import datetime
 from typing import Optional
 
 import pandas as pd
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from backend.market_data.data_validator import MarketDataValidator, PriceValidationResult
+from database.models import PriceData
 from database.database_manager import db_manager
 
 
@@ -61,7 +63,7 @@ class MarketDataStorage:
             return StorageResult(inserted_rows=0, stored_rows=0, skipped_rows=validation.input_rows, validation=validation)
 
         records = self._frame_to_records(cleaned, symbol=symbol, timeframe=timeframe)
-        inserted_rows = self.database_manager.insert_price_data_bulk(records)
+        inserted_rows = self._upsert_price_records(records)
         stored_rows = len(records)
         skipped_rows = max(stored_rows - inserted_rows, 0)
 
@@ -78,6 +80,23 @@ class MarketDataStorage:
             skipped_rows=skipped_rows,
             validation=validation,
         )
+
+    def _upsert_price_records(self, records: list[dict]) -> int:
+        """Insert new candles and ignore rows that already exist."""
+        if not records:
+            return 0
+
+        with self.database_manager.connection.session_scope() as session:
+            try:
+                statement = pg_insert(PriceData).values(records)
+                statement = statement.on_conflict_do_nothing(
+                    index_elements=["symbol", "timeframe", "timestamp"]
+                )
+                result = session.execute(statement)
+                return max(int(result.rowcount or 0), 0)
+            except Exception as exc:
+                logger.error("Failed to upsert price records: %s", exc, exc_info=True)
+                raise
 
     @staticmethod
     def _frame_to_records(data: pd.DataFrame, symbol: str, timeframe: int) -> list[dict]:

@@ -67,3 +67,42 @@ class MT5Provider(BaseProvider):
             return None
 
         return self.service.get_live_price(symbol)
+
+    def get_tick_info(self, symbol: str) -> Optional[dict]:
+        """Return the latest MT5 tick metadata for a symbol."""
+        if not self.is_connected and not self.connect():
+            return None
+
+        return self.service.tick_info(symbol)
+
+    def get_symbol_snapshot(self, symbol: str) -> Optional[dict]:
+        """Return combined symbol and tick details for inspection."""
+        if not self.is_connected and not self.connect():
+            return None
+
+        return self.service.symbol_snapshot(symbol)
+
+    def get_account_info(self) -> Optional[dict]:
+        """Return account information from the local terminal."""
+        if not self.is_connected and not self.connect():
+            return None
+
+        return self.service.account_info()
+
+    def validate_symbol(self, symbol: str) -> bool:
+        """Check whether a symbol is visible and tradable."""
+        if not self.is_connected and not self.connect():
+            return False
+
+        return self.service.validate_symbol(symbol)
+
+    def get_positions(self) -> list[dict]:
+        """Return the current open positions."""
+        if not self.is_connected and not self.connect():
+            return []
+
+        return self.service.get_positions()
+
+    def health_check(self) -> dict:
+        """Return a compact MT5 readiness summary."""
+        return self.service.health_check()
