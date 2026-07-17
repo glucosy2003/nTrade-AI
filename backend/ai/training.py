@@ -50,7 +50,7 @@ class TrainingResult:
 
 
 class GoldModelTrainer:
-    """Train and evaluate the gold Random Forest baseline."""
+    """Train and evaluate the gold tree-based baseline."""
 
     def __init__(
         self,
@@ -68,7 +68,7 @@ class GoldModelTrainer:
         *,
         horizon: int = 1,
         test_ratio: float = 0.2,
-        model_name: str = "gold_random_forest.pkl",
+        model_name: str = "gold_xgboost.pkl",
     ) -> TrainingResult:
         """Train a model from stored or exported market data."""
         features, labels = self.model.prepare_training_data(data, horizon=horizon)

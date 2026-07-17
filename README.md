@@ -253,7 +253,7 @@ MT5_SERVER=Weltrade-Demo
 python main.py
 python main.py --test
 python main.py --backtest
-python main.py --backtest --strategy gold_model --model-path models\\gold_random_forest_XAUUSD_i_60.pkl
+python main.py --backtest --strategy gold_model --model-path models\\gold_xgboost_XAUUSD_i_60.pkl
 python main.py --sync-history --years 5
 python main.py --build-features --symbol XAUUSD_i
 python main.py --train-model --symbol XAUUSD_i

@@ -14,9 +14,10 @@ from backend.strategies.base_strategy import BaseStrategy
 class GoldModelPredictionStrategy(BaseStrategy):
     """Generate trading signals from a persisted gold classifier."""
 
-    def __init__(self, model_path: str, horizon: int = 1) -> None:
+    def __init__(self, model_path: str, horizon: int = 1, confidence_threshold: float = 0.55) -> None:
         self.model_path = Path(model_path)
         self.horizon = horizon
+        self.confidence_threshold = confidence_threshold
         if not self.model_path.exists():
             raise FileNotFoundError(f"Model file not found: {self.model_path}")
 
@@ -37,7 +38,10 @@ class GoldModelPredictionStrategy(BaseStrategy):
         if not available_columns:
             raise ValueError("The trained model does not share any feature columns with the input data")
 
-        predictions = self.model.predict(feature_frame[available_columns])
+        predictions = self.model.predict_signal(
+            feature_frame[available_columns],
+            confidence_threshold=self.confidence_threshold,
+        )
         signals = pd.Series(0, index=data.index, dtype=int)
         signals.loc[feature_frame.index] = pd.Series(predictions, index=feature_frame.index).astype(int)
         return signals

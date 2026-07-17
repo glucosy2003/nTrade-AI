@@ -192,7 +192,7 @@ class BacktestResult:
         logger.info(f"Average Win: {stats['average_win']:.2f}")
         logger.info(f"Average Loss: {stats['average_loss']:.2f}")
         logger.info("")
-        logger.info(f"Sharpe Ratio: {stats['sharpe_ratio']:.2f}" if stats['sharpe_ratio'] else "N/A")
+        logger.info(f"Sharpe Ratio: {stats['sharpe_ratio']:.2f}" if stats['sharpe_ratio'] is not None else "Sharpe Ratio: N/A")
         logger.info(f"Max Drawdown: {stats['max_drawdown']:.2f}%")
         logger.info(f"Max Consecutive Wins: {stats['max_consecutive_wins']}")
         logger.info(f"Max Consecutive Losses: {stats['max_consecutive_losses']}")
@@ -236,6 +236,10 @@ class Backtester:
         Returns:
             BacktestResult instance
         """
+        if data.empty:
+            logger.warning("Backtest received no candles")
+            return self.result
+
         logger.info(f"Starting backtest with {len(data)} candles...")
         
         # Get signals from strategy
@@ -248,6 +252,7 @@ class Backtester:
         position = None
         entry_price = None
         entry_time = None
+        last_candle = None
 
         # Track equity
         self.result.add_equity_point(data.iloc[0]['time'], self.current_balance)
@@ -255,30 +260,23 @@ class Backtester:
         # Process each candle
         for i in range(len(data)):
             candle = data.iloc[i]
-            signal = signals[i]
+            signal = signals.iloc[i] if hasattr(signals, "iloc") else signals[i]
+            last_candle = candle
 
             # Exit position if signal reverses
             if position is not None and signal != 0:
                 if (position == 1 and signal == -1) or (position == -1 and signal == 1):
-                    # Close trade at close price
-                    exit_price = candle['close']
-                    self.result.add_trade(
+                    self._close_position(
+                        candle_time=candle['time'],
+                        exit_price=float(candle['close']),
+                        position=position,
                         entry_time=entry_time,
                         entry_price=entry_price,
-                        exit_time=candle['time'],
-                        exit_price=exit_price,
                         position_size=position_size,
-                        trade_type="BUY" if position == 1 else "SELL"
                     )
-                    
-                    # Update balance
-                    if position == 1:
-                        pnl = (exit_price - entry_price) * position_size
-                    else:
-                        pnl = (entry_price - exit_price) * position_size
-                    
-                    self.current_balance += pnl
                     position = None
+                    entry_price = None
+                    entry_time = None
 
             # Enter new position
             if position is None and signal != 0:
@@ -289,5 +287,44 @@ class Backtester:
             # Record equity at end of candle
             self.result.add_equity_point(candle['time'], self.current_balance)
 
+        if position is not None and last_candle is not None:
+            self._close_position(
+                candle_time=last_candle['time'],
+                exit_price=float(last_candle['close']),
+                position=position,
+                entry_time=entry_time,
+                entry_price=entry_price,
+                position_size=position_size,
+            )
+            if self.result.equity_curve:
+                self.result.equity_curve[-1] = self.current_balance
+
         logger.info("Backtest completed")
         return self.result
+
+    def _close_position(
+        self,
+        *,
+        candle_time: datetime,
+        exit_price: float,
+        position: int,
+        entry_time: datetime,
+        entry_price: float,
+        position_size: float,
+    ) -> None:
+        """Close the current position and update equity."""
+        self.result.add_trade(
+            entry_time=entry_time,
+            entry_price=entry_price,
+            exit_time=candle_time,
+            exit_price=exit_price,
+            position_size=position_size,
+            trade_type="BUY" if position == 1 else "SELL",
+        )
+
+        if position == 1:
+            pnl = (exit_price - entry_price) * position_size
+        else:
+            pnl = (entry_price - exit_price) * position_size
+
+        self.current_balance += pnl

@@ -74,9 +74,9 @@ def run_backtest() -> None:
     logger.info("Starting backtest...")
     
     from scripts.backtest_runner import run_backtest
-    
+
     run_backtest(
-        symbol="XAUUSD",
+        symbol=settings.gold_history_symbol,
         timeframe=60,
         years=1,
         strategy="ma_crossover",
@@ -194,7 +194,7 @@ def run_model_training(symbol: str, timeframe: int, limit: int, horizon: int, te
     )
 
     trainer = GoldModelTrainer()
-    model_name = f"gold_random_forest_{symbol}_{timeframe}.pkl"
+    model_name = f"gold_xgboost_{symbol}_{timeframe}.pkl"
     logger.info("Training gold model...")
     result = trainer.train_from_dataframe(
         price_data,

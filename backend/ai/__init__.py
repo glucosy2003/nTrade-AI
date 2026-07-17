@@ -12,6 +12,7 @@ __all__ = [
     "GoldModelTrainer",
     "TrainingResult",
     "GoldRandomForestModel",
+    "GoldXGBoostModel",
 ]
 
 
@@ -41,9 +42,12 @@ def __getattr__(name: str) -> Any:
         }
         return exported[name]
 
-    if name == "GoldRandomForestModel":
-        from backend.ai.models import GoldRandomForestModel  # noqa: WPS433
+    if name in {"GoldRandomForestModel", "GoldXGBoostModel"}:
+        from backend.ai.models import GoldRandomForestModel, GoldXGBoostModel  # noqa: WPS433
 
-        return GoldRandomForestModel
+        return {
+            "GoldRandomForestModel": GoldRandomForestModel,
+            "GoldXGBoostModel": GoldXGBoostModel,
+        }[name]
 
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

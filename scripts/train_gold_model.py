@@ -65,7 +65,7 @@ def main() -> int:
         return 1
 
     trainer = GoldModelTrainer()
-    model_name = f"gold_random_forest_{args.symbol}_{args.timeframe}.pkl"
+    model_name = f"gold_xgboost_{args.symbol}_{args.timeframe}.pkl"
 
     logger.info("Training model...")
     result = trainer.train_from_dataframe(
