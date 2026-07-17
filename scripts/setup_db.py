@@ -19,6 +19,7 @@ from alembic import command
 from alembic.config import Config
 import psycopg
 from psycopg import sql
+from sqlalchemy.engine import make_url
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -30,6 +31,11 @@ from database.database_manager import db_manager
 
 
 logger = setup_logger(__name__)
+
+
+def mask_database_url(database_url: str) -> str:
+    """Return a database URL safe for logs."""
+    return make_url(database_url).render_as_string(hide_password=True)
 
 
 def get_alembic_config() -> Config:
@@ -111,7 +117,7 @@ def main():
         logger.info("Database name: %s", settings.database_name)
         logger.info("Database user: %s", settings.database_user or "(unset)")
         logger.info("Admin user: %s", settings.database_admin_user or "(unset)")
-        logger.info(f"Database URL: {settings.database_url}")
+        logger.info("Database URL: %s", mask_database_url(settings.database_url))
         ensure_database_exists()
         db.initialize()
         
