@@ -1,0 +1,218 @@
+"""
+Settings and configuration management for the nTrade AI system.
+
+This module provides centralized configuration management using environment variables,
+with support for different environments (development, production, testing).
+
+Follows 12-factor app principles: configuration stored in environment variables,
+never hardcoded or committed to version control.
+"""
+
+import logging
+import os
+from urllib.parse import quote_plus
+from pathlib import Path
+from typing import Optional
+
+logger = logging.getLogger(__name__)
+
+
+def _load_dotenv_file() -> None:
+    """Load environment values from a local .env file when present."""
+    env_path = os.getenv("ENV_FILE")
+    if not env_path:
+        env_path = str(Path(__file__).resolve().parents[2] / ".env")
+
+    if not os.path.exists(env_path):
+        return
+
+    with open(env_path, "r", encoding="utf-8") as handle:
+        for raw_line in handle:
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            os.environ.setdefault(key, value)
+
+
+_load_dotenv_file()
+
+
+class Settings:
+    """Application settings loaded from environment variables and defaults."""
+
+    def __init__(self, **data):
+        """Initialize settings from explicit values or environment variables."""
+        self.project_name = data.get("project_name") or os.getenv("PROJECT_NAME", "nTrade AI")
+        self.app_env = data.get("app_env") or os.getenv("APP_ENV", "development")
+        self.app_debug = self._get_bool(data.get("app_debug"), os.getenv("APP_DEBUG"), True)
+        self.app_version = data.get("app_version") or os.getenv("APP_VERSION", "1.0.0")
+
+        # For backwards compatibility
+        self.VERSION = "1.0.0"
+        self.TRADING_MODE = "manual"
+        self.DEFAULT_SYMBOL = "XAUUSD"
+        self.RISK_PER_TRADE = 0.02
+        self.DEBUG = True
+
+        # Database Settings
+        self.database_host = data.get("database_host") or os.getenv("DATABASE_HOST", "localhost")
+        self.database_port = self._get_int(data.get("database_port"), os.getenv("DATABASE_PORT"), 5432)
+        self.database_name = data.get("database_name") or os.getenv("DATABASE_NAME", "ntrade_ai_dev")
+        self.database_user = data.get("database_user") or os.getenv("DATABASE_USER")
+        self.database_password = data.get("database_password") or os.getenv("DATABASE_PASSWORD")
+        self.database_admin_user = data.get("database_admin_user") or os.getenv(
+            "DATABASE_ADMIN_USER",
+            self.database_user or "postgres",
+        )
+        self.database_admin_password = data.get("database_admin_password") or os.getenv(
+            "DATABASE_ADMIN_PASSWORD",
+            self.database_password,
+        )
+        self.database_url = data.get("database_url") or os.getenv("DATABASE_URL") or self._build_database_url()
+        self.database_pool_size = self._get_int(data.get("database_pool_size"), os.getenv("DATABASE_POOL_SIZE"), 10)
+        self.database_max_overflow = self._get_int(data.get("database_max_overflow"), os.getenv("DATABASE_MAX_OVERFLOW"), 20)
+
+        # MetaTrader 5 Settings
+        self.mt5_account_number = data.get("mt5_account_number") or os.getenv("MT5_ACCOUNT_NUMBER")
+        self.mt5_password = data.get("mt5_password") or os.getenv("MT5_PASSWORD")
+        self.mt5_server = data.get("mt5_server") or os.getenv("MT5_SERVER", "Weltrade-Demo")
+        self.mt5_demo_mode = self._get_bool(data.get("mt5_demo_mode"), os.getenv("MT5_DEMO_MODE"), True)
+        self.mt5_auto_connect = self._get_bool(
+            data.get("mt5_auto_connect"),
+            os.getenv("MT5_AUTO_CONNECT"),
+            False,
+        )
+
+        # Trading Settings
+        self.default_symbol = data.get("default_symbol") or os.getenv("DEFAULT_SYMBOL", "XAUUSD")
+        self.gold_history_symbol = data.get("gold_history_symbol") or os.getenv("GOLD_HISTORY_SYMBOL", "XAUUSD_i")
+        self.default_timeframe = self._get_int(data.get("default_timeframe"), os.getenv("DEFAULT_TIMEFRAME"), 60)
+        self.trading_mode = data.get("trading_mode") or os.getenv("TRADING_MODE", "manual")
+
+        # Risk Management Settings
+        self.max_risk_per_trade = self._get_float(data.get("max_risk_per_trade"), os.getenv("MAX_RISK_PER_TRADE"), 2.0)
+        self.max_daily_loss_percent = self._get_float(data.get("max_daily_loss_percent"), os.getenv("MAX_DAILY_LOSS_PERCENT"), 5.0)
+        self.max_concurrent_trades = self._get_int(data.get("max_concurrent_trades"), os.getenv("MAX_CONCURRENT_TRADES"), 3)
+
+        # Data Collection Settings
+        self.historical_data_years = self._get_int(data.get("historical_data_years"), os.getenv("HISTORICAL_DATA_YEARS"), 5)
+        self.backtest_data_start_date = data.get("backtest_data_start_date") or os.getenv("BACKTEST_DATA_START_DATE", "2020-01-01")
+        self.broker_base_url = data.get("broker_base_url") or os.getenv("BROKER_BASE_URL", "http://127.0.0.1:8001")
+
+        # Logging Settings
+        self.log_level = data.get("log_level") or os.getenv("LOG_LEVEL", "INFO")
+        self.log_dir = data.get("log_dir") or os.getenv("LOG_DIR", "./logs")
+
+        # External API Keys (Optional)
+        self.news_api_key = data.get("news_api_key") or os.getenv("NEWS_API_KEY")
+        self.sentiment_api_key = data.get("sentiment_api_key") or os.getenv("SENTIMENT_API_KEY")
+
+        self._validate_configuration()
+
+    @staticmethod
+    def _get_bool(value, env_value, default: bool) -> bool:
+        if value is not None:
+            return bool(value)
+        if env_value is None:
+            return default
+        return str(env_value).strip().lower() in {"1", "true", "yes", "on"}
+
+    @staticmethod
+    def _get_int(value, env_value, default: int) -> int:
+        if value is not None:
+            return int(value)
+        if env_value is None:
+            return default
+        return int(env_value)
+
+    @staticmethod
+    def _get_float(value, env_value, default: float) -> float:
+        if value is not None:
+            return float(value)
+        if env_value is None:
+            return default
+        return float(env_value)
+
+    def _build_database_url(self) -> str:
+        """Construct a PostgreSQL connection URL from discrete settings."""
+        user = self.database_user
+        password = self.database_password
+        host = self.database_host
+        port = self.database_port
+        name = self.database_name
+
+        if user and password:
+            return (
+                "postgresql+psycopg://"
+                f"{quote_plus(str(user))}:{quote_plus(str(password))}"
+                f"@{host}:{port}/{name}"
+            )
+
+        if user:
+            return f"postgresql+psycopg://{quote_plus(str(user))}@{host}:{port}/{name}"
+
+        return f"postgresql+psycopg://{host}:{port}/{name}"
+
+    def _validate_configuration(self) -> None:
+        """Validate critical configuration values."""
+        if self.app_env not in ["development", "production", "testing"]:
+            logger.warning(f"Unknown APP_ENV: {self.app_env}. Using 'development'.")
+            self.app_env = "development"
+
+        if self.trading_mode not in ["manual", "automatic"]:
+            logger.warning(f"Unknown TRADING_MODE: {self.trading_mode}. Using 'manual'.")
+            self.trading_mode = "manual"
+
+        if self.max_risk_per_trade < 0.1 or self.max_risk_per_trade > 10:
+            logger.warning(
+                f"MAX_RISK_PER_TRADE {self.max_risk_per_trade}% seems unusual. "
+                "Should typically be 1-2%."
+            )
+
+        if not self.database_user or not self.database_password:
+            logger.warning(
+                "DATABASE_USER/DATABASE_PASSWORD are not fully set. "
+                "PostgreSQL may still work with trust authentication, but migrations "
+                "and first-time database creation usually need explicit credentials."
+            )
+
+    def is_production(self) -> bool:
+        """Check if running in production."""
+        return self.app_env == "production"
+
+    def is_development(self) -> bool:
+        """Check if running in development."""
+        return self.app_env == "development"
+
+    def is_testing(self) -> bool:
+        """Check if running in testing."""
+        return self.app_env == "testing"
+
+    def to_dict(self) -> dict:
+        """Return settings as dictionary (non-sensitive values only)."""
+        return {
+            "app_env": self.app_env,
+            "app_debug": self.app_debug,
+            "app_version": self.app_version,
+            "default_symbol": self.default_symbol,
+            "gold_history_symbol": self.gold_history_symbol,
+            "database_host": self.database_host,
+            "database_port": self.database_port,
+            "database_name": self.database_name,
+            "database_user": self.database_user,
+            "database_admin_user": self.database_admin_user,
+            "trading_mode": self.trading_mode,
+            "max_risk_per_trade": self.max_risk_per_trade,
+            "max_daily_loss_percent": self.max_daily_loss_percent,
+            "mt5_server": self.mt5_server,
+            "mt5_demo_mode": self.mt5_demo_mode,
+            "mt5_auto_connect": self.mt5_auto_connect,
+        }
+
+
+# Global settings instance (loaded once on import)
+settings = Settings()

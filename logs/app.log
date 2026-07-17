@@ -1,0 +1,494 @@
+2026-07-14 23:33:06 | __main__ | INFO     | main:82 | Database URL: postgresql://localhost:5432/ntrade_ai_dev
+2026-07-14 23:33:06 | __main__ | INFO     | ensure_database_exists:51 | Checking for PostgreSQL database 'ntrade_ai_dev'...
+2026-07-14 23:33:06 | __main__ | ERROR    | main:118 | ✗ Database operation failed: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: 5432, hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: 5432, hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Traceback (most recent call last):
+  File "/home/gracious/LINUX PROJECTS/ntrade_ai/scripts/setup_db.py", line 83, in main
+    ensure_database_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/gracious/LINUX PROJECTS/ntrade_ai/scripts/setup_db.py", line 52, in ensure_database_exists
+    with psycopg.connect(**connection_kwargs) as conn:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gracious/LINUX PROJECTS/ntrade_ai/venv/lib/python3.13/site-packages/psycopg/connection.py", line 130, in connect
+    raise new_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: 5432, hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: fe_sendauth: no password supplied
+- host: 'localhost', port: 5432, hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+2026-07-14 23:35:10 | __main__ | INFO     | main:82 | Database URL: postgresql+psycopg://localhost:55432/ntrade_ai_dev
+2026-07-14 23:35:10 | __main__ | INFO     | ensure_database_exists:51 | Checking for PostgreSQL database 'ntrade_ai_dev'...
+2026-07-14 23:35:10 | __main__ | INFO     | ensure_database_exists:61 | Creating database 'ntrade_ai_dev'...
+2026-07-14 23:35:10 | __main__ | INFO     | main:87 | Creating database tables...
+2026-07-14 23:35:10 | __main__ | INFO     | main:89 | ✓ Database tables created successfully
+2026-07-14 23:35:45 | __main__ | INFO     | main:82 | Database URL: postgresql+psycopg://localhost:55432/ntrade_ai_dev
+2026-07-14 23:35:45 | __main__ | INFO     | ensure_database_exists:51 | Checking for PostgreSQL database 'ntrade_ai_dev'...
+2026-07-14 23:35:45 | __main__ | INFO     | ensure_database_exists:58 | Database 'ntrade_ai_dev' already exists
+2026-07-14 23:35:45 | __main__ | INFO     | main:100 | Testing database connection...
+2026-07-14 23:35:45 | __main__ | ERROR    | main:118 | ✗ Database operation failed: 'generator' object does not support the context manager protocol
+Traceback (most recent call last):
+  File "/home/gracious/LINUX PROJECTS/ntrade_ai/scripts/setup_db.py", line 101, in main
+    stats = db_manager.get_database_stats()
+  File "/home/gracious/LINUX PROJECTS/ntrade_ai/database/database_manager.py", line 397, in get_database_stats
+    with self.connection.session_scope() as session:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'generator' object does not support the context manager protocol
+2026-07-14 23:36:06 | __main__ | INFO     | main:82 | Database URL: postgresql+psycopg://localhost:55432/ntrade_ai_dev
+2026-07-14 23:36:06 | __main__ | INFO     | ensure_database_exists:51 | Checking for PostgreSQL database 'ntrade_ai_dev'...
+2026-07-14 23:36:06 | __main__ | INFO     | ensure_database_exists:58 | Database 'ntrade_ai_dev' already exists
+2026-07-14 23:36:06 | __main__ | INFO     | main:100 | Testing database connection...
+2026-07-14 23:36:06 | __main__ | INFO     | main:102 | ✓ Database connection successful
+2026-07-14 23:36:06 | __main__ | INFO     | main:103 | Current database statistics:
+2026-07-14 23:36:06 | __main__ | INFO     | main:105 |   price_data_records: 0
+2026-07-14 23:36:06 | __main__ | INFO     | main:105 |   signals: 0
+2026-07-14 23:36:06 | __main__ | INFO     | main:105 |   active_signals: 0
+2026-07-14 23:36:06 | __main__ | INFO     | main:105 |   trades: 0
+2026-07-14 23:36:06 | __main__ | INFO     | main:105 |   open_trades: 0
+2026-07-14 23:36:06 | __main__ | INFO     | main:105 |   closed_trades: 0
+2026-07-14 23:36:06 | __main__ | INFO     | main:105 |   metrics_records: 0
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:158 | ============================================================
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:159 | PHASE 1 BACKTEST - FULL PIPELINE TEST
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:160 | ============================================================
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:164 | 
+1. LOADING DATA
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:165 |    Symbol: XAUUSD
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:166 |    Timeframe: 60 min
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:167 |    Years: 1
+2026-07-14 23:55:13 | __main__ | INFO     | load_or_generate_data:134 | Falling back to synthetic data generation...
+2026-07-14 23:55:13 | __main__ | INFO     | generate_synthetic_data:60 | Generating 1000 synthetic candles for XAUUSD...
+2026-07-14 23:55:13 | __main__ | INFO     | generate_synthetic_data:90 | ✓ Generated synthetic data: 1804.42 to 2169.98
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:170 | ✓ Loaded 1000 candles
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:173 | 
+2. INITIALIZING STRATEGY
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:174 |    Strategy: ma_crossover
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:181 | ✓ Strategy initialized
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:184 | 
+3. RUNNING BACKTEST
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:192 | ✓ Backtest completed
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:195 | 
+4. RESULTS
+2026-07-14 23:55:13 | __main__ | INFO     | run_backtest:199 | 
+5. SAVING TO DATABASE
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:220 | ✓ Inserted 1000 price candles to database
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:224 | Database Statistics:
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:226 |   price_data_records: 1000
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:226 |   signals: 0
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:226 |   active_signals: 0
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:226 |   trades: 0
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:226 |   open_trades: 0
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:226 |   closed_trades: 0
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:226 |   metrics_records: 0
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:233 | 
+============================================================
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:234 | ✓ PHASE 1 VALIDATION COMPLETE
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:235 | ============================================================
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:236 | 
+Next Steps:
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:237 | 1. Refine strategy parameters based on results
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:238 | 2. Add more indicators for Phase 2 (Real strategy)
+2026-07-14 23:55:16 | __main__ | INFO     | run_backtest:239 | 3. Move to live gold (XAUUSD) data with proper ML model
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:158 | ============================================================
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:159 | PHASE 1 BACKTEST - FULL PIPELINE TEST
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:160 | ============================================================
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:164 | 
+1. LOADING DATA
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:165 |    Symbol: XAUUSD
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:166 |    Timeframe: 60 min
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:167 |    Years: 1
+2026-07-14 23:55:28 | __main__ | INFO     | load_or_generate_data:134 | Falling back to synthetic data generation...
+2026-07-14 23:55:28 | __main__ | INFO     | generate_synthetic_data:60 | Generating 1000 synthetic candles for XAUUSD...
+2026-07-14 23:55:28 | __main__ | INFO     | generate_synthetic_data:90 | ✓ Generated synthetic data: 1990.21 to 2588.26
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:170 | ✓ Loaded 1000 candles
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:173 | 
+2. INITIALIZING STRATEGY
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:174 |    Strategy: ma_crossover
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:181 | ✓ Strategy initialized
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:184 | 
+3. RUNNING BACKTEST
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:192 | ✓ Backtest completed
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:195 | 
+4. RESULTS
+2026-07-14 23:55:28 | __main__ | INFO     | run_backtest:199 | 
+5. SAVING TO DATABASE
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:220 | ✓ Inserted 1000 price candles to database
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:224 | Database Statistics:
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:226 |   price_data_records: 2000
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:226 |   signals: 0
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:226 |   active_signals: 0
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:226 |   trades: 0
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:226 |   open_trades: 0
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:226 |   closed_trades: 0
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:226 |   metrics_records: 0
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:233 | 
+============================================================
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:234 | ✓ PHASE 1 VALIDATION COMPLETE
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:235 | ============================================================
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:236 | 
+Next Steps:
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:237 | 1. Refine strategy parameters based on results
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:238 | 2. Add more indicators for Phase 2 (Real strategy)
+2026-07-14 23:55:30 | __main__ | INFO     | run_backtest:239 | 3. Move to live gold (XAUUSD) data with proper ML model
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:160 | ============================================================
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:161 | PHASE 1 BACKTEST - FULL PIPELINE TEST
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:162 | ============================================================
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:166 | 
+1. LOADING DATA
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:167 |    Symbol: XAUUSD
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:168 |    Timeframe: 60 min
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:169 |    Years: 1
+2026-07-14 23:59:40 | __main__ | INFO     | load_or_generate_data:136 | Falling back to synthetic data generation...
+2026-07-14 23:59:40 | __main__ | INFO     | generate_synthetic_data:62 | Generating 1000 synthetic candles for XAUUSD...
+2026-07-14 23:59:40 | __main__ | INFO     | generate_synthetic_data:92 | ✓ Generated synthetic data: 1944.14 to 2986.59
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:172 | ✓ Loaded 1000 candles
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:175 | 
+2. PREPROCESSING DATA
+2026-07-14 23:59:40 | __main__ | INFO     | run_backtest:177 | ✓ Added return features for downstream analysis
+2026-07-14 23:59:40 | __main__ | ERROR    | run_backtest:258 | ✗ Backtest failed: risk_per_trade_pct must be between 0 and 1
+Traceback (most recent call last):
+  File "/home/gracious/LINUX PROJECTS/ntrade_ai/scripts/backtest_runner.py", line 179, in run_backtest
+    position_sizer = PositionSizer(risk_per_trade_pct=settings.max_risk_per_trade)
+  File "/home/gracious/LINUX PROJECTS/ntrade_ai/backend/risk/position_sizer.py", line 11, in __init__
+    raise ValueError("risk_per_trade_pct must be between 0 and 1")
+ValueError: risk_per_trade_pct must be between 0 and 1
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:160 | ============================================================
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:161 | PHASE 1 BACKTEST - FULL PIPELINE TEST
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:162 | ============================================================
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:166 | 
+1. LOADING DATA
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:167 |    Symbol: XAUUSD
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:168 |    Timeframe: 60 min
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:169 |    Years: 1
+2026-07-15 00:00:12 | __main__ | INFO     | load_or_generate_data:136 | Falling back to synthetic data generation...
+2026-07-15 00:00:12 | __main__ | INFO     | generate_synthetic_data:62 | Generating 1000 synthetic candles for XAUUSD...
+2026-07-15 00:00:12 | __main__ | INFO     | generate_synthetic_data:92 | ✓ Generated synthetic data: 1779.05 to 2166.79
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:172 | ✓ Loaded 1000 candles
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:175 | 
+2. PREPROCESSING DATA
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:177 | ✓ Added return features for downstream analysis
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:186 |    Risk-based position size: 9.51 units
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:189 | 
+3. INITIALIZING STRATEGY
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:190 |    Strategy: ma_crossover
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:197 | ✓ Strategy initialized
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:200 | 
+4. RUNNING BACKTEST
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:208 | ✓ Backtest completed
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:211 | 
+5. RESULTS
+2026-07-15 00:00:12 | __main__ | INFO     | run_backtest:215 | 
+6. SAVING TO DATABASE
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:236 | ✓ Inserted 1000 price candles to database
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:240 | Database Statistics:
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:242 |   price_data_records: 3000
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:242 |   signals: 0
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:242 |   active_signals: 0
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:242 |   trades: 0
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:242 |   open_trades: 0
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:242 |   closed_trades: 0
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:242 |   metrics_records: 0
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:249 | 
+============================================================
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:250 | ✓ PHASE 1 VALIDATION COMPLETE
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:251 | ============================================================
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:252 | 
+Next Steps:
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:253 | 1. Refine strategy parameters based on results
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:254 | 2. Add more indicators for Phase 2 (Real strategy)
+2026-07-15 00:00:14 | __main__ | INFO     | run_backtest:255 | 3. Move to live gold (XAUUSD) data with proper ML model
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:162 | ============================================================
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:163 | PHASE 1 BACKTEST - FULL PIPELINE TEST
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:164 | ============================================================
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:168 | 
+1. LOADING DATA
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:169 |    Symbol: XAUUSD
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:170 |    Timeframe: 60 min
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:171 |    Years: 1
+2026-07-15 16:27:45 | __main__ | INFO     | load_or_generate_data:138 | Falling back to synthetic data generation...
+2026-07-15 16:27:45 | __main__ | INFO     | generate_synthetic_data:64 | Generating 1000 synthetic candles for XAUUSD...
+2026-07-15 16:27:45 | __main__ | INFO     | generate_synthetic_data:94 | ✓ Generated synthetic data: 1871.55 to 2406.47
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:174 | ✓ Loaded 1000 candles
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:177 | 
+2. PREPROCESSING DATA
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:179 | ✓ Added return features for downstream analysis
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:190 |    Risk-based position size: 8.61 units
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:191 |    Target reward/risk ratio: 2.00
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:194 | 
+3. INITIALIZING STRATEGY
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:195 |    Strategy: gold_v1
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:204 | ✓ Strategy initialized
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:207 | 
+4. RUNNING BACKTEST
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:215 | ✓ Backtest completed
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:218 | 
+5. RESULTS
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:222 | 
+6. SAVING TO DATABASE
+2026-07-15 16:27:45 | __main__ | WARNING  | run_backtest:252 | Could not save to database: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 55432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: 55432, hostaddr: '::1': connection failed: connection to server at "::1", port 55432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+- host: 'localhost', port: 55432, hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 55432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:256 | 
+============================================================
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:257 | ✓ PHASE 1 VALIDATION COMPLETE
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:258 | ============================================================
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:259 | 
+Next Steps:
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:260 | 1. Refine strategy parameters based on results
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:261 | 2. Add more indicators for Phase 2 (Real strategy)
+2026-07-15 16:27:45 | __main__ | INFO     | run_backtest:262 | 3. Move to live gold (XAUUSD) data with proper ML model
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:163 | ============================================================
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:164 | PHASE 1 BACKTEST - FULL PIPELINE TEST
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:165 | ============================================================
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:169 | 
+1. LOADING DATA
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:170 |    Symbol: XAUUSD
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:171 |    Timeframe: 60 min
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:172 |    Years: 1
+2026-07-15 16:39:08 | __main__ | INFO     | load_or_generate_data:139 | Falling back to synthetic data generation...
+2026-07-15 16:39:08 | __main__ | INFO     | generate_synthetic_data:65 | Generating 1000 synthetic candles for XAUUSD...
+2026-07-15 16:39:08 | __main__ | INFO     | generate_synthetic_data:95 | ✓ Generated synthetic data: 1966.77 to 2485.49
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:175 | ✓ Loaded 1000 candles
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:178 | 
+2. PREPROCESSING DATA
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:181 | ✓ Added return and volatility features for downstream analysis
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:192 |    Risk-based position size: 8.49 units
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:193 |    Target reward/risk ratio: 2.00
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:196 | 
+3. INITIALIZING STRATEGY
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:197 |    Strategy: gold_v1
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:206 | ✓ Strategy initialized
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:209 | 
+4. RUNNING BACKTEST
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:217 | ✓ Backtest completed
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:220 | 
+5. RESULTS
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:224 | 
+6. SAVING TO DATABASE
+2026-07-15 16:39:08 | __main__ | WARNING  | run_backtest:254 | Could not save to database: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 55432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: 55432, hostaddr: '::1': connection failed: connection to server at "::1", port 55432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+- host: 'localhost', port: 55432, hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 55432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:258 | 
+============================================================
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:259 | ✓ PHASE 1 VALIDATION COMPLETE
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:260 | ============================================================
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:261 | 
+Next Steps:
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:262 | 1. Refine strategy parameters based on results
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:263 | 2. Add more indicators for Phase 2 (Real strategy)
+2026-07-15 16:39:08 | __main__ | INFO     | run_backtest:264 | 3. Move to live gold (XAUUSD) data with proper ML model
+2026-07-17 15:55:18 | __main__ | INFO     | main:87 | ============================================================
+2026-07-17 15:55:18 | __main__ | INFO     | main:88 | nTrade AI Trading System
+2026-07-17 15:55:18 | __main__ | INFO     | main:89 | ============================================================
+2026-07-17 15:55:18 | __main__ | INFO     | main:106 | 
+Initializing trading application...
+2026-07-17 15:55:18 | backend.core.application | INFO     | initialize:46 | ============================================================
+2026-07-17 15:55:18 | backend.core.application | INFO     | initialize:47 | Initializing nTrade AI Trading System
+2026-07-17 15:55:18 | backend.core.application | INFO     | initialize:48 | ============================================================
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:109 | Project: nTrade AI
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:110 | Version: 1.0.0
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:111 | Environment: development
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:112 | Debug Mode: True
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:113 | Trading Mode: manual
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:114 | Default Symbol: XAUUSD
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:115 | Default Timeframe: 60 minutes
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:116 | Max Risk Per Trade: 2.0%
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:117 | Max Daily Loss Limit: 5.0%
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:118 | MT5 Demo Mode: True
+2026-07-17 15:55:18 | backend.core.application | INFO     | _log_configuration:119 | MT5 Server: Weltrade-Demo
+2026-07-17 15:55:18 | backend.core.application | INFO     | start:76 | Starting trading system...
+2026-07-17 15:55:18 | backend.core.application | INFO     | start:78 | Trading system is now running
+2026-07-17 16:06:45 | unicode_test | INFO     | <module>:1 | ✓ unicode logging ok
+2026-07-17 16:08:55 | __main__ | INFO     | main:87 | ============================================================
+2026-07-17 16:08:55 | __main__ | INFO     | main:88 | nTrade AI Trading System
+2026-07-17 16:08:55 | __main__ | INFO     | main:89 | ============================================================
+2026-07-17 16:08:55 | __main__ | INFO     | main:106 | 
+Initializing trading application...
+2026-07-17 16:08:55 | backend.core.application | INFO     | initialize:46 | ============================================================
+2026-07-17 16:08:55 | backend.core.application | INFO     | initialize:47 | Initializing nTrade AI Trading System
+2026-07-17 16:08:55 | backend.core.application | INFO     | initialize:48 | ============================================================
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:109 | Project: nTrade AI
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:110 | Version: 1.0.0
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:111 | Environment: development
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:112 | Debug Mode: True
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:113 | Trading Mode: manual
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:114 | Default Symbol: XAUUSD
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:115 | Default Timeframe: 60 minutes
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:116 | Max Risk Per Trade: 2.0%
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:117 | Max Daily Loss Limit: 5.0%
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:118 | MT5 Demo Mode: True
+2026-07-17 16:08:55 | backend.core.application | INFO     | _log_configuration:119 | MT5 Server: Weltrade-Demo
+2026-07-17 16:08:55 | backend.core.application | INFO     | initialize:59 | ✓ Application initialization complete
+2026-07-17 16:08:55 | backend.core.application | INFO     | start:76 | Starting trading system...
+2026-07-17 16:08:55 | backend.core.application | INFO     | start:78 | Trading system is now running
+2026-07-17 16:09:43 | __main__ | INFO     | main:87 | ============================================================
+2026-07-17 16:09:43 | __main__ | INFO     | main:88 | nTrade AI Trading System
+2026-07-17 16:09:43 | __main__ | INFO     | main:89 | ============================================================
+2026-07-17 16:09:43 | __main__ | INFO     | main:106 | 
+Initializing trading application...
+2026-07-17 16:09:43 | backend.core.application | INFO     | initialize:46 | ============================================================
+2026-07-17 16:09:43 | backend.core.application | INFO     | initialize:47 | Initializing nTrade AI Trading System
+2026-07-17 16:09:43 | backend.core.application | INFO     | initialize:48 | ============================================================
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:109 | Project: nTrade AI
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:110 | Version: 1.0.0
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:111 | Environment: development
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:112 | Debug Mode: True
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:113 | Trading Mode: manual
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:114 | Default Symbol: XAUUSD
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:115 | Default Timeframe: 60 minutes
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:116 | Max Risk Per Trade: 2.0%
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:117 | Max Daily Loss Limit: 5.0%
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:118 | MT5 Demo Mode: True
+2026-07-17 16:09:43 | backend.core.application | INFO     | _log_configuration:119 | MT5 Server: Weltrade-Demo
+2026-07-17 16:09:43 | backend.core.application | INFO     | initialize:59 | ✓ Application initialization complete
+2026-07-17 16:09:43 | backend.core.application | INFO     | start:76 | Starting trading system...
+2026-07-17 16:09:43 | backend.core.application | INFO     | start:78 | Trading system is now running
+2026-07-17 17:12:08 | __main__ | INFO     | main:87 | ============================================================
+2026-07-17 17:12:08 | __main__ | INFO     | main:88 | nTrade AI Trading System
+2026-07-17 17:12:08 | __main__ | INFO     | main:89 | ============================================================
+2026-07-17 17:12:08 | __main__ | INFO     | main:106 | 
+Initializing trading application...
+2026-07-17 17:12:08 | backend.core.application | INFO     | initialize:46 | ============================================================
+2026-07-17 17:12:08 | backend.core.application | INFO     | initialize:47 | Initializing nTrade AI Trading System
+2026-07-17 17:12:08 | backend.core.application | INFO     | initialize:48 | ============================================================
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:109 | Project: nTrade AI
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:110 | Version: 1.0.0
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:111 | Environment: development
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:112 | Debug Mode: True
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:113 | Trading Mode: manual
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:114 | Default Symbol: XAUUSD
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:115 | Default Timeframe: 60 minutes
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:116 | Max Risk Per Trade: 2.0%
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:117 | Max Daily Loss Limit: 5.0%
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:118 | MT5 Demo Mode: True
+2026-07-17 17:12:08 | backend.core.application | INFO     | _log_configuration:119 | MT5 Server: Weltrade-Demo
+2026-07-17 17:12:08 | backend.core.application | INFO     | initialize:59 | ✓ Application initialization complete
+2026-07-17 17:12:08 | backend.core.application | INFO     | start:76 | Starting trading system...
+2026-07-17 17:12:08 | backend.core.application | INFO     | start:78 | Trading system is now running
+2026-07-17 17:20:39 | backend.core.application | INFO     | initialize:48 | ============================================================
+2026-07-17 17:20:39 | backend.core.application | INFO     | initialize:49 | Initializing nTrade AI Trading System
+2026-07-17 17:20:39 | backend.core.application | INFO     | initialize:50 | ============================================================
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:112 | Project: nTrade AI
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:113 | Version: 1.0.0
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:114 | Environment: development
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:115 | Debug Mode: True
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:116 | Trading Mode: manual
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:117 | Default Symbol: XAUUSD
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:118 | Default Timeframe: 60 minutes
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:119 | Max Risk Per Trade: 2.0%
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:120 | Max Daily Loss Limit: 5.0%
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:121 | MT5 Demo Mode: True
+2026-07-17 17:20:39 | backend.core.application | INFO     | _log_configuration:122 | MT5 Server: Weltrade-Demo
+2026-07-17 17:20:39 | backend.core.application | INFO     | _initialize_market_data:127 | MT5 auto-connect is disabled; startup will stay in manual mode
+2026-07-17 17:20:39 | backend.core.application | INFO     | initialize:62 | ✓ Application initialization complete
+2026-07-17 17:21:26 | backend.core.application | INFO     | initialize:48 | ============================================================
+2026-07-17 17:21:26 | backend.core.application | INFO     | initialize:49 | Initializing nTrade AI Trading System
+2026-07-17 17:21:26 | backend.core.application | INFO     | initialize:50 | ============================================================
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:112 | Project: nTrade AI
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:113 | Version: 1.0.0
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:114 | Environment: development
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:115 | Debug Mode: True
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:116 | Trading Mode: manual
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:117 | Default Symbol: XAUUSD
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:118 | Default Timeframe: 60 minutes
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:119 | Max Risk Per Trade: 2.0%
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:120 | Max Daily Loss Limit: 5.0%
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:121 | MT5 Demo Mode: True
+2026-07-17 17:21:26 | backend.core.application | INFO     | _log_configuration:122 | MT5 Server: Weltrade-Demo
+2026-07-17 17:21:26 | backend.core.application | INFO     | _initialize_market_data:127 | MT5 auto-connect is disabled; startup will stay in manual mode
+2026-07-17 17:21:26 | backend.core.application | INFO     | initialize:62 | ✓ Application initialization complete
+2026-07-17 17:26:43 | __main__ | INFO     | main:87 | ============================================================
+2026-07-17 17:26:43 | __main__ | INFO     | main:88 | nTrade AI Trading System
+2026-07-17 17:26:43 | __main__ | INFO     | main:89 | ============================================================
+2026-07-17 17:26:43 | __main__ | INFO     | main:106 | 
+Initializing trading application...
+2026-07-17 17:26:43 | backend.core.application | INFO     | initialize:48 | ============================================================
+2026-07-17 17:26:43 | backend.core.application | INFO     | initialize:49 | Initializing nTrade AI Trading System
+2026-07-17 17:26:43 | backend.core.application | INFO     | initialize:50 | ============================================================
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:112 | Project: nTrade AI
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:113 | Version: 1.0.0
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:114 | Environment: development
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:115 | Debug Mode: True
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:116 | Trading Mode: manual
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:117 | Default Symbol: XAUUSD
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:118 | Default Timeframe: 60 minutes
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:119 | Max Risk Per Trade: 2.0%
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:120 | Max Daily Loss Limit: 5.0%
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:121 | MT5 Demo Mode: True
+2026-07-17 17:26:43 | backend.core.application | INFO     | _log_configuration:122 | MT5 Server: Weltrade-Demo
+2026-07-17 17:26:43 | backend.core.application | INFO     | _initialize_market_data:127 | MT5 auto-connect is disabled; startup will stay in manual mode
+2026-07-17 17:26:43 | backend.core.application | INFO     | initialize:62 | ✓ Application initialization complete
+2026-07-17 17:26:43 | backend.core.application | INFO     | start:79 | Starting trading system...
+2026-07-17 17:26:43 | backend.core.application | INFO     | start:81 | Trading system is now running
+2026-07-17 18:05:38 | __main__ | INFO     | main:181 | ============================================================
+2026-07-17 18:05:38 | __main__ | INFO     | main:182 | nTrade AI Trading System
+2026-07-17 18:05:38 | __main__ | INFO     | main:183 | ============================================================
+2026-07-17 18:05:38 | __main__ | INFO     | main:221 | 
+Initializing trading application...
+2026-07-17 18:05:38 | backend.core.application | INFO     | initialize:48 | ============================================================
+2026-07-17 18:05:38 | backend.core.application | INFO     | initialize:49 | Initializing nTrade AI Trading System
+2026-07-17 18:05:38 | backend.core.application | INFO     | initialize:50 | ============================================================
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:112 | Project: nTrade AI
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:113 | Version: 1.0.0
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:114 | Environment: development
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:115 | Debug Mode: True
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:116 | Trading Mode: manual
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:117 | Default Symbol: XAUUSD
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:118 | Default Timeframe: 60 minutes
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:119 | Max Risk Per Trade: 2.0%
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:120 | Max Daily Loss Limit: 5.0%
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:121 | MT5 Demo Mode: True
+2026-07-17 18:05:38 | backend.core.application | INFO     | _log_configuration:122 | MT5 Server: Weltrade-Demo
+2026-07-17 18:05:38 | backend.core.application | INFO     | _initialize_market_data:127 | MT5 auto-connect is disabled; startup will stay in manual mode
+2026-07-17 18:05:38 | backend.core.application | INFO     | initialize:62 | ✓ Application initialization complete
+2026-07-17 18:05:38 | backend.core.application | INFO     | start:79 | Starting trading system...
+2026-07-17 18:05:38 | backend.core.application | INFO     | start:81 | Trading system is now running
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:165 | ============================================================
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:166 | PHASE 1 BACKTEST - FULL PIPELINE TEST
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:167 | ============================================================
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:171 | 
+1. LOADING DATA
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:172 |    Symbol: XAUUSD_i
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:173 |    Timeframe: 60 min
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:174 |    Years: 1
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | load_or_generate_data:140 | Falling back to synthetic data generation...
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | generate_synthetic_data:66 | Generating 1000 synthetic candles for XAUUSD_i...
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | generate_synthetic_data:96 | ✓ Generated synthetic data: 1881.55 to 2359.63
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:177 | ✓ Loaded 1000 candles
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:180 | 
+2. PREPROCESSING DATA
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:183 | ✓ Added return and volatility features for downstream analysis
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:194 |    Risk-based position size: 10.31 units
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:195 |    Target reward/risk ratio: 2.00
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:198 | 
+3. INITIALIZING STRATEGY
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:199 |    Strategy: gold_model
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:207 |    Model path: models\smoke_gold_model.pkl
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:212 | ✓ Strategy initialized
+2026-07-17 18:22:30 | scripts.backtest_runner | INFO     | run_backtest:215 | 
+4. RUNNING BACKTEST
+2026-07-17 18:22:31 | scripts.backtest_runner | INFO     | run_backtest:223 | ✓ Backtest completed
+2026-07-17 18:22:31 | scripts.backtest_runner | INFO     | run_backtest:226 | 
+5. RESULTS
+2026-07-17 18:22:31 | scripts.backtest_runner | INFO     | run_backtest:230 | 
+6. SAVING TO DATABASE
+2026-07-17 18:22:32 | scripts.backtest_runner | WARNING  | run_backtest:260 | Could not save to database: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:264 | 
+============================================================
+2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:265 | ✓ PHASE 1 VALIDATION COMPLETE
+2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:266 | ============================================================
+2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:267 | 
+Next Steps:
+2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:268 | 1. Refine strategy parameters based on results
+2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:269 | 2. Add more indicators for gold-strategy development
+2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:270 | 3. Move to live gold (XAUUSD) data with proper ML model

@@ -1,0 +1,96 @@
+{
+  "created_at": "2026-07-17T16:08:33.942823",
+  "model_name": "temp_test",
+  "metrics": {
+    "train_accuracy": 0.94375,
+    "test_accuracy": 0.55,
+    "test_precision_macro": 0.3646723646723647,
+    "test_recall_macro": 0.36772486772486773,
+    "test_f1_macro": 0.3588709677419355,
+    "train_distribution": {
+      "-1": 84,
+      "1": 76
+    },
+    "test_distribution": {
+      "-1": 21,
+      "0": 1,
+      "1": 18
+    },
+    "classification_report": {
+      "-1": {
+        "precision": 0.5555555555555556,
+        "recall": 0.7142857142857143,
+        "f1-score": 0.6250000000000001,
+        "support": 21.0
+      },
+      "0": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 1.0
+      },
+      "1": {
+        "precision": 0.5384615384615384,
+        "recall": 0.3888888888888889,
+        "f1-score": 0.45161290322580644,
+        "support": 18.0
+      },
+      "accuracy": 0.55,
+      "macro avg": {
+        "precision": 0.3646723646723647,
+        "recall": 0.36772486772486773,
+        "f1-score": 0.3588709677419355,
+        "support": 40.0
+      },
+      "weighted avg": {
+        "precision": 0.533974358974359,
+        "recall": 0.55,
+        "f1-score": 0.531350806451613,
+        "support": 40.0
+      }
+    }
+  },
+  "feature_columns": [
+    "returns",
+    "log_returns",
+    "price_range",
+    "candle_body",
+    "upper_wick",
+    "lower_wick",
+    "body_to_range",
+    "rolling_volatility_5",
+    "rolling_volatility_10",
+    "rolling_volatility_20",
+    "volume_ma_5",
+    "volume_ma_20",
+    "volume_zscore_20",
+    "relative_volume_20",
+    "ema_5",
+    "ema_10",
+    "ema_20",
+    "ema_50",
+    "ema_gap_10_50",
+    "ema_gap_5_20",
+    "ema_slope_10",
+    "ema_slope_50",
+    "rsi_14",
+    "macd_line",
+    "macd_signal",
+    "macd_histogram",
+    "atr_14",
+    "atr_percent",
+    "bollinger_middle",
+    "bollinger_upper",
+    "bollinger_lower",
+    "bollinger_bandwidth",
+    "bollinger_percent_b",
+    "trend_strength_10",
+    "trend_strength_20",
+    "volatility_ratio_20_50",
+    "market_regime_score",
+    "distance_from_ema_20",
+    "distance_from_ema_50",
+    "hour_of_day",
+    "day_of_week"
+  ]
+}
