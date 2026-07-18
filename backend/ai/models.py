@@ -38,6 +38,7 @@ class GoldRandomForestModel:
         self.class_labels: list[int] = []
         self._label_to_index: dict[int, int] = {}
         self._index_to_label: dict[int, int] = {}
+        self.constant_label: int | None = None
 
         if XGBClassifier is not None:
             self.model = XGBClassifier(
@@ -99,8 +100,18 @@ class GoldRandomForestModel:
     def fit(self, X: pd.DataFrame, y: np.ndarray) -> "GoldRandomForestModel":
         """Train the model on the provided feature matrix."""
         self.class_labels = sorted(int(label) for label in np.unique(y))
+        if len(self.class_labels) == 0:
+            raise ValueError("Training data must contain at least one class")
+        if len(self.class_labels) == 1:
+            self.constant_label = self.class_labels[0]
+            self._label_to_index = {self.constant_label: 0}
+            self._index_to_label = {0: self.constant_label}
+            self.model_family = "constant"
+            return self
+
         self._label_to_index = {label: index for index, label in enumerate(self.class_labels)}
         self._index_to_label = {index: label for label, index in self._label_to_index.items()}
+        self.constant_label = None
 
         encoded_y = np.array([self._label_to_index[int(label)] for label in y], dtype=int)
 
@@ -112,6 +123,9 @@ class GoldRandomForestModel:
 
     def predict(self, X: pd.DataFrame) -> np.ndarray:
         """Predict a signal series from a feature matrix."""
+        if self.constant_label is not None:
+            return np.full(len(X), self.constant_label, dtype=int)
+
         if XGBClassifier is not None or RandomForestClassifier is not None:
             encoded_predictions = self.model.predict(X)
             return self._decode_labels(encoded_predictions)
@@ -122,6 +136,12 @@ class GoldRandomForestModel:
 
     def predict_proba(self, X: pd.DataFrame) -> np.ndarray | None:
         """Return class probabilities when the underlying model supports them."""
+        if self.constant_label is not None:
+            probabilities = np.zeros((len(X), max(len(self.class_labels), 1)), dtype=float)
+            if probabilities.size > 0:
+                probabilities[:, 0] = 1.0
+            return probabilities
+
         if XGBClassifier is not None or RandomForestClassifier is not None:
             probabilities = self.model.predict_proba(X)
             probabilities = np.asarray(probabilities)
@@ -151,6 +171,7 @@ class GoldRandomForestModel:
                     "random_state": self.random_state,
                     "class_labels": self.class_labels,
                     "model_family": self.model_family,
+                    "constant_label": self.constant_label,
                 },
                 handle,
             )
@@ -166,11 +187,15 @@ class GoldRandomForestModel:
             self.random_state = payload.get("random_state", self.random_state)
             self.class_labels = [int(label) for label in payload.get("class_labels", self.class_labels)]
             self.model_family = payload.get("model_family", getattr(self, "model_family", "unknown"))
+            constant_label = payload.get("constant_label")
+            self.constant_label = int(constant_label) if constant_label is not None else None
         else:
             self.model = payload
 
         if not self.class_labels and hasattr(self.model, "classes_"):
             self.class_labels = [int(label) for label in getattr(self.model, "classes_", [])]
+        if self.constant_label is not None and not self.class_labels:
+            self.class_labels = [self.constant_label]
 
         self._label_to_index = {label: index for index, label in enumerate(self.class_labels)}
         self._index_to_label = {index: label for label, index in self._label_to_index.items()}

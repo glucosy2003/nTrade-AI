@@ -9,6 +9,7 @@ from typing import Optional
 
 import pandas as pd
 from sqlalchemy.dialects.postgresql import insert as pg_insert
+from sqlalchemy import desc
 
 from backend.market_data.data_validator import MarketDataValidator, PriceValidationResult
 from database.models import PriceData
@@ -43,10 +44,16 @@ class MarketDataStorage:
     def get_latest_timestamp(self, symbol: str, timeframe: int) -> Optional[datetime]:
         """Return the latest stored candle timestamp for a symbol and timeframe."""
         try:
-            records = self.database_manager.get_price_data(symbol=symbol, timeframe=timeframe, limit=1)
-            if not records:
-                return None
-            return records[-1].timestamp
+            self.ensure_ready()
+            with self.database_manager.connection.session_scope() as session:
+                latest_timestamp = (
+                    session.query(PriceData.timestamp)
+                    .filter(PriceData.symbol == symbol, PriceData.timeframe == timeframe)
+                    .order_by(desc(PriceData.timestamp))
+                    .limit(1)
+                    .scalar()
+                )
+                return latest_timestamp
         except Exception as exc:
             logger.error("Failed to look up latest timestamp for %s: %s", symbol, exc, exc_info=True)
             return None

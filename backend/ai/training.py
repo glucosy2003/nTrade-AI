@@ -93,8 +93,8 @@ class GoldModelTrainer:
 
     def _fit_model(self, X_train: pd.DataFrame, y_train: np.ndarray) -> None:
         """Fit the underlying model."""
-        if len(np.unique(y_train)) < 2:
-            raise ValueError("Training data must contain at least two classes")
+        if len(y_train) == 0:
+            raise ValueError("Training data must contain at least one row")
         self.model.fit(X_train, y_train)
 
     @staticmethod

@@ -74,7 +74,8 @@ class DatabaseConnection:
             self.SessionLocal = sessionmaker(
                 autocommit=False,
                 autoflush=False,
-                bind=self.engine
+                bind=self.engine,
+                expire_on_commit=False,
             )
             
             # Test connection

@@ -492,3 +492,29 @@ Next Steps:
 2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:268 | 1. Refine strategy parameters based on results
 2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:269 | 2. Add more indicators for gold-strategy development
 2026-07-17 18:22:32 | scripts.backtest_runner | INFO     | run_backtest:270 | 3. Move to live gold (XAUUSD) data with proper ML model
+2026-07-18 15:57:57 | __main__ | INFO     | main:264 | Loading live candles for XAUUSD_i (60 min)...
+2026-07-18 15:57:57 | __main__ | WARNING  | resolve_or_train_model:211 | No saved model found; training a fresh one from stored price data.
+2026-07-18 15:57:58 | __main__ | WARNING  | main:291 | Model path unavailable or training failed: value 0 for Parameter num_class should be greater equal to 1
+num_class: Number of output class in the multi-class classification.
+2026-07-18 15:57:59 | __main__ | INFO     | main:337 | Latest close: 4016.41000
+2026-07-18 15:57:59 | __main__ | INFO     | main:338 | Signal source: gold_strategy_v1
+2026-07-18 15:57:59 | __main__ | INFO     | main:339 | Raw model signal: 1
+2026-07-18 15:57:59 | __main__ | INFO     | main:340 | Confidence: 0.00%
+2026-07-18 15:57:59 | __main__ | INFO     | main:341 | Final signal: BUY
+2026-07-18 15:57:59 | __main__ | INFO     | main:342 | Order type: MARKET
+2026-07-18 15:57:59 | __main__ | INFO     | main:343 | Trade mode: 4
+2026-07-18 15:57:59 | __main__ | INFO     | main:344 | Entry: 4016.90000
+2026-07-18 15:57:59 | __main__ | INFO     | main:346 | Stop loss: 3996.81550
+2026-07-18 15:57:59 | __main__ | INFO     | main:347 | Take profit: 4057.06900
+2026-07-18 15:57:59 | __main__ | INFO     | main:348 | Lot size: 0.09
+2026-07-18 15:57:59 | __main__ | INFO     | main:349 | Risk amount: 200.00
+2026-07-18 15:57:59 | __main__ | INFO     | main:350 | Actual risk amount: 180.76
+2026-07-18 15:57:59 | __main__ | INFO     | main:351 | Risk/reward: 2.00
+2026-07-18 15:57:59 | __main__ | INFO     | main:352 | Lot range: 0.01 - 100.00 step 0.01
+2026-07-18 15:57:59 | __main__ | INFO     | main:353 | Spread: None points
+2026-07-18 15:57:59 | __main__ | INFO     | main:354 | Deviation: 20 points
+2026-07-18 15:57:59 | __main__ | INFO     | main:355 | Filling mode: 1
+2026-07-18 15:57:59 | __main__ | INFO     | main:356 | Time in force: GTC
+2026-07-18 15:57:59 | __main__ | INFO     | main:357 | Estimated margin: 18.08
+2026-07-18 15:57:59 | __main__ | INFO     | main:358 | Free margin: None
+2026-07-18 15:57:59 | __main__ | WARNING  | main:361 | Trade check: Terminal trading is disabled

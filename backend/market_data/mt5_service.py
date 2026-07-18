@@ -145,6 +145,70 @@ class MT5Service:
         info = mt5.symbol_info(symbol)
         return info._asdict() if info is not None else None
 
+    def symbol_trade_context(self, symbol: str) -> Optional[dict[str, Any]]:
+        """Return broker-specific trading constraints for a symbol."""
+        symbol_info = self.symbol_info(symbol)
+        if symbol_info is None:
+            return None
+
+        tick_info = self.tick_info(symbol) or {}
+        return {
+            "symbol": symbol,
+            "trade_mode": symbol_info.get("trade_mode"),
+            "order_mode": symbol_info.get("order_mode"),
+            "filling_mode": symbol_info.get("filling_mode"),
+            "expiration_mode": symbol_info.get("expiration_mode"),
+            "volume_min": symbol_info.get("volume_min"),
+            "volume_max": symbol_info.get("volume_max"),
+            "volume_step": symbol_info.get("volume_step"),
+            "volume_limit": symbol_info.get("volume_limit"),
+            "trade_contract_size": symbol_info.get("trade_contract_size"),
+            "trade_tick_size": symbol_info.get("trade_tick_size"),
+            "trade_tick_value": symbol_info.get("trade_tick_value"),
+            "point": symbol_info.get("point"),
+            "digits": symbol_info.get("digits"),
+            "spread": tick_info.get("spread"),
+            "ask": tick_info.get("ask"),
+            "bid": tick_info.get("bid"),
+            "last": tick_info.get("last"),
+            "time": tick_info.get("time"),
+            "trade_stops_level": symbol_info.get("trade_stops_level"),
+            "trade_freeze_level": symbol_info.get("trade_freeze_level"),
+            "visible": symbol_info.get("visible"),
+        }
+
+    def estimate_order_margin(self, symbol: str, volume: float, order_type: str, price: float) -> Optional[float]:
+        """Estimate required margin for a market order."""
+        if not self.connect() or mt5 is None:
+            return None
+
+        order_type_map = {
+            "BUY": getattr(mt5, "ORDER_TYPE_BUY", None),
+            "SELL": getattr(mt5, "ORDER_TYPE_SELL", None),
+        }
+        mt5_order_type = order_type_map.get(order_type.upper())
+        if mt5_order_type is None:
+            return None
+
+        try:
+            margin = mt5.order_calc_margin(mt5_order_type, symbol, volume, price)
+            return float(margin) if margin is not None else None
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("Margin estimate failed for %s: %s", symbol, exc)
+            return None
+
+    def order_check(self, request: dict[str, Any]) -> Optional[dict[str, Any]]:
+        """Run a broker-side order check when supported."""
+        if not self.connect() or mt5 is None:
+            return None
+
+        try:
+            result = mt5.order_check(request)
+            return result._asdict() if result is not None else None
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("Order check failed: %s", exc)
+            return None
+
     def tick_info(self, symbol: str) -> Optional[dict[str, Any]]:
         """Return the latest tick metadata for a symbol."""
         if not self.validate_symbol(symbol) or mt5 is None:

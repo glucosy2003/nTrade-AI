@@ -275,6 +275,14 @@ Recommended setup flow:
 5. Use `python scripts\\build_feature_dataset.py` or `python main.py --build-features` to create training rows.
 6. Use `python scripts\\train_gold_model.py` or `python main.py --train-model` to train and save the first gold model.
 7. Use `python main.py --backtest --strategy gold_model --model-path ...` to measure model-driven trading performance.
+8. Use `python scripts\\live_trade_signal.py --store-signal` to generate a live trade setup with stop loss, take profit, and position size.
+
+Live signal workflow:
+- The script reads the latest MT5 candles.
+- It runs the trained model and prints `BUY`, `SELL`, or `HOLD`.
+- It calculates stop loss, take profit, and position size from the risk settings.
+- With `--store-signal`, it saves the setup in the `signals` table for later review.
+- The system does not retrain itself automatically; improvement comes from saving results, reviewing them, and retraining with `python scripts\\train_gold_model.py`.
 
 `python scripts\\setup_db.py --init` still exists as a direct ORM table-creation fallback, but migrations are now the primary path.
 
