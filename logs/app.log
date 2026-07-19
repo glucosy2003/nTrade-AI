@@ -1311,3 +1311,112 @@ sqlalchemy.exc.DataError: (psycopg.errors.StringDataRightTruncation) value too l
 (Background on this error at: https://sqlalche.me/e/20/9h9h)
 2026-07-19 06:23:24 | __main__ | INFO     | _request_stop:27 | Stop requested; runner will exit after the current cycle
 2026-07-19 06:23:25 | __main__ | INFO     | main:98 | Synthetic auto runner stopped
+2026-07-19 06:24:05 | __main__ | INFO     | main:61 | Synthetic auto runner started | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | dry_run=False | symbol=all
+2026-07-19 06:24:05 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 1 at 2026-07-19T06:24:05
+2026-07-19 06:24:06 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:434 | Synced open broker position for FX Vol 20 into local trade log | ticket=434870380
+2026-07-19 06:24:06 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:434 | Synced open broker position for FX Vol 40 into local trade log | ticket=434872416
+2026-07-19 06:24:06 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:434 | Synced open broker position for FX Vol 80 into local trade log | ticket=434873694
+2026-07-19 06:24:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:24:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 06:24:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 06:24:06 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 06:29:06 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 2 at 2026-07-19T06:29:06
+2026-07-19 06:29:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:29:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 06:29:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 06:29:06 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-19 06:34:06 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 3 at 2026-07-19T06:34:06
+2026-07-19 06:34:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:34:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 06:34:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 06:34:07 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 3 with exit code 0
+2026-07-19 06:39:07 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 4 at 2026-07-19T06:39:07
+2026-07-19 06:39:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:39:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 06:39:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 06:39:07 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 4 with exit code 0
+2026-07-19 06:44:07 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 5 at 2026-07-19T06:44:07
+2026-07-19 06:44:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:44:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 06:44:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 06:44:07 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 5 with exit code 0
+2026-07-19 06:49:07 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 6 at 2026-07-19T06:49:07
+2026-07-19 06:49:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:49:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 06:49:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 06:49:08 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 6 with exit code 0
+2026-07-19 06:54:08 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 7 at 2026-07-19T06:54:08
+2026-07-19 06:54:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:54:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 06:54:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 06:54:08 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 7 with exit code 0
+2026-07-19 06:59:08 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 8 at 2026-07-19T06:59:08
+2026-07-19 06:59:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:59:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 06:59:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 06:59:08 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 8 with exit code 0
+2026-07-19 07:04:08 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 9 at 2026-07-19T07:04:08
+2026-07-19 07:04:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:04:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:04:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:04:09 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 9 with exit code 0
+2026-07-19 07:09:09 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 10 at 2026-07-19T07:09:09
+2026-07-19 07:09:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:09:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:09:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:09:09 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 10 with exit code 0
+2026-07-19 07:14:09 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 11 at 2026-07-19T07:14:09
+2026-07-19 07:14:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:14:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:14:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:14:09 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 11 with exit code 0
+2026-07-19 07:19:09 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 12 at 2026-07-19T07:19:09
+2026-07-19 07:19:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:19:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:19:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:19:10 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 12 with exit code 0
+2026-07-19 07:24:10 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 13 at 2026-07-19T07:24:10
+2026-07-19 07:24:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:24:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:24:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:24:10 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 13 with exit code 0
+2026-07-19 07:29:10 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 14 at 2026-07-19T07:29:10
+2026-07-19 07:29:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:29:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:29:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:29:10 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 14 with exit code 0
+2026-07-19 07:34:10 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 15 at 2026-07-19T07:34:10
+2026-07-19 07:34:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:34:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:34:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:34:16 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 15 with exit code 0
+2026-07-19 07:39:16 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 16 at 2026-07-19T07:39:16
+2026-07-19 07:39:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:39:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:39:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:39:17 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 16 with exit code 0
+2026-07-19 07:44:17 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 17 at 2026-07-19T07:44:17
+2026-07-19 07:44:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:44:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:44:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:44:17 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 17 with exit code 0
+2026-07-19 07:49:17 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 18 at 2026-07-19T07:49:17
+2026-07-19 07:49:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:49:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:49:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:49:18 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 18 with exit code 0
+2026-07-19 07:54:18 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 19 at 2026-07-19T07:54:18
+2026-07-19 07:54:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:54:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:54:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:54:18 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 19 with exit code 0
+2026-07-19 07:59:18 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 20 at 2026-07-19T07:59:18
+2026-07-19 07:59:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 07:59:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 07:59:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:516 | Skipping FX Vol 80 because an open position already exists
+2026-07-19 07:59:18 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 20 with exit code 0
+2026-07-19 08:01:10 | __main__ | INFO     | _request_stop:27 | Stop requested; runner will exit after the current cycle
+2026-07-19 08:01:10 | __main__ | INFO     | main:98 | Synthetic auto runner stopped
+2026-07-19 14:35:39 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:523 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 14:37:01 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:523 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 14:37:20 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:523 | Synced open broker position for FX Vol 20 into local trade log | ticket=123

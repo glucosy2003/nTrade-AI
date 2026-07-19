@@ -7,6 +7,7 @@ from scripts.synthetic_demo_trade import (
     _resolve_symbol,
     _retcode_succeeded,
     _select_recent_signal,
+    _synthetic_magic,
     _sync_broker_open_positions,
     _synthetic_model_version,
     _trading_disabled_warnings,
@@ -86,6 +87,11 @@ def test_synthetic_model_version_fits_signal_schema():
     assert len(_synthetic_model_version("80", "SyntheticBreakoutStrategy")) <= 20
 
 
+def test_synthetic_magic_is_stable_per_account_and_bucket():
+    assert _synthetic_magic("acc1", "20") == _synthetic_magic("acc1", "20")
+    assert _synthetic_magic("acc1", "20") != _synthetic_magic("acc2", "20")
+
+
 def test_sync_broker_open_positions_backfills_missing_trade(monkeypatch):
     inserted = []
 
@@ -105,7 +111,7 @@ def test_sync_broker_open_positions_backfills_missing_trade(monkeypatch):
             ]
 
     class FakeDbManager:
-        def get_open_trades(self, symbol=None):
+        def get_open_trades(self, symbol=None, account_id=None):
             return []
 
         def insert_trade(self, trade_data):
@@ -114,9 +120,10 @@ def test_sync_broker_open_positions_backfills_missing_trade(monkeypatch):
     monkeypatch.setattr(synthetic_demo_trade, "mt5_collector", FakeCollector())
     monkeypatch.setattr(synthetic_demo_trade, "db_manager", FakeDbManager())
 
-    _sync_broker_open_positions({"FX Vol 20"})
+    _sync_broker_open_positions("synthetic", {"FX Vol 20"})
 
     assert inserted[0]["signal_id"] is None
+    assert inserted[0]["account_id"] == "synthetic"
     assert inserted[0]["symbol"] == "FX Vol 20"
     assert inserted[0]["trade_type"] == "SELL"
     assert inserted[0]["status"] == "OPEN"
@@ -126,6 +133,7 @@ def test_sync_broker_open_positions_backfills_missing_trade(monkeypatch):
 def test_trade_options_from_namespace():
     class Args:
         symbol = "20"
+        account_id = "acc1"
         timeframe = 5
         lookback_days = 30
         account_balance = 5000.0
@@ -133,6 +141,8 @@ def test_trade_options_from_namespace():
         reward_to_risk = 1.5
         max_spread_points = 25.0
         signal_lookback_candles = 4
+        min_analysis_score = 0.7
+        disable_deep_analysis = False
         list_symbols = False
         symbol_filter = "fx"
         dry_run = True
@@ -140,7 +150,10 @@ def test_trade_options_from_namespace():
     options = SyntheticTradeOptions.from_namespace(Args())
 
     assert options.symbol == "20"
+    assert options.account_id == "acc1"
     assert options.timeframe == 5
     assert options.lookback_days == 30
     assert options.signal_lookback_candles == 4
+    assert options.min_analysis_score == 0.7
+    assert options.deep_analysis is True
     assert options.dry_run is True

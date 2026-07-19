@@ -90,10 +90,16 @@ class Settings:
         self.synthetic_mt5_account_number = data.get("synthetic_mt5_account_number") or os.getenv("SYNTHETIC_MT5_ACCOUNT_NUMBER")
         self.synthetic_mt5_password = data.get("synthetic_mt5_password") or os.getenv("SYNTHETIC_MT5_PASSWORD")
         self.synthetic_mt5_server = data.get("synthetic_mt5_server") or os.getenv("SYNTHETIC_MT5_SERVER")
+        self.synthetic_mt5_terminal_path = data.get("synthetic_mt5_terminal_path") or os.getenv("SYNTHETIC_MT5_TERMINAL_PATH")
         self.synthetic_mt5_demo_mode = self._get_bool(
             data.get("synthetic_mt5_demo_mode"),
             os.getenv("SYNTHETIC_MT5_DEMO_MODE"),
             True,
+        )
+        self.synthetic_account_ids = self._get_csv(
+            data.get("synthetic_account_ids"),
+            os.getenv("SYNTHETIC_ACCOUNT_IDS"),
+            ["synthetic"],
         )
 
         # Trading Settings
@@ -250,9 +256,11 @@ class Settings:
         if profile_name == "synthetic":
             return {
                 "name": "synthetic",
+                "account_id": os.getenv("NTRADE_SYNTHETIC_ACCOUNT_ID", "synthetic"),
                 "account_number": self.synthetic_mt5_account_number,
                 "password": self.synthetic_mt5_password,
                 "server": self.synthetic_mt5_server,
+                "terminal_path": self.synthetic_mt5_terminal_path,
                 "demo_mode": self.synthetic_mt5_demo_mode,
             }
 
@@ -263,6 +271,28 @@ class Settings:
             "server": self.mt5_server,
             "demo_mode": self.mt5_demo_mode,
         }
+
+    def synthetic_account_profiles(self) -> list[dict]:
+        """Return configured synthetic account profiles for multi-account runners."""
+        profiles: list[dict] = []
+        for account_id in self.synthetic_account_ids:
+            env_key = "".join(character if character.isalnum() else "_" for character in account_id).upper()
+            prefix = f"SYNTHETIC_{env_key}"
+            if account_id == "synthetic":
+                profile = self.mt5_account_profile("synthetic")
+            else:
+                profile = {
+                    "name": account_id,
+                    "account_id": account_id,
+                    "account_number": os.getenv(f"{prefix}_ACCOUNT_NUMBER"),
+                    "password": os.getenv(f"{prefix}_PASSWORD"),
+                    "server": os.getenv(f"{prefix}_SERVER"),
+                    "terminal_path": os.getenv(f"{prefix}_TERMINAL_PATH"),
+                    "demo_mode": self._get_bool(None, os.getenv(f"{prefix}_DEMO_MODE"), True),
+                }
+            profile["enabled"] = self._get_bool(None, os.getenv(f"{prefix}_ENABLED"), True)
+            profiles.append(profile)
+        return profiles
 
     def to_dict(self) -> dict:
         """Return settings as dictionary (non-sensitive values only)."""
@@ -294,7 +324,9 @@ class Settings:
             "mt5_demo_mode": self.mt5_demo_mode,
             "mt5_auto_connect": self.mt5_auto_connect,
             "synthetic_mt5_server": self.synthetic_mt5_server,
+            "synthetic_mt5_terminal_path": self.synthetic_mt5_terminal_path,
             "synthetic_mt5_demo_mode": self.synthetic_mt5_demo_mode,
+            "synthetic_account_ids": self.synthetic_account_ids,
             "synthetic_mt5_configured": bool(
                 self.synthetic_mt5_account_number
                 and self.synthetic_mt5_password

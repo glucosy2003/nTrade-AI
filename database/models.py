@@ -83,6 +83,7 @@ class Signal(Base):
     id = Column(Integer, primary_key=True, index=True)
     
     # Signal identification
+    account_id = Column(String(50), nullable=False, index=True, default="synthetic")
     symbol = Column(String(20), nullable=False, index=True)
     signal_type = Column(String(10), nullable=False)  # 'BUY' or 'SELL'
     timestamp = Column(DateTime, nullable=False, index=True, default=datetime.utcnow)
@@ -113,6 +114,7 @@ class Signal(Base):
     
     # Indices
     __table_args__ = (
+        Index('idx_signal_account_symbol', 'account_id', 'symbol'),
         Index('idx_signal_symbol_type', 'symbol', 'signal_type'),
         Index('idx_signal_active', 'is_active'),
     )
@@ -137,6 +139,7 @@ class Trade(Base):
     signal_id = Column(Integer, ForeignKey("signals.id"), nullable=True, index=True)
     
     # Trade identification
+    account_id = Column(String(50), nullable=False, index=True, default="synthetic")
     symbol = Column(String(20), nullable=False, index=True)
     trade_type = Column(String(10), nullable=False)  # 'BUY' or 'SELL'
     
@@ -173,6 +176,7 @@ class Trade(Base):
     
     # Indices
     __table_args__ = (
+        Index('idx_trade_account_symbol_status', 'account_id', 'symbol', 'status'),
         Index('idx_trade_symbol_status', 'symbol', 'status'),
         Index('idx_trade_entry_time', 'entry_time'),
     )

@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from backend.core.logger import setup_logger
 from backend.core.settings import settings
+from backend.indicators.indicators import MomentumIndicators, MovingAverages, VolatilityIndicators
 from backend.market_data.data_collector import MT5DataCollector
 from backend.market_data.mt5_service import MT5Service
 from backend.strategies.synthetic_indices import (
@@ -36,6 +37,7 @@ logger = setup_logger(__name__)
 @dataclass(frozen=True)
 class SyntheticTradeOptions:
     symbol: str | None = None
+    account_id: str = "synthetic"
     timeframe: int = 5
     lookback_days: int = 90
     account_balance: float | None = None
@@ -43,6 +45,8 @@ class SyntheticTradeOptions:
     reward_to_risk: float = 2.0
     max_spread_points: float = 50.0
     signal_lookback_candles: int = 3
+    min_analysis_score: float = 0.65
+    deep_analysis: bool = True
     list_symbols: bool = False
     symbol_filter: str = "fx,vol,index,sfx"
     dry_run: bool = False
@@ -51,6 +55,7 @@ class SyntheticTradeOptions:
     def from_namespace(cls, args: Namespace) -> "SyntheticTradeOptions":
         return cls(
             symbol=args.symbol,
+            account_id=args.account_id,
             timeframe=args.timeframe,
             lookback_days=args.lookback_days,
             account_balance=args.account_balance,
@@ -58,6 +63,8 @@ class SyntheticTradeOptions:
             reward_to_risk=args.reward_to_risk,
             max_spread_points=args.max_spread_points,
             signal_lookback_candles=args.signal_lookback_candles,
+            min_analysis_score=args.min_analysis_score,
+            deep_analysis=not args.disable_deep_analysis,
             list_symbols=args.list_symbols,
             symbol_filter=args.symbol_filter,
             dry_run=args.dry_run,
@@ -69,6 +76,7 @@ synthetic_mt5_service = MT5Service(
     account_number=SYNTHETIC_MT5_PROFILE["account_number"],
     password=SYNTHETIC_MT5_PROFILE["password"],
     server=SYNTHETIC_MT5_PROFILE["server"],
+    terminal_path=SYNTHETIC_MT5_PROFILE.get("terminal_path"),
     profile_name="synthetic",
 )
 mt5_collector = MT5DataCollector(service=synthetic_mt5_service)
@@ -134,6 +142,12 @@ def _synthetic_model_version(bucket: str, strategy_name: str) -> str:
     }
     strategy_alias = aliases.get(strategy_name, strategy_name.replace("Synthetic", "").replace("Strategy", "").lower())
     return f"syn_{bucket}_{strategy_alias}"[:20]
+
+
+def _synthetic_magic(account_id: str, bucket: str) -> int:
+    """Create a stable MT5 magic number per account and volatility bucket."""
+    seed = f"{account_id}:{bucket}:synthetic"
+    return 700000 + (sum((index + 1) * ord(character) for index, character in enumerate(seed)) % 200000)
 
 
 def _trading_disabled_warnings(terminal_info: dict, account_info: dict) -> list[str]:
@@ -270,11 +284,83 @@ def _select_recent_signal(signal_series, lookback_candles: int) -> tuple[int, in
     return selected[0], selected[1], selected[2], recent_nonzero_count, len(signal_series) - start_position
 
 
-def _trade_allowed(symbol: str, now: datetime, max_total: int, max_per_symbol: int) -> tuple[bool, list[str]]:
+def _deep_market_analysis(signal: int, data, minimum_score: float) -> tuple[bool, float, list[str]]:
+    """Score a strategy signal with extra trend, momentum, RSI, and volatility checks."""
+    if signal == 0:
+        return False, 0.0, ["no primary signal"]
+    if data is None or data.empty or len(data) < 35:
+        return False, 0.0, ["insufficient candles for deep analysis"]
+
+    frame = data.copy()
+    close = frame["close"].astype(float)
+    high = frame["high"].astype(float)
+    low = frame["low"].astype(float)
+    direction = 1 if signal > 0 else -1
+
+    fast_ema = MovingAverages.ema(close.to_numpy(), 8)
+    slow_ema = MovingAverages.ema(close.to_numpy(), 21)
+    rsi = MomentumIndicators.rsi(close.to_numpy(), 14)
+    atr = VolatilityIndicators.atr(high.to_numpy(), low.to_numpy(), close.to_numpy(), 14)
+
+    latest_close = float(close.iloc[-1])
+    latest_fast = float(fast_ema[-1])
+    latest_slow = float(slow_ema[-1])
+    latest_rsi = float(rsi[-1])
+    latest_atr = float(atr[-1])
+    momentum = latest_close - float(close.iloc[-7])
+    atr_ratio = latest_atr / latest_close if latest_close else 0.0
+
+    score = 0.35
+    reasons = ["primary strategy signal"]
+
+    trend_aligned = (latest_fast > latest_slow and direction > 0) or (latest_fast < latest_slow and direction < 0)
+    if trend_aligned:
+        score += 0.20
+        reasons.append("EMA trend aligned")
+    else:
+        reasons.append("EMA trend disagrees")
+
+    momentum_aligned = (momentum > 0 and direction > 0) or (momentum < 0 and direction < 0)
+    if momentum_aligned:
+        score += 0.15
+        reasons.append("short momentum aligned")
+    else:
+        reasons.append("short momentum disagrees")
+
+    rsi_aligned = (50 <= latest_rsi <= 78 and direction > 0) or (22 <= latest_rsi <= 50 and direction < 0)
+    if rsi_aligned:
+        score += 0.15
+        reasons.append(f"RSI aligned ({latest_rsi:.1f})")
+    else:
+        reasons.append(f"RSI not ideal ({latest_rsi:.1f})")
+
+    if atr_ratio >= 0.0002:
+        score += 0.10
+        reasons.append(f"ATR active ({atr_ratio:.4%})")
+    else:
+        reasons.append(f"ATR too quiet ({atr_ratio:.4%})")
+
+    if atr_ratio <= 0.02:
+        score += 0.05
+        reasons.append("volatility not extreme")
+    else:
+        reasons.append("volatility extreme")
+
+    score = min(score, 1.0)
+    return score >= minimum_score, score, reasons
+
+
+def _trade_allowed(
+    account_id: str,
+    symbol: str,
+    now: datetime,
+    max_total: int,
+    max_per_symbol: int,
+) -> tuple[bool, list[str]]:
     warnings: list[str] = []
     since = now - timedelta(hours=24)
-    total_trades = db_manager.count_trades_since(since)
-    symbol_trades = db_manager.count_trades_since(since, symbol=symbol)
+    total_trades = db_manager.count_trades_since(since, account_id=account_id)
+    symbol_trades = db_manager.count_trades_since(since, symbol=symbol, account_id=account_id)
 
     if total_trades >= max_total:
         warnings.append(f"Daily trade cap reached ({total_trades}/{max_total})")
@@ -284,13 +370,13 @@ def _trade_allowed(symbol: str, now: datetime, max_total: int, max_per_symbol: i
     return not warnings, warnings
 
 
-def _has_open_position(symbol: str) -> bool:
+def _has_open_position(account_id: str, symbol: str) -> bool:
     """Return True when MT5 or the local trade log already has an open position."""
     broker_positions = mt5_collector.get_positions()
     if any(position.get("symbol") == symbol for position in broker_positions):
         return True
 
-    return bool(db_manager.get_open_trades(symbol=symbol))
+    return bool(db_manager.get_open_trades(symbol=symbol, account_id=account_id))
 
 
 def _build_order_request(symbol: str, trade_setup: dict[str, object]) -> dict[str, object]:
@@ -367,6 +453,7 @@ def _order_check_with_filling_retry(symbol: str, order_request: dict[str, object
 
 def _store_trade(
     *,
+    account_id: str,
     symbol: str,
     strategy_name: str,
     signal_record_id: int | None,
@@ -381,6 +468,7 @@ def _store_trade(
     db_manager.insert_trade(
         {
             "signal_id": signal_record_id,
+            "account_id": account_id,
             "symbol": symbol,
             "trade_type": trade_setup["signal_type"],
             "entry_time": now,
@@ -394,13 +482,13 @@ def _store_trade(
     )
 
 
-def _sync_broker_open_positions(symbols: set[str]) -> None:
+def _sync_broker_open_positions(account_id: str, symbols: set[str]) -> None:
     """Backfill open broker positions that are missing from the local trade log."""
     for position in mt5_collector.get_positions():
         symbol = str(position.get("symbol") or "")
         if symbol not in symbols:
             continue
-        if db_manager.get_open_trades(symbol=symbol):
+        if db_manager.get_open_trades(symbol=symbol, account_id=account_id):
             continue
 
         ticket = position.get("ticket") or 0
@@ -420,6 +508,7 @@ def _sync_broker_open_positions(symbols: set[str]) -> None:
         db_manager.insert_trade(
             {
                 "signal_id": None,
+                "account_id": account_id,
                 "symbol": symbol,
                 "trade_type": str(position.get("type") or "UNKNOWN"),
                 "entry_time": entry_time,
@@ -438,6 +527,7 @@ def build_parser() -> ArgumentParser:
     """Build CLI parser for synthetic demo trading."""
     parser = ArgumentParser(description="Trade synthetic FX indices on a demo MT5 account")
     parser.add_argument("--symbol", default=None, help="Trade only one resolved symbol, or bucket: 20, 40, 80")
+    parser.add_argument("--account-id", default=str(SYNTHETIC_MT5_PROFILE.get("account_id") or "synthetic"), help="Local account identifier for DB isolation")
     parser.add_argument("--timeframe", type=int, default=5, help="MT5 candle timeframe in minutes")
     parser.add_argument("--lookback-days", type=int, default=90, help="History window for signal generation")
     parser.add_argument("--account-balance", type=float, default=None, help="Fallback demo balance for sizing")
@@ -445,6 +535,8 @@ def build_parser() -> ArgumentParser:
     parser.add_argument("--reward-to-risk", type=float, default=2.0, help="Reward-to-risk ratio")
     parser.add_argument("--max-spread-points", type=float, default=50.0, help="Maximum acceptable spread in points")
     parser.add_argument("--signal-lookback-candles", type=int, default=3, help="Recent candles to inspect for a fresh non-HOLD signal")
+    parser.add_argument("--min-analysis-score", type=float, default=0.65, help="Minimum deep-analysis score required before trading")
+    parser.add_argument("--disable-deep-analysis", action="store_true", help="Trade on primary strategy signals without extra analysis scoring")
     parser.add_argument("--list-symbols", action="store_true", help="List synthetic-account broker symbols")
     parser.add_argument("--symbol-filter", default="fx,vol,index,sfx", help="Comma-separated filter for --list-symbols")
     parser.add_argument("--dry-run", action="store_true", help="Only preview trades without sending orders")
@@ -453,6 +545,7 @@ def build_parser() -> ArgumentParser:
 
 def run_trade_cycle(options: SyntheticTradeOptions) -> int:
     """Execute one synthetic FX-index trade scan."""
+    account_id = options.account_id
 
     if settings.synthetic_demo_only and not SYNTHETIC_MT5_PROFILE["demo_mode"]:
         logger.error("Synthetic trading is configured for demo mode only")
@@ -505,15 +598,16 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
 
     db_manager.initialize()
     try:
-        _sync_broker_open_positions({symbol for _, symbol, _ in targets})
+        if not options.dry_run:
+            _sync_broker_open_positions(account_id, {symbol for _, symbol, _ in targets})
         for bucket, symbol, strategy_class in targets:
-            allowed, cap_warnings = _trade_allowed(symbol, now, max_total, max_per_symbol)
+            allowed, cap_warnings = _trade_allowed(account_id, symbol, now, max_total, max_per_symbol)
             if not allowed:
                 logger.warning("%s", "; ".join(cap_warnings))
                 continue
 
-            if _has_open_position(symbol):
-                logger.info("Skipping %s because an open position already exists", symbol)
+            if _has_open_position(account_id, symbol):
+                logger.info("Skipping %s on %s because an open position already exists", symbol, account_id)
                 continue
 
             if not mt5_collector.validate_symbol(symbol):
@@ -556,6 +650,34 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                     signal_index,
                 )
 
+            analysis_score = 1.0
+            analysis_reasons = ["deep analysis disabled"]
+            if options.deep_analysis:
+                analysis_passed, analysis_score, analysis_reasons = _deep_market_analysis(
+                    latest_signal,
+                    live_data,
+                    options.min_analysis_score,
+                )
+                if not analysis_passed:
+                    logger.info(
+                        "Deep analysis blocked %s %s on %s | score=%.2f minimum=%.2f | %s",
+                        symbol,
+                        "BUY" if latest_signal > 0 else "SELL",
+                        account_id,
+                        analysis_score,
+                        options.min_analysis_score,
+                        "; ".join(analysis_reasons),
+                    )
+                    continue
+                logger.info(
+                    "Deep analysis approved %s %s on %s | score=%.2f | %s",
+                    symbol,
+                    "BUY" if latest_signal > 0 else "SELL",
+                    account_id,
+                    analysis_score,
+                    "; ".join(analysis_reasons),
+                )
+
             trade_context = mt5_collector.service.symbol_trade_context(symbol) or {}
             trade_setup = build_trade_setup(
                 symbol=symbol,
@@ -567,6 +689,8 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                 trade_context=trade_context,
                 max_spread_points=options.max_spread_points,
             )
+            trade_setup["magic"] = _synthetic_magic(account_id, bucket)
+            trade_setup["comment"] = f"syn_{account_id}_{bucket}"[:31]
 
             if trade_setup["warnings"]:
                 logger.warning("%s: %s", symbol, "; ".join(trade_setup["warnings"]))
@@ -625,6 +749,7 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                 signal_record = db_manager.insert_signal(
                     {
                         "symbol": symbol,
+                        "account_id": account_id,
                         "signal_type": trade_setup["signal_type"],
                         "timestamp": datetime.now(),
                         "entry_price": trade_setup["entry_price"],
@@ -634,7 +759,7 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                         "risk_amount": trade_setup["risk_amount"],
                         "reward_amount": abs(trade_setup["take_profit"] - trade_setup["entry_price"]) * trade_setup["lot_size"],
                         "risk_reward_ratio": trade_setup["risk_reward_ratio"],
-                        "confidence_score": 1.0,
+                        "confidence_score": analysis_score,
                         "model_version": _synthetic_model_version(bucket, strategy_name),
                         "reasoning": f"synthetic {bucket}% demo trade via {strategy_name}",
                         "is_active": True,
@@ -652,6 +777,7 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
 
             try:
                 _store_trade(
+                    account_id=account_id,
                     symbol=symbol,
                     strategy_name=strategy_name,
                     signal_record_id=signal_record_id,
@@ -664,9 +790,9 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
             logger.info(
                 "Stored synthetic demo trade for %s | symbol cap %s/%s | total cap %s/%s",
                 symbol,
-                db_manager.count_trades_since(now - timedelta(hours=24), symbol=symbol),
+                db_manager.count_trades_since(now - timedelta(hours=24), symbol=symbol, account_id=account_id),
                 max_per_symbol,
-                db_manager.count_trades_since(now - timedelta(hours=24)),
+                db_manager.count_trades_since(now - timedelta(hours=24), account_id=account_id),
                 max_total,
             )
     finally:

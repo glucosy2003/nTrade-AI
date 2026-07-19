@@ -275,7 +275,7 @@ class DatabaseManager:
                 logger.error(f"✗ Failed to update trade: {str(e)}", exc_info=True)
                 raise
 
-    def get_open_trades(self, symbol: Optional[str] = None) -> List[Trade]:
+    def get_open_trades(self, symbol: Optional[str] = None, account_id: Optional[str] = None) -> List[Trade]:
         """
         Retrieve all open trades.
         
@@ -289,6 +289,8 @@ class DatabaseManager:
             try:
                 query = session.query(Trade).filter(Trade.status == "OPEN")
                 
+                if account_id:
+                    query = query.filter(Trade.account_id == account_id)
                 if symbol:
                     query = query.filter(Trade.symbol == symbol)
                 
@@ -301,6 +303,7 @@ class DatabaseManager:
     def get_closed_trades(
         self,
         symbol: Optional[str] = None,
+        account_id: Optional[str] = None,
         days: int = 30
     ) -> List[Trade]:
         """
@@ -322,6 +325,8 @@ class DatabaseManager:
                     Trade.exit_time >= cutoff_date
                 )
                 
+                if account_id:
+                    query = query.filter(Trade.account_id == account_id)
                 if symbol:
                     query = query.filter(Trade.symbol == symbol)
                 
@@ -331,11 +336,18 @@ class DatabaseManager:
                 logger.error(f"✗ Failed to retrieve closed trades: {str(e)}", exc_info=True)
                 raise
 
-    def get_trades_since(self, since: datetime, symbol: Optional[str] = None) -> List[Trade]:
+    def get_trades_since(
+        self,
+        since: datetime,
+        symbol: Optional[str] = None,
+        account_id: Optional[str] = None,
+    ) -> List[Trade]:
         """Retrieve trades opened since a given timestamp."""
         with self.connection.session_scope() as session:
             try:
                 query = session.query(Trade).filter(Trade.entry_time >= since)
+                if account_id:
+                    query = query.filter(Trade.account_id == account_id)
                 if symbol:
                     query = query.filter(Trade.symbol == symbol)
                 return query.order_by(desc(Trade.entry_time)).all()
@@ -343,11 +355,18 @@ class DatabaseManager:
                 logger.error(f"✗ Failed to retrieve recent trades: {str(e)}", exc_info=True)
                 raise
 
-    def count_trades_since(self, since: datetime, symbol: Optional[str] = None) -> int:
+    def count_trades_since(
+        self,
+        since: datetime,
+        symbol: Optional[str] = None,
+        account_id: Optional[str] = None,
+    ) -> int:
         """Count trades opened since a given timestamp."""
         with self.connection.session_scope() as session:
             try:
                 query = session.query(func.count(Trade.id)).filter(Trade.entry_time >= since)
+                if account_id:
+                    query = query.filter(Trade.account_id == account_id)
                 if symbol:
                     query = query.filter(Trade.symbol == symbol)
                 return int(query.scalar() or 0)

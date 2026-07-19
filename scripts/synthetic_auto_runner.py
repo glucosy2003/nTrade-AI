@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import signal
+import os
 import sys
 import time
 from argparse import ArgumentParser
@@ -38,6 +39,7 @@ def main() -> int:
     parser.add_argument("--interval-minutes", type=float, default=5.0, help="Minutes between market scans")
     parser.add_argument("--max-cycles", type=int, default=None, help="Stop after N cycles, useful for testing")
     parser.add_argument("--symbol", default=None, help="Trade only one resolved symbol, or bucket: 20, 40, 80")
+    parser.add_argument("--account-id", default=os.getenv("NTRADE_SYNTHETIC_ACCOUNT_ID", "synthetic"), help="Local account identifier for DB isolation")
     parser.add_argument("--timeframe", type=int, default=5, help="MT5 candle timeframe in minutes")
     parser.add_argument("--lookback-days", type=int, default=90, help="History window for signal generation")
     parser.add_argument("--account-balance", type=float, default=None, help="Fallback demo balance for sizing")
@@ -45,6 +47,8 @@ def main() -> int:
     parser.add_argument("--reward-to-risk", type=float, default=2.0, help="Reward-to-risk ratio")
     parser.add_argument("--max-spread-points", type=float, default=50.0, help="Maximum acceptable spread in points")
     parser.add_argument("--signal-lookback-candles", type=int, default=3, help="Recent candles to inspect for a fresh non-HOLD signal")
+    parser.add_argument("--min-analysis-score", type=float, default=0.65, help="Minimum deep-analysis score required before trading")
+    parser.add_argument("--disable-deep-analysis", action="store_true", help="Trade on primary strategy signals without extra analysis scoring")
     parser.add_argument("--dry-run", action="store_true", help="Only preview trades without sending orders")
     args = parser.parse_args()
 
@@ -59,10 +63,12 @@ def main() -> int:
     interval_seconds = int(args.interval_minutes * 60)
     cycle = 0
     logger.info(
-        "Synthetic auto runner started | interval=%.2f minutes | timeframe=%s | signal_lookback=%s | dry_run=%s | symbol=%s",
+        "Synthetic auto runner started | account=%s | interval=%.2f minutes | timeframe=%s | signal_lookback=%s | min_analysis=%.2f | dry_run=%s | symbol=%s",
+        args.account_id,
         args.interval_minutes,
         args.timeframe,
         args.signal_lookback_candles,
+        args.min_analysis_score,
         args.dry_run,
         args.symbol or "all",
     )
@@ -73,6 +79,7 @@ def main() -> int:
 
         options = SyntheticTradeOptions(
             symbol=args.symbol,
+            account_id=args.account_id,
             timeframe=args.timeframe,
             lookback_days=args.lookback_days,
             account_balance=args.account_balance,
@@ -80,6 +87,8 @@ def main() -> int:
             reward_to_risk=args.reward_to_risk,
             max_spread_points=args.max_spread_points,
             signal_lookback_candles=args.signal_lookback_candles,
+            min_analysis_score=args.min_analysis_score,
+            deep_analysis=not args.disable_deep_analysis,
             dry_run=args.dry_run,
         )
 

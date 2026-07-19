@@ -57,11 +57,13 @@ class MT5Service:
         account_number: Optional[int | str] = None,
         password: Optional[str] = None,
         server: Optional[str] = None,
+        terminal_path: Optional[str] = None,
         profile_name: str = "default",
     ) -> None:
         self.account_number = account_number
         self.password = password
         self.server = server
+        self.terminal_path = terminal_path
         self.profile_name = profile_name
         self.is_connected = False
         self.last_error: Optional[str] = None
@@ -81,7 +83,8 @@ class MT5Service:
             logger.error(self.last_error)
             return False
 
-        if not mt5.initialize():
+        initialized = mt5.initialize(path=self.terminal_path) if self.terminal_path else mt5.initialize()
+        if not initialized:
             self.last_error = str(mt5.last_error())
             logger.error("MT5 initialization failed: %s", self.last_error)
             return False
