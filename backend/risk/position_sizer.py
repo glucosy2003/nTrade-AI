@@ -7,7 +7,7 @@ class PositionSizer:
     """Calculate a position size from a fixed risk budget."""
 
     def __init__(self, risk_per_trade_pct: float = 0.01) -> None:
-        if risk_per_trade_pct > 1:
+        if risk_per_trade_pct >= 1:
             risk_per_trade_pct = risk_per_trade_pct / 100.0
         if not 0 < risk_per_trade_pct < 1:
             raise ValueError("risk_per_trade_pct must be between 0 and 1")

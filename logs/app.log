@@ -518,3 +518,796 @@ num_class: Number of output class in the multi-class classification.
 2026-07-18 15:57:59 | __main__ | INFO     | main:357 | Estimated margin: 18.08
 2026-07-18 15:57:59 | __main__ | INFO     | main:358 | Free margin: None
 2026-07-18 15:57:59 | __main__ | WARNING  | main:361 | Trade check: Terminal trading is disabled
+2026-07-18 21:34:39 | __main__ | INFO     | main:59 | Synthetic auto runner started | interval=5.00 minutes | dry_run=True | symbol=all
+2026-07-18 21:34:39 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 1 at 2026-07-18T21:34:39
+2026-07-18 21:34:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 21:34:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 21:34:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 21:34:40 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-18 21:39:40 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 2 at 2026-07-18T21:39:40
+2026-07-18 21:39:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 21:39:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 21:39:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 21:39:41 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-18 21:44:41 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 3 at 2026-07-18T21:44:41
+2026-07-18 21:44:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 21:44:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 21:44:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 21:44:42 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 3 with exit code 0
+2026-07-18 21:49:42 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 4 at 2026-07-18T21:49:42
+2026-07-18 21:49:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 21:49:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 21:49:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 21:49:42 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 4 with exit code 0
+2026-07-18 21:54:42 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 5 at 2026-07-18T21:54:42
+2026-07-18 21:54:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 21:54:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 21:54:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 21:54:43 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 5 with exit code 0
+2026-07-18 21:59:43 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 6 at 2026-07-18T21:59:43
+2026-07-18 21:59:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 21:59:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 21:59:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 21:59:44 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 6 with exit code 0
+2026-07-18 22:04:44 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 7 at 2026-07-18T22:04:44
+2026-07-18 22:04:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 22:04:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 22:04:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 22:04:44 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 7 with exit code 0
+2026-07-18 22:09:44 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 8 at 2026-07-18T22:09:44
+2026-07-18 22:09:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 22:09:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 22:09:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 22:09:45 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 8 with exit code 0
+2026-07-18 22:14:45 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 9 at 2026-07-18T22:14:45
+2026-07-18 22:14:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 22:14:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 22:14:46 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 22:14:46 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 9 with exit code 0
+2026-07-18 22:15:53 | __main__ | INFO     | _request_stop:27 | Stop requested; runner will exit after the current cycle
+2026-07-18 22:15:53 | __main__ | INFO     | main:92 | Synthetic auto runner stopped
+2026-07-18 22:16:23 | __main__ | INFO     | main:59 | Synthetic auto runner started | interval=5.00 minutes | dry_run=False | symbol=all
+2026-07-18 22:16:23 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 1 at 2026-07-18T22:16:23
+2026-07-18 22:16:23 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 22:16:23 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 22:16:24 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 22:16:24 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-18 22:34:31 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 2 at 2026-07-18T22:34:31
+2026-07-18 22:34:31 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:345 | Account trading is disabled
+2026-07-18 22:34:31 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 2 with exit code 1
+2026-07-18 22:39:31 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 3 at 2026-07-18T22:39:31
+2026-07-18 22:39:32 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 22:39:32 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 22:39:32 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 22:39:32 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 3 with exit code 0
+2026-07-18 22:44:32 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 4 at 2026-07-18T22:44:32
+2026-07-18 22:44:32 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 22:44:32 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 22:44:33 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 22:44:33 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 4 with exit code 0
+2026-07-18 22:49:33 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 5 at 2026-07-18T22:49:33
+2026-07-18 22:49:33 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 22:49:33 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 22:49:33 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 22:49:33 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 5 with exit code 0
+2026-07-18 22:54:33 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 6 at 2026-07-18T22:54:33
+2026-07-18 22:54:34 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 22:54:34 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 22:54:34 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 22:54:34 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 6 with exit code 0
+2026-07-18 22:59:34 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 7 at 2026-07-18T22:59:34
+2026-07-18 22:59:34 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 22:59:34 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 22:59:34 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 22:59:34 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 7 with exit code 0
+2026-07-18 23:04:34 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 8 at 2026-07-18T23:04:34
+2026-07-18 23:04:35 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:04:35 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:04:35 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:04:35 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 8 with exit code 0
+2026-07-18 23:09:35 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 9 at 2026-07-18T23:09:35
+2026-07-18 23:09:35 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:09:35 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:09:36 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:09:36 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 9 with exit code 0
+2026-07-18 23:14:36 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 10 at 2026-07-18T23:14:36
+2026-07-18 23:14:36 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:14:36 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:14:36 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:14:36 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 10 with exit code 0
+2026-07-18 23:19:36 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 11 at 2026-07-18T23:19:36
+2026-07-18 23:19:36 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:19:37 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:19:37 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:19:37 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 11 with exit code 0
+2026-07-18 23:24:37 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 12 at 2026-07-18T23:24:37
+2026-07-18 23:24:37 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:24:37 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:24:37 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:24:37 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 12 with exit code 0
+2026-07-18 23:29:37 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 13 at 2026-07-18T23:29:37
+2026-07-18 23:29:38 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:29:38 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:29:38 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:29:38 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 13 with exit code 0
+2026-07-18 23:34:38 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 14 at 2026-07-18T23:34:38
+2026-07-18 23:34:38 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:34:38 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:34:38 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:34:38 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 14 with exit code 0
+2026-07-18 23:39:38 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 15 at 2026-07-18T23:39:38
+2026-07-18 23:39:39 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:39:39 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:39:39 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:39:39 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 15 with exit code 0
+2026-07-18 23:44:39 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 16 at 2026-07-18T23:44:39
+2026-07-18 23:44:39 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:44:39 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:44:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:44:40 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 16 with exit code 0
+2026-07-18 23:49:40 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 17 at 2026-07-18T23:49:40
+2026-07-18 23:49:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:49:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:49:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:49:40 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 17 with exit code 0
+2026-07-18 23:54:40 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 18 at 2026-07-18T23:54:40
+2026-07-18 23:54:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:54:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:54:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:54:41 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 18 with exit code 0
+2026-07-18 23:59:41 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 19 at 2026-07-18T23:59:41
+2026-07-18 23:59:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-18 23:59:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-18 23:59:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-18 23:59:41 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 19 with exit code 0
+2026-07-19 00:04:41 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 20 at 2026-07-19T00:04:41
+2026-07-19 00:04:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:04:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:04:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:04:42 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 20 with exit code 0
+2026-07-19 00:09:42 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 21 at 2026-07-19T00:09:42
+2026-07-19 00:09:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:09:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:09:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:09:42 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 21 with exit code 0
+2026-07-19 00:14:42 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 22 at 2026-07-19T00:14:42
+2026-07-19 00:14:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:14:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:14:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:14:43 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 22 with exit code 0
+2026-07-19 00:19:43 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 23 at 2026-07-19T00:19:43
+2026-07-19 00:19:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:19:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:19:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:19:44 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 23 with exit code 0
+2026-07-19 00:24:44 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 24 at 2026-07-19T00:24:44
+2026-07-19 00:24:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:24:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:24:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:24:44 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 24 with exit code 0
+2026-07-19 00:29:44 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 25 at 2026-07-19T00:29:44
+2026-07-19 00:29:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:29:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:29:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:29:45 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 25 with exit code 0
+2026-07-19 00:34:45 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 26 at 2026-07-19T00:34:45
+2026-07-19 00:34:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:34:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:34:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:34:45 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 26 with exit code 0
+2026-07-19 00:39:45 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 27 at 2026-07-19T00:39:45
+2026-07-19 00:39:46 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:39:46 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:39:46 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:39:46 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 27 with exit code 0
+2026-07-19 00:44:46 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 28 at 2026-07-19T00:44:46
+2026-07-19 00:44:46 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:44:46 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:44:47 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:44:47 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 28 with exit code 0
+2026-07-19 00:49:47 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 29 at 2026-07-19T00:49:47
+2026-07-19 00:49:47 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:49:47 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:49:47 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:49:47 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 29 with exit code 0
+2026-07-19 00:54:47 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 30 at 2026-07-19T00:54:47
+2026-07-19 00:54:47 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:54:47 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:54:48 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:54:48 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 30 with exit code 0
+2026-07-19 00:59:48 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 31 at 2026-07-19T00:59:48
+2026-07-19 00:59:48 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 00:59:48 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 00:59:48 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 00:59:48 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 31 with exit code 0
+2026-07-19 01:04:48 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 32 at 2026-07-19T01:04:48
+2026-07-19 01:04:48 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:04:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:04:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:04:49 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 32 with exit code 0
+2026-07-19 01:09:49 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 33 at 2026-07-19T01:09:49
+2026-07-19 01:09:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:09:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:09:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:09:49 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 33 with exit code 0
+2026-07-19 01:14:49 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 34 at 2026-07-19T01:14:49
+2026-07-19 01:14:50 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:14:50 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:14:50 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:14:50 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 34 with exit code 0
+2026-07-19 01:19:50 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 35 at 2026-07-19T01:19:50
+2026-07-19 01:19:50 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:19:50 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:19:51 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:19:51 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 35 with exit code 0
+2026-07-19 01:24:51 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 36 at 2026-07-19T01:24:51
+2026-07-19 01:24:51 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:24:51 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:24:51 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:24:51 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 36 with exit code 0
+2026-07-19 01:29:51 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 37 at 2026-07-19T01:29:51
+2026-07-19 01:29:51 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:29:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:29:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:29:52 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 37 with exit code 0
+2026-07-19 01:34:52 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 38 at 2026-07-19T01:34:52
+2026-07-19 01:34:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:34:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:34:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:34:52 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 38 with exit code 0
+2026-07-19 01:39:52 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 39 at 2026-07-19T01:39:52
+2026-07-19 01:39:53 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:39:53 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:39:53 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:39:53 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 39 with exit code 0
+2026-07-19 01:44:53 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 40 at 2026-07-19T01:44:53
+2026-07-19 01:44:53 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:44:53 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:44:53 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:44:53 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 40 with exit code 0
+2026-07-19 01:49:53 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 41 at 2026-07-19T01:49:53
+2026-07-19 01:49:54 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:49:54 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:49:54 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:49:54 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 41 with exit code 0
+2026-07-19 01:54:54 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 42 at 2026-07-19T01:54:54
+2026-07-19 01:54:54 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:54:54 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:54:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:54:55 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 42 with exit code 0
+2026-07-19 01:59:55 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 43 at 2026-07-19T01:59:55
+2026-07-19 01:59:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 01:59:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 01:59:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 01:59:55 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 43 with exit code 0
+2026-07-19 02:04:55 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 44 at 2026-07-19T02:04:55
+2026-07-19 02:04:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:04:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:04:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:04:56 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 44 with exit code 0
+2026-07-19 02:09:56 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 45 at 2026-07-19T02:09:56
+2026-07-19 02:09:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:09:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:09:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:09:56 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 45 with exit code 0
+2026-07-19 02:14:56 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 46 at 2026-07-19T02:14:56
+2026-07-19 02:14:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:14:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:14:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:14:57 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 46 with exit code 0
+2026-07-19 02:19:57 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 47 at 2026-07-19T02:19:57
+2026-07-19 02:19:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:19:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:19:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:19:57 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 47 with exit code 0
+2026-07-19 02:24:57 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 48 at 2026-07-19T02:24:57
+2026-07-19 02:24:58 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:24:58 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:24:58 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:24:58 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 48 with exit code 0
+2026-07-19 02:29:58 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 49 at 2026-07-19T02:29:58
+2026-07-19 02:29:58 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:29:58 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:29:59 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:29:59 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 49 with exit code 0
+2026-07-19 02:34:59 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 50 at 2026-07-19T02:34:59
+2026-07-19 02:34:59 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:34:59 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:34:59 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:34:59 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 50 with exit code 0
+2026-07-19 02:39:59 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 51 at 2026-07-19T02:39:59
+2026-07-19 02:39:59 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:40:00 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:40:00 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:40:00 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 51 with exit code 0
+2026-07-19 02:45:00 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 52 at 2026-07-19T02:45:00
+2026-07-19 02:45:00 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:45:00 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:45:00 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:45:00 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 52 with exit code 0
+2026-07-19 02:50:00 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 53 at 2026-07-19T02:50:00
+2026-07-19 02:50:01 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:50:01 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:50:01 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:50:01 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 53 with exit code 0
+2026-07-19 02:55:01 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 54 at 2026-07-19T02:55:01
+2026-07-19 02:55:01 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 02:55:01 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 02:55:02 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 02:55:02 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 54 with exit code 0
+2026-07-19 03:00:02 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 55 at 2026-07-19T03:00:02
+2026-07-19 03:00:02 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:00:02 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:00:02 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:00:02 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 55 with exit code 0
+2026-07-19 03:05:02 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 56 at 2026-07-19T03:05:02
+2026-07-19 03:05:02 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:05:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:05:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:05:03 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 56 with exit code 0
+2026-07-19 03:10:03 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 57 at 2026-07-19T03:10:03
+2026-07-19 03:10:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:10:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:10:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:10:03 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 57 with exit code 0
+2026-07-19 03:15:03 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 58 at 2026-07-19T03:15:03
+2026-07-19 03:15:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:15:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:15:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:15:04 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 58 with exit code 0
+2026-07-19 03:20:04 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 59 at 2026-07-19T03:20:04
+2026-07-19 03:20:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:20:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:20:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:20:04 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 59 with exit code 0
+2026-07-19 03:25:04 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 60 at 2026-07-19T03:25:04
+2026-07-19 03:25:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:25:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:25:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:25:05 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 60 with exit code 0
+2026-07-19 03:30:05 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 61 at 2026-07-19T03:30:05
+2026-07-19 03:30:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:30:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:30:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:30:06 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 61 with exit code 0
+2026-07-19 03:35:06 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 62 at 2026-07-19T03:35:06
+2026-07-19 03:35:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:35:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:35:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:35:06 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 62 with exit code 0
+2026-07-19 03:40:06 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 63 at 2026-07-19T03:40:06
+2026-07-19 03:40:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:40:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:40:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:40:07 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 63 with exit code 0
+2026-07-19 03:45:07 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 64 at 2026-07-19T03:45:07
+2026-07-19 03:45:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:45:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:45:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:45:07 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 64 with exit code 0
+2026-07-19 03:50:07 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 65 at 2026-07-19T03:50:07
+2026-07-19 03:50:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:50:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:50:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:50:08 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 65 with exit code 0
+2026-07-19 03:55:08 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 66 at 2026-07-19T03:55:08
+2026-07-19 03:55:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 03:55:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 03:55:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 03:55:09 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 66 with exit code 0
+2026-07-19 04:00:09 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 67 at 2026-07-19T04:00:09
+2026-07-19 04:00:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:00:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:00:09 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:00:09 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 67 with exit code 0
+2026-07-19 04:05:09 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 68 at 2026-07-19T04:05:09
+2026-07-19 04:05:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:05:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:05:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:05:10 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 68 with exit code 0
+2026-07-19 04:10:10 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 69 at 2026-07-19T04:10:10
+2026-07-19 04:10:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:10:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:10:10 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:10:10 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 69 with exit code 0
+2026-07-19 04:15:10 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 70 at 2026-07-19T04:15:10
+2026-07-19 04:15:11 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:15:11 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:15:11 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:15:11 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 70 with exit code 0
+2026-07-19 04:20:11 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 71 at 2026-07-19T04:20:11
+2026-07-19 04:20:11 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:20:11 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:20:12 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:20:12 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 71 with exit code 0
+2026-07-19 04:25:12 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 72 at 2026-07-19T04:25:12
+2026-07-19 04:25:12 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:25:12 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:25:12 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:25:12 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 72 with exit code 0
+2026-07-19 04:30:12 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 73 at 2026-07-19T04:30:12
+2026-07-19 04:30:12 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:30:12 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:30:13 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:30:13 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 73 with exit code 0
+2026-07-19 04:35:13 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 74 at 2026-07-19T04:35:13
+2026-07-19 04:35:13 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:35:13 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:35:13 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:35:13 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 74 with exit code 0
+2026-07-19 04:40:13 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 75 at 2026-07-19T04:40:13
+2026-07-19 04:40:14 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:40:14 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:40:14 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:40:14 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 75 with exit code 0
+2026-07-19 04:45:14 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 76 at 2026-07-19T04:45:14
+2026-07-19 04:45:14 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:45:14 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:45:14 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:45:14 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 76 with exit code 0
+2026-07-19 04:50:14 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 77 at 2026-07-19T04:50:14
+2026-07-19 04:50:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:50:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:50:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:50:15 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 77 with exit code 0
+2026-07-19 04:55:15 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 78 at 2026-07-19T04:55:15
+2026-07-19 04:55:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 04:55:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 04:55:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 04:55:16 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 78 with exit code 0
+2026-07-19 05:00:16 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 79 at 2026-07-19T05:00:16
+2026-07-19 05:00:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:00:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:00:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:00:16 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 79 with exit code 0
+2026-07-19 05:05:16 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 80 at 2026-07-19T05:05:16
+2026-07-19 05:05:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:05:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:05:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:05:17 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 80 with exit code 0
+2026-07-19 05:10:17 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 81 at 2026-07-19T05:10:17
+2026-07-19 05:10:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:10:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:10:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:10:17 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 81 with exit code 0
+2026-07-19 05:15:17 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 82 at 2026-07-19T05:15:17
+2026-07-19 05:15:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:15:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:15:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:15:18 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 82 with exit code 0
+2026-07-19 05:20:18 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 83 at 2026-07-19T05:20:18
+2026-07-19 05:20:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:20:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:20:18 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:20:18 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 83 with exit code 0
+2026-07-19 05:25:18 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 84 at 2026-07-19T05:25:18
+2026-07-19 05:25:19 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:25:19 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:25:19 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:25:19 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 84 with exit code 0
+2026-07-19 05:30:19 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 85 at 2026-07-19T05:30:19
+2026-07-19 05:30:19 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:30:19 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:30:20 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:30:20 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 85 with exit code 0
+2026-07-19 05:35:20 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 86 at 2026-07-19T05:35:20
+2026-07-19 05:35:20 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:35:20 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:35:20 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:35:20 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 86 with exit code 0
+2026-07-19 05:40:20 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 87 at 2026-07-19T05:40:20
+2026-07-19 05:40:20 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:40:20 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:40:21 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:40:21 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 87 with exit code 0
+2026-07-19 05:45:21 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 88 at 2026-07-19T05:45:21
+2026-07-19 05:45:21 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:45:21 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:45:21 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:45:21 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 88 with exit code 0
+2026-07-19 05:50:21 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 89 at 2026-07-19T05:50:21
+2026-07-19 05:50:22 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:50:22 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:50:22 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:50:22 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 89 with exit code 0
+2026-07-19 05:55:22 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 90 at 2026-07-19T05:55:22
+2026-07-19 05:55:22 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 05:55:22 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 05:55:22 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 80
+2026-07-19 05:55:23 | __main__ | INFO     | main:82 | Finished synthetic scan cycle 90 with exit code 0
+2026-07-19 06:00:23 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 91 at 2026-07-19T06:00:23
+2026-07-19 06:00:23 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 06:00:23 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 06:00:24 | __main__ | ERROR    | main:84 | Synthetic scan cycle 91 failed: risk_per_trade_pct must be between 0 and 1
+Traceback (most recent call last):
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_auto_runner.py", line 81, in main
+    max_spread_points=args.max_spread_points,
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_demo_trade.py", line 398, in run_trade_cycle
+    db_manager.initialize()
+                          ^
+  File "D:\PROJECTS\ntrade_ai\scripts\live_trade_signal.py", line 105, in build_trade_setup
+    trade_plan = risk_manager.build_trade_plan(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\backend\risk\risk_manager.py", line 30, in build_trade_plan
+    sizer = PositionSizer(risk_per_trade_pct=self.risk_per_trade_pct)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\backend\risk\position_sizer.py", line 13, in __init__
+    raise ValueError("risk_per_trade_pct must be between 0 and 1")
+ValueError: risk_per_trade_pct must be between 0 and 1
+2026-07-19 06:00:48 | __main__ | INFO     | run_trade_cycle:485 | DRY RUN FX Vol 20 SELL lot=1.66 entry=120224.16000 sl=120825.28080 tp=119021.91840
+2026-07-19 06:00:52 | __main__ | INFO     | run_trade_cycle:432 | Hold signal for FX Vol 40 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 04:00:00 | latest_close=188332.65000
+2026-07-19 06:00:56 | __main__ | WARNING  | run_trade_cycle:463 | FX Vol 80: Calculated lot size exceeded broker maximum; capped
+2026-07-19 06:00:56 | __main__ | INFO     | run_trade_cycle:485 | DRY RUN FX Vol 80 SELL lot=1.00 entry=39517.28000 sl=39714.86640 tp=39122.10720
+2026-07-19 06:01:39 | __main__ | INFO     | main:61 | Synthetic auto runner started | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | dry_run=True | symbol=all
+2026-07-19 06:01:39 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 1 at 2026-07-19T06:01:39
+2026-07-19 06:01:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:485 | DRY RUN FX Vol 20 SELL lot=1.66 entry=120244.28000 sl=120845.50140 tp=119041.83720
+2026-07-19 06:01:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:432 | Hold signal for FX Vol 40 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 04:00:00 | latest_close=188332.65000
+2026-07-19 06:01:49 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:463 | FX Vol 80: Calculated lot size exceeded broker maximum; capped
+2026-07-19 06:01:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:485 | DRY RUN FX Vol 80 SELL lot=1.00 entry=39496.07000 sl=39693.55035 tp=39101.10930
+2026-07-19 06:01:49 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 06:01:49 | __main__ | INFO     | main:93 | Reached --max-cycles=1; stopping runner
+2026-07-19 06:01:49 | __main__ | INFO     | main:98 | Synthetic auto runner stopped
+2026-07-19 06:05:24 | __main__ | INFO     | main:68 | Starting synthetic scan cycle 92 at 2026-07-19T06:05:24
+2026-07-19 06:05:24 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 20
+2026-07-19 06:05:24 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:394 | Hold signal for FX Vol 40
+2026-07-19 06:05:24 | __main__ | ERROR    | main:84 | Synthetic scan cycle 92 failed: risk_per_trade_pct must be between 0 and 1
+Traceback (most recent call last):
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_auto_runner.py", line 81, in main
+    max_spread_points=args.max_spread_points,
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_demo_trade.py", line 398, in run_trade_cycle
+    db_manager.initialize()
+                          ^
+  File "D:\PROJECTS\ntrade_ai\scripts\live_trade_signal.py", line 105, in build_trade_setup
+    trade_plan = risk_manager.build_trade_plan(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\backend\risk\risk_manager.py", line 30, in build_trade_plan
+    sizer = PositionSizer(risk_per_trade_pct=self.risk_per_trade_pct)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\backend\risk\position_sizer.py", line 13, in __init__
+    raise ValueError("risk_per_trade_pct must be between 0 and 1")
+ValueError: risk_per_trade_pct must be between 0 and 1
+2026-07-19 06:05:38 | __main__ | INFO     | _request_stop:27 | Stop requested; runner will exit after the current cycle
+2026-07-19 06:05:38 | __main__ | INFO     | main:92 | Synthetic auto runner stopped
+2026-07-19 06:05:48 | __main__ | INFO     | main:61 | Synthetic auto runner started | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | dry_run=False | symbol=all
+2026-07-19 06:05:48 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 1 at 2026-07-19T06:05:48
+2026-07-19 06:05:51 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:442 | Using recent SELL signal for FX Vol 20 from 1 candle(s) ago at 25893
+2026-07-19 06:05:51 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:479 | FX Vol 20 order check retcode=10030
+2026-07-19 06:05:51 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:481 | FX Vol 20 order check rejected request: {'retcode': 10030, 'balance': 0.0, 'equity': 0.0, 'profit': 0.0, 'margin': 0.0, 'margin_free': 0.0, 'margin_level': 0.0, 'comment': 'Unsupported filling mode', 'request': TradeRequest(action=1, magic=0, order=0, symbol='FX Vol 20', volume=1.66, price=120242.79, stoplimit=0.0, sl=120844.00395, tp=119040.3621, deviation=20, type=1, type_filling=1, type_time=0, expiration=0, comment='synthetic_demo_trade', position=0, position_by=0)}
+2026-07-19 06:05:54 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:432 | Hold signal for FX Vol 40 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 04:05:00 | latest_close=187823.95000
+2026-07-19 06:05:57 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:463 | FX Vol 80: Calculated lot size exceeded broker maximum; capped
+2026-07-19 06:05:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:479 | FX Vol 80 order check retcode=10030
+2026-07-19 06:05:57 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:481 | FX Vol 80 order check rejected request: {'retcode': 10030, 'balance': 0.0, 'equity': 0.0, 'profit': 0.0, 'margin': 0.0, 'margin_free': 0.0, 'margin_level': 0.0, 'comment': 'Unsupported filling mode', 'request': TradeRequest(action=1, magic=0, order=0, symbol='FX Vol 80', volume=1.0, price=39552.8, stoplimit=0.0, sl=39750.564000000006, tp=39157.272000000004, deviation=20, type=1, type_filling=1, type_time=0, expiration=0, comment='synthetic_demo_trade', position=0, position_by=0)}
+2026-07-19 06:05:57 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 06:10:57 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 2 at 2026-07-19T06:10:57
+2026-07-19 06:11:00 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:479 | FX Vol 20 order check retcode=10030
+2026-07-19 06:11:00 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:481 | FX Vol 20 order check rejected request: {'retcode': 10030, 'balance': 0.0, 'equity': 0.0, 'profit': 0.0, 'margin': 0.0, 'margin_free': 0.0, 'margin_level': 0.0, 'comment': 'Unsupported filling mode', 'request': TradeRequest(action=1, magic=0, order=0, symbol='FX Vol 20', volume=1.66, price=120279.8, stoplimit=0.0, sl=120881.19900000001, tp=119077.00200000001, deviation=20, type=1, type_filling=1, type_time=0, expiration=0, comment='synthetic_demo_trade', position=0, position_by=0)}
+2026-07-19 06:11:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:479 | FX Vol 40 order check retcode=10030
+2026-07-19 06:11:03 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:481 | FX Vol 40 order check rejected request: {'retcode': 10030, 'balance': 0.0, 'equity': 0.0, 'profit': 0.0, 'margin': 0.0, 'margin_free': 0.0, 'margin_level': 0.0, 'comment': 'Unsupported filling mode', 'request': TradeRequest(action=1, magic=0, order=0, symbol='FX Vol 40', volume=1.07, price=186762.4, stoplimit=0.0, sl=187696.212, tp=184894.77599999998, deviation=20, type=1, type_filling=1, type_time=0, expiration=0, comment='synthetic_demo_trade', position=0, position_by=0)}
+2026-07-19 06:11:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:442 | Using recent SELL signal for FX Vol 80 from 1 candle(s) ago at 25893
+2026-07-19 06:11:07 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:463 | FX Vol 80: Calculated lot size exceeded broker maximum; capped
+2026-07-19 06:11:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:479 | FX Vol 80 order check retcode=10030
+2026-07-19 06:11:07 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:481 | FX Vol 80 order check rejected request: {'retcode': 10030, 'balance': 0.0, 'equity': 0.0, 'profit': 0.0, 'margin': 0.0, 'margin_free': 0.0, 'margin_level': 0.0, 'comment': 'Unsupported filling mode', 'request': TradeRequest(action=1, magic=0, order=0, symbol='FX Vol 80', volume=1.0, price=39628.46, stoplimit=0.0, sl=39826.6023, tp=39232.1754, deviation=20, type=1, type_filling=1, type_time=0, expiration=0, comment='synthetic_demo_trade', position=0, position_by=0)}
+2026-07-19 06:11:07 | __main__ | INFO     | main:88 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-19 06:12:03 | __main__ | INFO     | _request_stop:27 | Stop requested; runner will exit after the current cycle
+2026-07-19 06:12:04 | __main__ | INFO     | main:98 | Synthetic auto runner stopped
+2026-07-19 06:12:09 | __main__ | INFO     | main:61 | Synthetic auto runner started | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | dry_run=False | symbol=all
+2026-07-19 06:12:09 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 1 at 2026-07-19T06:12:09
+2026-07-19 06:12:12 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:345 | FX Vol 20 order check retcode=0 type_filling=0
+2026-07-19 06:12:13 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:558 | Order result FX Vol 20 retcode=10009 order=434870380 deal=414009272 price=120302.18
+2026-07-19 06:12:13 | __main__ | ERROR    | main:90 | Synthetic scan cycle 1 failed: (psycopg.errors.StringDataRightTruncation) value too long for type character varying(20)
+[SQL: INSERT INTO signals (symbol, signal_type, timestamp, entry_price, stop_loss, take_profit, position_size, risk_amount, reward_amount, risk_reward_ratio, confidence_score, model_version, reasoning, is_active, is_manual, date_created) VALUES (%(symbol)s::VARCHAR, %(signal_type)s::VARCHAR, %(timestamp)s::TIMESTAMP WITHOUT TIME ZONE, %(entry_price)s, %(stop_loss)s, %(take_profit)s, %(position_size)s, %(risk_amount)s, %(reward_amount)s, %(risk_reward_ratio)s, %(confidence_score)s, %(model_version)s::VARCHAR, %(reasoning)s::VARCHAR, %(is_active)s, %(is_manual)s, %(date_created)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING signals.id]
+[parameters: {'symbol': 'FX Vol 20', 'signal_type': 'SELL', 'timestamp': datetime.datetime(2026, 7, 19, 6, 12, 13, 79670), 'entry_price': 120302.18, 'stop_loss': 120903.69089999999, 'take_profit': 119099.15819999999, 'position_size': 1.66, 'risk_amount': 1002.0817, 'reward_amount': 1997.0161880000037, 'risk_reward_ratio': 2.000000000000024, 'confidence_score': 1.0, 'model_version': 'SyntheticTrendStrategy', 'reasoning': 'synthetic 20% demo trade via SyntheticTrendStrategy', 'is_active': True, 'is_manual': False, 'date_created': datetime.datetime(2026, 7, 19, 4, 12, 13, 90380)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+Traceback (most recent call last):
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.StringDataRightTruncation: value too long for type character varying(20)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_auto_runner.py", line 87, in main
+    result = run_trade_cycle(options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_demo_trade.py", line 570, in run_trade_cycle
+    signal_record = db_manager.insert_signal(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\database\database_manager.py", line 200, in insert_signal
+    session.flush()
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4312, in flush
+    self._flush(objects)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4447, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4408, in _flush
+    flush_context.execute()
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.DataError: (psycopg.errors.StringDataRightTruncation) value too long for type character varying(20)
+[SQL: INSERT INTO signals (symbol, signal_type, timestamp, entry_price, stop_loss, take_profit, position_size, risk_amount, reward_amount, risk_reward_ratio, confidence_score, model_version, reasoning, is_active, is_manual, date_created) VALUES (%(symbol)s::VARCHAR, %(signal_type)s::VARCHAR, %(timestamp)s::TIMESTAMP WITHOUT TIME ZONE, %(entry_price)s, %(stop_loss)s, %(take_profit)s, %(position_size)s, %(risk_amount)s, %(reward_amount)s, %(risk_reward_ratio)s, %(confidence_score)s, %(model_version)s::VARCHAR, %(reasoning)s::VARCHAR, %(is_active)s, %(is_manual)s, %(date_created)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING signals.id]
+[parameters: {'symbol': 'FX Vol 20', 'signal_type': 'SELL', 'timestamp': datetime.datetime(2026, 7, 19, 6, 12, 13, 79670), 'entry_price': 120302.18, 'stop_loss': 120903.69089999999, 'take_profit': 119099.15819999999, 'position_size': 1.66, 'risk_amount': 1002.0817, 'reward_amount': 1997.0161880000037, 'risk_reward_ratio': 2.000000000000024, 'confidence_score': 1.0, 'model_version': 'SyntheticTrendStrategy', 'reasoning': 'synthetic 20% demo trade via SyntheticTrendStrategy', 'is_active': True, 'is_manual': False, 'date_created': datetime.datetime(2026, 7, 19, 4, 12, 13, 90380)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2026-07-19 06:17:13 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 2 at 2026-07-19T06:17:13
+2026-07-19 06:17:13 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:464 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:17:16 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:345 | FX Vol 40 order check retcode=0 type_filling=0
+2026-07-19 06:17:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:558 | Order result FX Vol 40 retcode=10009 order=434872416 deal=414011302 price=187066.46
+2026-07-19 06:17:17 | __main__ | ERROR    | main:90 | Synthetic scan cycle 2 failed: (psycopg.errors.StringDataRightTruncation) value too long for type character varying(20)
+[SQL: INSERT INTO signals (symbol, signal_type, timestamp, entry_price, stop_loss, take_profit, position_size, risk_amount, reward_amount, risk_reward_ratio, confidence_score, model_version, reasoning, is_active, is_manual, date_created) VALUES (%(symbol)s::VARCHAR, %(signal_type)s::VARCHAR, %(timestamp)s::TIMESTAMP WITHOUT TIME ZONE, %(entry_price)s, %(stop_loss)s, %(take_profit)s, %(position_size)s, %(risk_amount)s, %(reward_amount)s, %(risk_reward_ratio)s, %(confidence_score)s, %(model_version)s::VARCHAR, %(reasoning)s::VARCHAR, %(is_active)s, %(is_manual)s, %(date_created)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING signals.id]
+[parameters: {'symbol': 'FX Vol 40', 'signal_type': 'SELL', 'timestamp': datetime.datetime(2026, 7, 19, 6, 17, 17, 12663), 'entry_price': 187066.46, 'stop_loss': 188001.7923, 'take_profit': 185195.7954, 'position_size': 1.07, 'risk_amount': 1002.0817, 'reward_amount': 2001.6111219999884, 'risk_reward_ratio': 1.999999999999969, 'confidence_score': 1.0, 'model_version': 'SyntheticBalancedMomentumStrategy', 'reasoning': 'synthetic 40% demo trade via SyntheticBalancedMomentumStrategy', 'is_active': True, 'is_manual': False, 'date_created': datetime.datetime(2026, 7, 19, 4, 17, 17, 34460)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+Traceback (most recent call last):
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.StringDataRightTruncation: value too long for type character varying(20)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_auto_runner.py", line 87, in main
+    result = run_trade_cycle(options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_demo_trade.py", line 570, in run_trade_cycle
+    signal_record = db_manager.insert_signal(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\database\database_manager.py", line 200, in insert_signal
+    session.flush()
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4312, in flush
+    self._flush(objects)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4447, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4408, in _flush
+    flush_context.execute()
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.DataError: (psycopg.errors.StringDataRightTruncation) value too long for type character varying(20)
+[SQL: INSERT INTO signals (symbol, signal_type, timestamp, entry_price, stop_loss, take_profit, position_size, risk_amount, reward_amount, risk_reward_ratio, confidence_score, model_version, reasoning, is_active, is_manual, date_created) VALUES (%(symbol)s::VARCHAR, %(signal_type)s::VARCHAR, %(timestamp)s::TIMESTAMP WITHOUT TIME ZONE, %(entry_price)s, %(stop_loss)s, %(take_profit)s, %(position_size)s, %(risk_amount)s, %(reward_amount)s, %(risk_reward_ratio)s, %(confidence_score)s, %(model_version)s::VARCHAR, %(reasoning)s::VARCHAR, %(is_active)s, %(is_manual)s, %(date_created)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING signals.id]
+[parameters: {'symbol': 'FX Vol 40', 'signal_type': 'SELL', 'timestamp': datetime.datetime(2026, 7, 19, 6, 17, 17, 12663), 'entry_price': 187066.46, 'stop_loss': 188001.7923, 'take_profit': 185195.7954, 'position_size': 1.07, 'risk_amount': 1002.0817, 'reward_amount': 2001.6111219999884, 'risk_reward_ratio': 1.999999999999969, 'confidence_score': 1.0, 'model_version': 'SyntheticBalancedMomentumStrategy', 'reasoning': 'synthetic 40% demo trade via SyntheticBalancedMomentumStrategy', 'is_active': True, 'is_manual': False, 'date_created': datetime.datetime(2026, 7, 19, 4, 17, 17, 34460)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2026-07-19 06:20:46 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:434 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 06:22:17 | __main__ | INFO     | main:72 | Starting synthetic scan cycle 3 at 2026-07-19T06:22:17
+2026-07-19 06:22:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:464 | Skipping FX Vol 20 because an open position already exists
+2026-07-19 06:22:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:464 | Skipping FX Vol 40 because an open position already exists
+2026-07-19 06:22:29 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:520 | FX Vol 80: Calculated lot size exceeded broker maximum; capped
+2026-07-19 06:22:29 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:345 | FX Vol 80 order check retcode=0 type_filling=0
+2026-07-19 06:22:29 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:558 | Order result FX Vol 80 retcode=10009 order=434873694 deal=414012541 price=39500.58
+2026-07-19 06:22:30 | __main__ | ERROR    | main:90 | Synthetic scan cycle 3 failed: (psycopg.errors.StringDataRightTruncation) value too long for type character varying(20)
+[SQL: INSERT INTO signals (symbol, signal_type, timestamp, entry_price, stop_loss, take_profit, position_size, risk_amount, reward_amount, risk_reward_ratio, confidence_score, model_version, reasoning, is_active, is_manual, date_created) VALUES (%(symbol)s::VARCHAR, %(signal_type)s::VARCHAR, %(timestamp)s::TIMESTAMP WITHOUT TIME ZONE, %(entry_price)s, %(stop_loss)s, %(take_profit)s, %(position_size)s, %(risk_amount)s, %(reward_amount)s, %(risk_reward_ratio)s, %(confidence_score)s, %(model_version)s::VARCHAR, %(reasoning)s::VARCHAR, %(is_active)s, %(is_manual)s, %(date_created)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING signals.id]
+[parameters: {'symbol': 'FX Vol 80', 'signal_type': 'SELL', 'timestamp': datetime.datetime(2026, 7, 19, 6, 22, 29, 851732), 'entry_price': 39500.58, 'stop_loss': 39698.0829, 'take_profit': 39105.5742, 'position_size': 1.0, 'risk_amount': 1002.0817, 'reward_amount': 395.005799999999, 'risk_reward_ratio': 2.0, 'confidence_score': 1.0, 'model_version': 'SyntheticBreakoutStrategy', 'reasoning': 'synthetic 80% demo trade via SyntheticBreakoutStrategy', 'is_active': True, 'is_manual': False, 'date_created': datetime.datetime(2026, 7, 19, 4, 22, 29, 942880)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+Traceback (most recent call last):
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.StringDataRightTruncation: value too long for type character varying(20)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_auto_runner.py", line 87, in main
+    result = run_trade_cycle(options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\scripts\synthetic_demo_trade.py", line 570, in run_trade_cycle
+  File "D:\PROJECTS\ntrade_ai\database\database_manager.py", line 200, in insert_signal
+    session.flush()
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4312, in flush
+    self._flush(objects)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4447, in _flush
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4408, in _flush
+    flush_context.execute()
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "D:\PROJECTS\ntrade_ai\venv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.DataError: (psycopg.errors.StringDataRightTruncation) value too long for type character varying(20)
+[SQL: INSERT INTO signals (symbol, signal_type, timestamp, entry_price, stop_loss, take_profit, position_size, risk_amount, reward_amount, risk_reward_ratio, confidence_score, model_version, reasoning, is_active, is_manual, date_created) VALUES (%(symbol)s::VARCHAR, %(signal_type)s::VARCHAR, %(timestamp)s::TIMESTAMP WITHOUT TIME ZONE, %(entry_price)s, %(stop_loss)s, %(take_profit)s, %(position_size)s, %(risk_amount)s, %(reward_amount)s, %(risk_reward_ratio)s, %(confidence_score)s, %(model_version)s::VARCHAR, %(reasoning)s::VARCHAR, %(is_active)s, %(is_manual)s, %(date_created)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING signals.id]
+[parameters: {'symbol': 'FX Vol 80', 'signal_type': 'SELL', 'timestamp': datetime.datetime(2026, 7, 19, 6, 22, 29, 851732), 'entry_price': 39500.58, 'stop_loss': 39698.0829, 'take_profit': 39105.5742, 'position_size': 1.0, 'risk_amount': 1002.0817, 'reward_amount': 395.005799999999, 'risk_reward_ratio': 2.0, 'confidence_score': 1.0, 'model_version': 'SyntheticBreakoutStrategy', 'reasoning': 'synthetic 80% demo trade via SyntheticBreakoutStrategy', 'is_active': True, 'is_manual': False, 'date_created': datetime.datetime(2026, 7, 19, 4, 22, 29, 942880)}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+2026-07-19 06:23:24 | __main__ | INFO     | _request_stop:27 | Stop requested; runner will exit after the current cycle
+2026-07-19 06:23:25 | __main__ | INFO     | main:98 | Synthetic auto runner stopped

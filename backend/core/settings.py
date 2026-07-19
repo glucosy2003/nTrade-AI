@@ -75,6 +75,7 @@ class Settings:
         self.database_url = data.get("database_url") or os.getenv("DATABASE_URL") or self._build_database_url()
         self.database_pool_size = self._get_int(data.get("database_pool_size"), os.getenv("DATABASE_POOL_SIZE"), 10)
         self.database_max_overflow = self._get_int(data.get("database_max_overflow"), os.getenv("DATABASE_MAX_OVERFLOW"), 20)
+        self.database_echo = self._get_bool(data.get("database_echo"), os.getenv("DATABASE_ECHO"), False)
 
         # MetaTrader 5 Settings
         self.mt5_account_number = data.get("mt5_account_number") or os.getenv("MT5_ACCOUNT_NUMBER")
@@ -86,12 +87,55 @@ class Settings:
             os.getenv("MT5_AUTO_CONNECT"),
             False,
         )
+        self.synthetic_mt5_account_number = data.get("synthetic_mt5_account_number") or os.getenv("SYNTHETIC_MT5_ACCOUNT_NUMBER")
+        self.synthetic_mt5_password = data.get("synthetic_mt5_password") or os.getenv("SYNTHETIC_MT5_PASSWORD")
+        self.synthetic_mt5_server = data.get("synthetic_mt5_server") or os.getenv("SYNTHETIC_MT5_SERVER")
+        self.synthetic_mt5_demo_mode = self._get_bool(
+            data.get("synthetic_mt5_demo_mode"),
+            os.getenv("SYNTHETIC_MT5_DEMO_MODE"),
+            True,
+        )
 
         # Trading Settings
         self.default_symbol = data.get("default_symbol") or os.getenv("DEFAULT_SYMBOL", "XAUUSD")
         self.gold_history_symbol = data.get("gold_history_symbol") or os.getenv("GOLD_HISTORY_SYMBOL", "XAUUSD_i")
         self.default_timeframe = self._get_int(data.get("default_timeframe"), os.getenv("DEFAULT_TIMEFRAME"), 60)
         self.trading_mode = data.get("trading_mode") or os.getenv("TRADING_MODE", "manual")
+
+        # Synthetic index Settings
+        self.synthetic_index_20_symbol = data.get("synthetic_index_20_symbol") or os.getenv("SYNTHETIC_INDEX_20_SYMBOL", "FX Vol 20")
+        self.synthetic_index_40_symbol = data.get("synthetic_index_40_symbol") or os.getenv("SYNTHETIC_INDEX_40_SYMBOL", "FX Vol 40")
+        self.synthetic_index_80_symbol = data.get("synthetic_index_80_symbol") or os.getenv("SYNTHETIC_INDEX_80_SYMBOL", "FX Vol 80")
+        self.synthetic_index_20_search_terms = self._get_csv(
+            data.get("synthetic_index_20_search_terms"),
+            os.getenv("SYNTHETIC_INDEX_20_SEARCH_TERMS"),
+            ["fx", "vol", "20"],
+        )
+        self.synthetic_index_40_search_terms = self._get_csv(
+            data.get("synthetic_index_40_search_terms"),
+            os.getenv("SYNTHETIC_INDEX_40_SEARCH_TERMS"),
+            ["fx", "vol", "40"],
+        )
+        self.synthetic_index_80_search_terms = self._get_csv(
+            data.get("synthetic_index_80_search_terms"),
+            os.getenv("SYNTHETIC_INDEX_80_SEARCH_TERMS"),
+            ["fx", "vol", "80"],
+        )
+        self.synthetic_max_trades_per_day = self._get_int(
+            data.get("synthetic_max_trades_per_day"),
+            os.getenv("SYNTHETIC_MAX_TRADES_PER_DAY"),
+            6,
+        )
+        self.synthetic_max_trades_per_symbol_per_day = self._get_int(
+            data.get("synthetic_max_trades_per_symbol_per_day"),
+            os.getenv("SYNTHETIC_MAX_TRADES_PER_SYMBOL_PER_DAY"),
+            2,
+        )
+        self.synthetic_demo_only = self._get_bool(
+            data.get("synthetic_demo_only"),
+            os.getenv("SYNTHETIC_DEMO_ONLY"),
+            True,
+        )
 
         # Risk Management Settings
         self.max_risk_per_trade = self._get_float(data.get("max_risk_per_trade"), os.getenv("MAX_RISK_PER_TRADE"), 2.0)
@@ -136,6 +180,15 @@ class Settings:
         if env_value is None:
             return default
         return float(env_value)
+
+    @staticmethod
+    def _get_csv(value, env_value, default: list[str]) -> list[str]:
+        source = value if value is not None else env_value
+        if source is None:
+            return default
+        if isinstance(source, (list, tuple)):
+            return [str(item).strip() for item in source if str(item).strip()]
+        return [item.strip() for item in str(source).split(",") if item.strip()]
 
     def _build_database_url(self) -> str:
         """Construct a PostgreSQL connection URL from discrete settings."""
@@ -192,6 +245,25 @@ class Settings:
         """Check if running in testing."""
         return self.app_env == "testing"
 
+    def mt5_account_profile(self, profile_name: str = "default") -> dict:
+        """Return a named MT5 account profile."""
+        if profile_name == "synthetic":
+            return {
+                "name": "synthetic",
+                "account_number": self.synthetic_mt5_account_number,
+                "password": self.synthetic_mt5_password,
+                "server": self.synthetic_mt5_server,
+                "demo_mode": self.synthetic_mt5_demo_mode,
+            }
+
+        return {
+            "name": "default",
+            "account_number": self.mt5_account_number,
+            "password": self.mt5_password,
+            "server": self.mt5_server,
+            "demo_mode": self.mt5_demo_mode,
+        }
+
     def to_dict(self) -> dict:
         """Return settings as dictionary (non-sensitive values only)."""
         return {
@@ -200,17 +272,34 @@ class Settings:
             "app_version": self.app_version,
             "default_symbol": self.default_symbol,
             "gold_history_symbol": self.gold_history_symbol,
+            "synthetic_index_20_symbol": self.synthetic_index_20_symbol,
+            "synthetic_index_40_symbol": self.synthetic_index_40_symbol,
+            "synthetic_index_80_symbol": self.synthetic_index_80_symbol,
+            "synthetic_index_20_search_terms": self.synthetic_index_20_search_terms,
+            "synthetic_index_40_search_terms": self.synthetic_index_40_search_terms,
+            "synthetic_index_80_search_terms": self.synthetic_index_80_search_terms,
+            "synthetic_max_trades_per_day": self.synthetic_max_trades_per_day,
+            "synthetic_max_trades_per_symbol_per_day": self.synthetic_max_trades_per_symbol_per_day,
+            "synthetic_demo_only": self.synthetic_demo_only,
             "database_host": self.database_host,
             "database_port": self.database_port,
             "database_name": self.database_name,
             "database_user": self.database_user,
             "database_admin_user": self.database_admin_user,
+            "database_echo": self.database_echo,
             "trading_mode": self.trading_mode,
             "max_risk_per_trade": self.max_risk_per_trade,
             "max_daily_loss_percent": self.max_daily_loss_percent,
             "mt5_server": self.mt5_server,
             "mt5_demo_mode": self.mt5_demo_mode,
             "mt5_auto_connect": self.mt5_auto_connect,
+            "synthetic_mt5_server": self.synthetic_mt5_server,
+            "synthetic_mt5_demo_mode": self.synthetic_mt5_demo_mode,
+            "synthetic_mt5_configured": bool(
+                self.synthetic_mt5_account_number
+                and self.synthetic_mt5_password
+                and self.synthetic_mt5_server
+            ),
         }
 
 

@@ -51,7 +51,18 @@ class MT5Service:
         "MN1": "TIMEFRAME_MN1",
     }
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        account_number: Optional[int | str] = None,
+        password: Optional[str] = None,
+        server: Optional[str] = None,
+        profile_name: str = "default",
+    ) -> None:
+        self.account_number = account_number
+        self.password = password
+        self.server = server
+        self.profile_name = profile_name
         self.is_connected = False
         self.last_error: Optional[str] = None
 
@@ -65,25 +76,35 @@ class MT5Service:
         if self.is_connected:
             return True
 
+        if self.profile_name != "default" and not all([self.account_number, self.password, self.server]):
+            self.last_error = f"MT5 {self.profile_name} profile is incomplete"
+            logger.error(self.last_error)
+            return False
+
         if not mt5.initialize():
             self.last_error = str(mt5.last_error())
             logger.error("MT5 initialization failed: %s", self.last_error)
             return False
 
-        account_number = self._coerce_int(settings.mt5_account_number)
-        password = settings.mt5_password
-        server = settings.mt5_server
+        if self.profile_name == "default":
+            account_number = self._coerce_int(self.account_number or settings.mt5_account_number)
+            password = self.password or settings.mt5_password
+            server = self.server or settings.mt5_server
+        else:
+            account_number = self._coerce_int(self.account_number)
+            password = self.password
+            server = self.server
 
         if account_number is not None and password and server:
             if not mt5.login(login=account_number, password=password, server=server):
                 self.last_error = str(mt5.last_error())
-                logger.error("MT5 login failed: %s", self.last_error)
+                logger.error("MT5 login failed for %s profile: %s", self.profile_name, self.last_error)
                 mt5.shutdown()
                 return False
 
         self.is_connected = True
         self.last_error = None
-        logger.info("MT5 terminal initialized successfully")
+        logger.info("MT5 terminal initialized successfully for %s profile", self.profile_name)
         return True
 
     def disconnect(self) -> None:
@@ -197,6 +218,53 @@ class MT5Service:
             logger.warning("Margin estimate failed for %s: %s", symbol, exc)
             return None
 
+    def supported_filling_modes(self, symbol: str) -> list[int]:
+        """Return broker-supported order filling modes for a symbol.
+
+        MT5 exposes symbol filling capabilities as bit flags, while order
+        requests use a separate ORDER_FILLING_* enum. In particular, symbol
+        filling flag 1 means FOK is supported, but ORDER_FILLING_FOK is 0.
+        """
+        if not self.connect() or mt5 is None:
+            return []
+
+        symbol_info = mt5.symbol_info(symbol)
+        if symbol_info is None:
+            return []
+
+        filling_flags = int(getattr(symbol_info, "filling_mode", 0) or 0)
+        order_fok = getattr(mt5, "ORDER_FILLING_FOK", None)
+        order_ioc = getattr(mt5, "ORDER_FILLING_IOC", None)
+        symbol_fok = int(getattr(mt5, "SYMBOL_FILLING_FOK", 1))
+        symbol_ioc = int(getattr(mt5, "SYMBOL_FILLING_IOC", 2))
+
+        modes: list[int] = []
+        if order_fok is not None and filling_flags & symbol_fok:
+            modes.append(int(order_fok))
+        if order_ioc is not None and filling_flags & symbol_ioc:
+            modes.append(int(order_ioc))
+
+        return modes
+
+    def preferred_filling_mode(self, symbol: str) -> Optional[int]:
+        """Pick a broker-supported filling mode for a market order."""
+        supported_modes = self.supported_filling_modes(symbol)
+        if supported_modes:
+            return supported_modes[0]
+
+        if mt5 is None:
+            return None
+
+        for candidate in [
+            getattr(mt5, "ORDER_FILLING_FOK", None),
+            getattr(mt5, "ORDER_FILLING_IOC", None),
+            getattr(mt5, "ORDER_FILLING_RETURN", None),
+        ]:
+            if candidate is not None:
+                return int(candidate)
+
+        return None
+
     def order_check(self, request: dict[str, Any]) -> Optional[dict[str, Any]]:
         """Run a broker-side order check when supported."""
         if not self.connect() or mt5 is None:
@@ -207,6 +275,18 @@ class MT5Service:
             return result._asdict() if result is not None else None
         except Exception as exc:  # pragma: no cover - broker/library failure
             logger.warning("Order check failed: %s", exc)
+            return None
+
+    def order_send(self, request: dict[str, Any]) -> Optional[dict[str, Any]]:
+        """Submit a trading request to MT5."""
+        if not self.connect() or mt5 is None:
+            return None
+
+        try:
+            result = mt5.order_send(request)
+            return result._asdict() if result is not None else None
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("Order send failed: %s", exc)
             return None
 
     def tick_info(self, symbol: str) -> Optional[dict[str, Any]]:
@@ -336,8 +416,11 @@ class MT5Service:
                     "volume": position.volume,
                     "open_price": position.price_open,
                     "current_price": position.price_current,
+                    "stop_loss": getattr(position, "sl", None),
+                    "take_profit": getattr(position, "tp", None),
                     "profit": position.profit,
                     "open_time": position.time,
+                    "comment": getattr(position, "comment", None),
                 }
             )
 

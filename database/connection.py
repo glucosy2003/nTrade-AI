@@ -67,7 +67,7 @@ class DatabaseConnection:
                 pool_size=settings.database_pool_size,
                 max_overflow=settings.database_max_overflow,
                 pool_pre_ping=True,  # Verify connection is alive before using
-                echo=settings.app_debug,  # Log SQL queries in debug mode
+                echo=settings.database_echo,
             )
             
             # Create session factory

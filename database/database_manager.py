@@ -13,7 +13,7 @@ from typing import List, Optional, Dict, Any
 from datetime import datetime, timedelta
 
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 
 from database.connection import db
 from database.models import Base, PriceData, Signal, Trade, PerformanceMetrics
@@ -329,6 +329,30 @@ class DatabaseManager:
                 return results
             except Exception as e:
                 logger.error(f"✗ Failed to retrieve closed trades: {str(e)}", exc_info=True)
+                raise
+
+    def get_trades_since(self, since: datetime, symbol: Optional[str] = None) -> List[Trade]:
+        """Retrieve trades opened since a given timestamp."""
+        with self.connection.session_scope() as session:
+            try:
+                query = session.query(Trade).filter(Trade.entry_time >= since)
+                if symbol:
+                    query = query.filter(Trade.symbol == symbol)
+                return query.order_by(desc(Trade.entry_time)).all()
+            except Exception as e:
+                logger.error(f"✗ Failed to retrieve recent trades: {str(e)}", exc_info=True)
+                raise
+
+    def count_trades_since(self, since: datetime, symbol: Optional[str] = None) -> int:
+        """Count trades opened since a given timestamp."""
+        with self.connection.session_scope() as session:
+            try:
+                query = session.query(func.count(Trade.id)).filter(Trade.entry_time >= since)
+                if symbol:
+                    query = query.filter(Trade.symbol == symbol)
+                return int(query.scalar() or 0)
+            except Exception as e:
+                logger.error(f"✗ Failed to count recent trades: {str(e)}", exc_info=True)
                 raise
 
     # ==================== Performance Metrics Operations ====================

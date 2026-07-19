@@ -9,7 +9,7 @@ class RiskManager:
     """Create a consistent trade plan from risk budget inputs."""
 
     def __init__(self, risk_per_trade_pct: float = 0.01, reward_to_risk_ratio: float = 2.0) -> None:
-        if risk_per_trade_pct > 1:
+        if risk_per_trade_pct >= 1:
             risk_per_trade_pct = risk_per_trade_pct / 100.0
         if risk_per_trade_pct <= 0:
             raise ValueError("risk_per_trade_pct must be positive")

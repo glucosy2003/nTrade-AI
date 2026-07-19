@@ -29,8 +29,9 @@ class MT5DataCollector:
             logger.info("✓ Connected to MT5 successfully")
             account_info = self.service.account_info()
             if account_info:
-                login = account_info.get("login", settings.mt5_account_number or "unknown")
-                server = account_info.get("server", settings.mt5_server)
+                login = account_info.get("login", self.service.account_number or settings.mt5_account_number or "unknown")
+                server = account_info.get("server", self.service.server or settings.mt5_server)
+                logger.info("  Profile: %s", self.service.profile_name)
                 logger.info("  Account: %s", login)
                 logger.info("  Server: %s", server)
         return self.is_connected
