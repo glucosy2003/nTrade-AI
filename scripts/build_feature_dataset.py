@@ -17,7 +17,6 @@ from backend.core.logger import setup_logger
 from backend.core.settings import settings
 from database.database_manager import db_manager
 
-
 logger = setup_logger(__name__)
 
 
@@ -25,7 +24,9 @@ def load_price_data(symbol: str, timeframe: int, limit: int) -> pd.DataFrame:
     """Load stored price candles from PostgreSQL."""
     db_manager.initialize()
     try:
-        records = db_manager.get_price_data(symbol=symbol, timeframe=timeframe, limit=limit)
+        records = db_manager.get_price_data(
+            symbol=symbol, timeframe=timeframe, limit=limit
+        )
         if not records:
             return pd.DataFrame()
 
@@ -61,12 +62,24 @@ def save_dataset(data: pd.DataFrame, output_path: Path) -> None:
 
 def main() -> int:
     """Build and save a feature dataset."""
-    parser = ArgumentParser(description="Build a gold feature dataset")
-    parser.add_argument("--symbol", default=settings.gold_history_symbol, help="Gold history symbol")
-    parser.add_argument("--timeframe", type=int, default=60, help="Timeframe in minutes")
-    parser.add_argument("--limit", type=int, default=5000, help="Maximum number of candles to load")
-    parser.add_argument("--horizon", type=int, default=1, help="Target horizon in candles")
-    parser.add_argument("--threshold", type=float, default=0.0, help="Target return threshold")
+    parser = ArgumentParser(description="Build a synthetic feature dataset")
+    parser.add_argument(
+        "--symbol",
+        default=settings.synthetic_index_20_symbol,
+        help="Synthetic index symbol",
+    )
+    parser.add_argument(
+        "--timeframe", type=int, default=60, help="Timeframe in minutes"
+    )
+    parser.add_argument(
+        "--limit", type=int, default=5000, help="Maximum number of candles to load"
+    )
+    parser.add_argument(
+        "--horizon", type=int, default=1, help="Target horizon in candles"
+    )
+    parser.add_argument(
+        "--threshold", type=float, default=0.0, help="Target return threshold"
+    )
     parser.add_argument(
         "--output",
         default=None,
@@ -74,9 +87,15 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    output_path = Path(args.output) if args.output else Path("datasets") / "features" / f"{args.symbol}_{args.timeframe}.csv"
+    output_path = (
+        Path(args.output)
+        if args.output
+        else Path("datasets") / "features" / f"{args.symbol}_{args.timeframe}.csv"
+    )
 
-    logger.info("Loading price data for %s (%s minutes)...", args.symbol, args.timeframe)
+    logger.info(
+        "Loading price data for %s (%s minutes)...", args.symbol, args.timeframe
+    )
     price_data = load_price_data(args.symbol, args.timeframe, args.limit)
     if price_data.empty:
         logger.error("No stored price data found for %s", args.symbol)

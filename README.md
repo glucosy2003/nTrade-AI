@@ -1,9 +1,9 @@
 # nTrade AI Trading System
 
-Windows-first AI trading platform for MetaTrader 5, built as a single project folder with one operating system, one runtime path, and one deployment target.
+Windows-first AI trading platform for MetaTrader 5, built as a single project folder for synthetic indices research and execution.
 
 **Prepared for:** Gracious  
-**Current Version:** 3.0  
+**Current Version:** 3.1  
 **Migration State:** Windows-only workspace  
 **Last Updated:** July 2026
 
@@ -11,18 +11,17 @@ Windows-first AI trading platform for MetaTrader 5, built as a single project fo
 
 ## Overview
 
-nTrade AI is a personal trading research and execution system focused on gold trading first, then broader market expansion later. The project now lives entirely inside one Windows workspace and no longer depends on a split Linux/Windows development flow.
+nTrade AI is a personal trading research and execution system specialized for synthetic indices. The project now lives entirely inside one Windows workspace and focuses on live market scanning, multi-timeframe analysis, and disciplined execution for synthetic instruments.
 
 The goal is to move through the stack in a controlled order:
 
 1. Connect directly to MT5 on Windows
-2. Build a reliable data pipeline for gold history
-3. Engineer the features needed for model training
-4. Train and evaluate an AI model on real market data
-5. Backtest the model properly
-6. Run demo trading with strong safety controls
+2. Scan synthetic indices with deep multi-timeframe analysis
+3. Apply adaptive feedback from recent closed trades
+4. Backtest and validate strategies before demo execution
+5. Run synthetic demo trading with strong guardrails
 
-The system starts in manual AI recommendation mode and only advances toward semi-automatic and automatic execution once the earlier stages are stable.
+The system starts with a conservative synthetic specialist workflow and only expands its coverage once the earlier stages are stable.
 
 ---
 
@@ -35,19 +34,26 @@ The system starts in manual AI recommendation mode and only advances toward semi
 - The roadmap now starts at Phase 4 because the earlier migration work is complete
 - Console logging is UTF-8 safe on Windows, so status symbols no longer crash the app
 - MT5 startup health checks are opt-in with `MT5_AUTO_CONNECT=1`
-- Gold history defaults to `XAUUSD_i` via `GOLD_HISTORY_SYMBOL`
+- Synthetic symbols default to the configured FX Vol profiles via the synthetic settings
 
 ---
 
 ## Current Goals
 
 - Build a clean MT5 core for account, symbol, candle, and live price access
-- Pull and validate XAUUSD_i history into PostgreSQL
-- Add feature engineering for indicators and regime detection
-- Train on real gold data instead of synthetic placeholders
-- Replace rule-based logic with model-driven predictions
-- Backtest with proper trading metrics
-- Move into demo trading with strict safety controls
+- Scan and analyze synthetic indices with deep multi-timeframe logic
+- Apply adaptive feedback from recent closed trades
+- Backtest strategies on synthetic index data before execution
+- Move into synthetic demo trading with strict safety controls
+
+## Synthetic trading guardrails
+
+The synthetic auto-runner now behaves as a continuous watcher rather than a one-shot scan:
+
+- It re-evaluates the market on a repeating loop and only trades when a high-quality setup passes strategy and deep-analysis gates.
+- Deep analysis is mandatory before any order is sent; the runner no longer offers a bypass flag for that guardrail.
+- Daily caps are enforced using both local trade records and recent MT5 trade history, so closed trades count toward the 24-hour limit.
+- The active MT5 account is derived from the current synthetic profile from the environment, so the runner uses the intended account instead of a stale identifier.
 
 ---
 
@@ -56,6 +62,7 @@ The system starts in manual AI recommendation mode and only advances toward semi
 ### Phase 4 — MT5 Core
 
 Focus:
+
 - Direct MT5 connection
 - Account information
 - Symbols
@@ -63,6 +70,7 @@ Focus:
 - Live prices
 
 Deliverables:
+
 - Stable Windows MT5 connection
 - Terminal, account, and symbol inspection tools
 - Candle and tick retrieval helpers
@@ -71,19 +79,22 @@ Deliverables:
 ### Phase 5 — Data Pipeline
 
 Focus:
-- Download and validate `XAUUSD_i` history
+
+- Download and validate synthetic index history
 - Store data in PostgreSQL
 - Support incremental updates
 
 Deliverables:
+
 - Normalized price history tables
 - Data validation rules
 - Repeatable import/update scripts
-- A trusted source of historical gold data
+- A trusted source of historical synthetic index data
 
 ### Phase 6 — Feature Engineering
 
 Focus:
+
 - EMA
 - RSI
 - ATR
@@ -93,6 +104,7 @@ Focus:
 - Market regime features
 
 Deliverables:
+
 - Feature generation pipeline
 - Consistent training dataset schema
 - Feature versioning for experiments
@@ -100,22 +112,26 @@ Deliverables:
 ### Phase 7 — AI Model
 
 Focus:
-- Train on real gold data
+
+- Train on synthetic-index data
 - Save and load models
 - Evaluate performance
 
 Deliverables:
-- Baseline model trained on historical XAUUSD data
+
+- Baseline model trained on historical synthetic index data
 - Reusable model artifacts
 - Evaluation reports for precision, recall, and trading value
 
 ### Phase 8 — AI Backtesting
 
 Focus:
-- Replace rule-based strategy with AI predictions
+
+- Compare rule-based and model-based synthetic strategies
 - Measure win rate, drawdown, Sharpe ratio, and profit factor
 
 Deliverables:
+
 - Backtest engine wired to model outputs
 - Performance reports across multiple periods
 - Clear comparison against the rule-based baseline
@@ -123,11 +139,13 @@ Deliverables:
 ### Phase 9 — Demo Trading
 
 Focus:
+
 - Manual AI recommendations
 - Semi-automatic execution
 - Fully automatic execution with safety controls
 
 Deliverables:
+
 - Live demo signal workflow
 - Semi-auto trade placement
 - Risk controls, kill switch, and monitoring
@@ -139,7 +157,7 @@ Deliverables:
 
 - Demo first, always
 - Risk management is mandatory, not optional
-- One instrument at a time until the system proves itself
+- One synthetic family at a time until the system proves itself
 - Backtest before live demo trading
 - Keep the implementation simple before adding complexity
 - Treat every model as a candidate, not a guarantee
@@ -204,8 +222,8 @@ Why this matters:
 - `DATABASE_ADMIN_USER` / `DATABASE_ADMIN_PASSWORD` are used only to create the database the first time
 - table creation and later schema changes require the app role to have sufficient privileges on the target database
 - Alembic migrations are the preferred schema path; direct table creation is still available as a fallback
-- synced candles are turned into model features with the gold feature pipeline before training
-- the baseline Random Forest model is trained from stored candles and saved with metrics
+- synced candles are turned into synthetic-market features for strategy evaluation and feedback tuning
+- the baseline synthetic strategy workflow uses stored candles and saved metrics to improve decision quality
 
 Example first-time setup:
 
@@ -243,7 +261,9 @@ DATABASE_USER=ntrade_ai_user
 DATABASE_PASSWORD=change_me
 DATABASE_ADMIN_USER=postgres
 DATABASE_ADMIN_PASSWORD=change_me
-GOLD_HISTORY_SYMBOL=XAUUSD_i
+SYNTHETIC_INDEX_20_SYMBOL=FX Vol 20
+SYNTHETIC_INDEX_40_SYMBOL=FX Vol 40
+SYNTHETIC_INDEX_80_SYMBOL=FX Vol 80
 MT5_SERVER=Weltrade-Demo
 ```
 
@@ -253,17 +273,12 @@ MT5_SERVER=Weltrade-Demo
 python main.py
 python main.py --test
 python main.py --backtest
-python main.py --backtest --strategy gold_model --model-path models\\gold_xgboost_XAUUSD_i_60.pkl
-python main.py --sync-history --years 5
-python main.py --build-features --symbol XAUUSD_i
-python main.py --train-model --symbol XAUUSD_i
+python scripts\\synthetic_auto_runner.py --skip-wait --max-cycles 1
+python scripts\\synthetic_auto_runner.py
 python scripts\\setup_db.py
 python scripts\\setup_db.py --migrate
 python scripts\\mt5_inspect.py
 python scripts\\mt5_connector_test.py
-python scripts\\sync_gold_history.py
-python scripts\\build_feature_dataset.py
-python scripts\\train_gold_model.py
 ```
 
 Recommended setup flow:
@@ -271,18 +286,16 @@ Recommended setup flow:
 1. Create the PostgreSQL role and database.
 2. Put the values in `.env`.
 3. Run `python scripts\\setup_db.py --migrate` to apply the schema.
-4. Use `python scripts\\sync_gold_history.py` to begin storing candles.
-5. Use `python scripts\\build_feature_dataset.py` or `python main.py --build-features` to create training rows.
-6. Use `python scripts\\train_gold_model.py` or `python main.py --train-model` to train and save the first gold model.
-7. Use `python main.py --backtest --strategy gold_model --model-path ...` to measure model-driven trading performance.
-8. Use `python scripts\\live_trade_signal.py --store-signal` to generate a live trade setup with stop loss, take profit, and position size.
+4. Start the synthetic runner with `python scripts\\synthetic_auto_runner.py` to scan and trade the configured synthetic instruments.
+5. Use `python main.py --backtest` to validate a strategy before live demo execution.
+6. Review the scan summaries and trade logs, then refine the rules and feedback profile for the synthetic specialist workflow.
 
 Live signal workflow:
-- The script reads the latest MT5 candles.
-- It runs the trained model and prints `BUY`, `SELL`, or `HOLD`.
+
+- The runner reads the latest MT5 candles for the configured synthetic symbols.
+- It runs the deep-analysis and feedback pipeline and prints `BUY`, `SELL`, or `HOLD` decisions.
 - It calculates stop loss, take profit, and position size from the risk settings.
-- With `--store-signal`, it saves the setup in the `signals` table for later review.
-- The system does not retrain itself automatically; improvement comes from saving results, reviewing them, and retraining with `python scripts\\train_gold_model.py`.
+- The system does not retrain itself automatically; improvement comes from saving results, reviewing them, and refining the synthetic specialist logic.
 
 `python scripts\\setup_db.py --init` still exists as a direct ORM table-creation fallback, but migrations are now the primary path.
 

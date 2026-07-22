@@ -35,7 +35,9 @@ def _load_dotenv_file() -> None:
             key, value = line.split("=", 1)
             key = key.strip()
             value = value.strip().strip('"').strip("'")
-            os.environ.setdefault(key, value)
+            # Prefer the active .env file over any already-exported shell values so
+            # the configured account is used consistently across runs.
+            os.environ[key] = value
 
 
 _load_dotenv_file()
@@ -46,9 +48,13 @@ class Settings:
 
     def __init__(self, **data):
         """Initialize settings from explicit values or environment variables."""
-        self.project_name = data.get("project_name") or os.getenv("PROJECT_NAME", "nTrade AI")
+        self.project_name = data.get("project_name") or os.getenv(
+            "PROJECT_NAME", "nTrade AI"
+        )
         self.app_env = data.get("app_env") or os.getenv("APP_ENV", "development")
-        self.app_debug = self._get_bool(data.get("app_debug"), os.getenv("APP_DEBUG"), True)
+        self.app_debug = self._get_bool(
+            data.get("app_debug"), os.getenv("APP_DEBUG"), True
+        )
         self.app_version = data.get("app_version") or os.getenv("APP_VERSION", "1.0.0")
 
         # For backwards compatibility
@@ -59,11 +65,19 @@ class Settings:
         self.DEBUG = True
 
         # Database Settings
-        self.database_host = data.get("database_host") or os.getenv("DATABASE_HOST", "localhost")
-        self.database_port = self._get_int(data.get("database_port"), os.getenv("DATABASE_PORT"), 5432)
-        self.database_name = data.get("database_name") or os.getenv("DATABASE_NAME", "ntrade_ai_dev")
+        self.database_host = data.get("database_host") or os.getenv(
+            "DATABASE_HOST", "localhost"
+        )
+        self.database_port = self._get_int(
+            data.get("database_port"), os.getenv("DATABASE_PORT"), 5432
+        )
+        self.database_name = data.get("database_name") or os.getenv(
+            "DATABASE_NAME", "ntrade_ai_dev"
+        )
         self.database_user = data.get("database_user") or os.getenv("DATABASE_USER")
-        self.database_password = data.get("database_password") or os.getenv("DATABASE_PASSWORD")
+        self.database_password = data.get("database_password") or os.getenv(
+            "DATABASE_PASSWORD"
+        )
         self.database_admin_user = data.get("database_admin_user") or os.getenv(
             "DATABASE_ADMIN_USER",
             self.database_user or "postgres",
@@ -72,25 +86,49 @@ class Settings:
             "DATABASE_ADMIN_PASSWORD",
             self.database_password,
         )
-        self.database_url = data.get("database_url") or os.getenv("DATABASE_URL") or self._build_database_url()
-        self.database_pool_size = self._get_int(data.get("database_pool_size"), os.getenv("DATABASE_POOL_SIZE"), 10)
-        self.database_max_overflow = self._get_int(data.get("database_max_overflow"), os.getenv("DATABASE_MAX_OVERFLOW"), 20)
-        self.database_echo = self._get_bool(data.get("database_echo"), os.getenv("DATABASE_ECHO"), False)
+        self.database_url = (
+            data.get("database_url")
+            or os.getenv("DATABASE_URL")
+            or self._build_database_url()
+        )
+        self.database_pool_size = self._get_int(
+            data.get("database_pool_size"), os.getenv("DATABASE_POOL_SIZE"), 10
+        )
+        self.database_max_overflow = self._get_int(
+            data.get("database_max_overflow"), os.getenv("DATABASE_MAX_OVERFLOW"), 20
+        )
+        self.database_echo = self._get_bool(
+            data.get("database_echo"), os.getenv("DATABASE_ECHO"), False
+        )
 
         # MetaTrader 5 Settings
-        self.mt5_account_number = data.get("mt5_account_number") or os.getenv("MT5_ACCOUNT_NUMBER")
+        self.mt5_account_number = data.get("mt5_account_number") or os.getenv(
+            "MT5_ACCOUNT_NUMBER"
+        )
         self.mt5_password = data.get("mt5_password") or os.getenv("MT5_PASSWORD")
-        self.mt5_server = data.get("mt5_server") or os.getenv("MT5_SERVER", "Weltrade-Demo")
-        self.mt5_demo_mode = self._get_bool(data.get("mt5_demo_mode"), os.getenv("MT5_DEMO_MODE"), True)
+        self.mt5_server = data.get("mt5_server") or os.getenv(
+            "MT5_SERVER", "Weltrade-Demo"
+        )
+        self.mt5_demo_mode = self._get_bool(
+            data.get("mt5_demo_mode"), os.getenv("MT5_DEMO_MODE"), True
+        )
         self.mt5_auto_connect = self._get_bool(
             data.get("mt5_auto_connect"),
             os.getenv("MT5_AUTO_CONNECT"),
             False,
         )
-        self.synthetic_mt5_account_number = data.get("synthetic_mt5_account_number") or os.getenv("SYNTHETIC_MT5_ACCOUNT_NUMBER")
-        self.synthetic_mt5_password = data.get("synthetic_mt5_password") or os.getenv("SYNTHETIC_MT5_PASSWORD")
-        self.synthetic_mt5_server = data.get("synthetic_mt5_server") or os.getenv("SYNTHETIC_MT5_SERVER")
-        self.synthetic_mt5_terminal_path = data.get("synthetic_mt5_terminal_path") or os.getenv("SYNTHETIC_MT5_TERMINAL_PATH")
+        self.synthetic_mt5_account_number = data.get(
+            "synthetic_mt5_account_number"
+        ) or os.getenv("SYNTHETIC_MT5_ACCOUNT_NUMBER")
+        self.synthetic_mt5_password = data.get("synthetic_mt5_password") or os.getenv(
+            "SYNTHETIC_MT5_PASSWORD"
+        )
+        self.synthetic_mt5_server = data.get("synthetic_mt5_server") or os.getenv(
+            "SYNTHETIC_MT5_SERVER"
+        )
+        self.synthetic_mt5_terminal_path = data.get(
+            "synthetic_mt5_terminal_path"
+        ) or os.getenv("SYNTHETIC_MT5_TERMINAL_PATH")
         self.synthetic_mt5_demo_mode = self._get_bool(
             data.get("synthetic_mt5_demo_mode"),
             os.getenv("SYNTHETIC_MT5_DEMO_MODE"),
@@ -103,15 +141,29 @@ class Settings:
         )
 
         # Trading Settings
-        self.default_symbol = data.get("default_symbol") or os.getenv("DEFAULT_SYMBOL", "XAUUSD")
-        self.gold_history_symbol = data.get("gold_history_symbol") or os.getenv("GOLD_HISTORY_SYMBOL", "XAUUSD_i")
-        self.default_timeframe = self._get_int(data.get("default_timeframe"), os.getenv("DEFAULT_TIMEFRAME"), 60)
-        self.trading_mode = data.get("trading_mode") or os.getenv("TRADING_MODE", "manual")
+        self.default_symbol = data.get("default_symbol") or os.getenv(
+            "DEFAULT_SYMBOL", "XAUUSD"
+        )
+        self.gold_history_symbol = data.get("gold_history_symbol") or os.getenv(
+            "GOLD_HISTORY_SYMBOL", "XAUUSD_i"
+        )
+        self.default_timeframe = self._get_int(
+            data.get("default_timeframe"), os.getenv("DEFAULT_TIMEFRAME"), 60
+        )
+        self.trading_mode = data.get("trading_mode") or os.getenv(
+            "TRADING_MODE", "manual"
+        )
 
         # Synthetic index Settings
-        self.synthetic_index_20_symbol = data.get("synthetic_index_20_symbol") or os.getenv("SYNTHETIC_INDEX_20_SYMBOL", "FX Vol 20")
-        self.synthetic_index_40_symbol = data.get("synthetic_index_40_symbol") or os.getenv("SYNTHETIC_INDEX_40_SYMBOL", "FX Vol 40")
-        self.synthetic_index_80_symbol = data.get("synthetic_index_80_symbol") or os.getenv("SYNTHETIC_INDEX_80_SYMBOL", "FX Vol 80")
+        self.synthetic_index_20_symbol = data.get(
+            "synthetic_index_20_symbol"
+        ) or os.getenv("SYNTHETIC_INDEX_20_SYMBOL", "FX Vol 20")
+        self.synthetic_index_40_symbol = data.get(
+            "synthetic_index_40_symbol"
+        ) or os.getenv("SYNTHETIC_INDEX_40_SYMBOL", "FX Vol 40")
+        self.synthetic_index_80_symbol = data.get(
+            "synthetic_index_80_symbol"
+        ) or os.getenv("SYNTHETIC_INDEX_80_SYMBOL", "FX Vol 80")
         self.synthetic_index_20_search_terms = self._get_csv(
             data.get("synthetic_index_20_search_terms"),
             os.getenv("SYNTHETIC_INDEX_20_SEARCH_TERMS"),
@@ -144,14 +196,26 @@ class Settings:
         )
 
         # Risk Management Settings
-        self.max_risk_per_trade = self._get_float(data.get("max_risk_per_trade"), os.getenv("MAX_RISK_PER_TRADE"), 2.0)
-        self.max_daily_loss_percent = self._get_float(data.get("max_daily_loss_percent"), os.getenv("MAX_DAILY_LOSS_PERCENT"), 5.0)
-        self.max_concurrent_trades = self._get_int(data.get("max_concurrent_trades"), os.getenv("MAX_CONCURRENT_TRADES"), 3)
+        self.max_risk_per_trade = self._get_float(
+            data.get("max_risk_per_trade"), os.getenv("MAX_RISK_PER_TRADE"), 2.0
+        )
+        self.max_daily_loss_percent = self._get_float(
+            data.get("max_daily_loss_percent"), os.getenv("MAX_DAILY_LOSS_PERCENT"), 5.0
+        )
+        self.max_concurrent_trades = self._get_int(
+            data.get("max_concurrent_trades"), os.getenv("MAX_CONCURRENT_TRADES"), 3
+        )
 
         # Data Collection Settings
-        self.historical_data_years = self._get_int(data.get("historical_data_years"), os.getenv("HISTORICAL_DATA_YEARS"), 5)
-        self.backtest_data_start_date = data.get("backtest_data_start_date") or os.getenv("BACKTEST_DATA_START_DATE", "2020-01-01")
-        self.broker_base_url = data.get("broker_base_url") or os.getenv("BROKER_BASE_URL", "http://127.0.0.1:8001")
+        self.historical_data_years = self._get_int(
+            data.get("historical_data_years"), os.getenv("HISTORICAL_DATA_YEARS"), 5
+        )
+        self.backtest_data_start_date = data.get(
+            "backtest_data_start_date"
+        ) or os.getenv("BACKTEST_DATA_START_DATE", "2020-01-01")
+        self.broker_base_url = data.get("broker_base_url") or os.getenv(
+            "BROKER_BASE_URL", "http://127.0.0.1:8001"
+        )
 
         # Logging Settings
         self.log_level = data.get("log_level") or os.getenv("LOG_LEVEL", "INFO")
@@ -159,7 +223,9 @@ class Settings:
 
         # External API Keys (Optional)
         self.news_api_key = data.get("news_api_key") or os.getenv("NEWS_API_KEY")
-        self.sentiment_api_key = data.get("sentiment_api_key") or os.getenv("SENTIMENT_API_KEY")
+        self.sentiment_api_key = data.get("sentiment_api_key") or os.getenv(
+            "SENTIMENT_API_KEY"
+        )
 
         self._validate_configuration()
 
@@ -223,7 +289,9 @@ class Settings:
             self.app_env = "development"
 
         if self.trading_mode not in ["manual", "automatic"]:
-            logger.warning(f"Unknown TRADING_MODE: {self.trading_mode}. Using 'manual'.")
+            logger.warning(
+                f"Unknown TRADING_MODE: {self.trading_mode}. Using 'manual'."
+            )
             self.trading_mode = "manual"
 
         if self.max_risk_per_trade < 0.1 or self.max_risk_per_trade > 10:
@@ -276,7 +344,9 @@ class Settings:
         """Return configured synthetic account profiles for multi-account runners."""
         profiles: list[dict] = []
         for account_id in self.synthetic_account_ids:
-            env_key = "".join(character if character.isalnum() else "_" for character in account_id).upper()
+            env_key = "".join(
+                character if character.isalnum() else "_" for character in account_id
+            ).upper()
             prefix = f"SYNTHETIC_{env_key}"
             if account_id == "synthetic":
                 profile = self.mt5_account_profile("synthetic")
@@ -288,9 +358,13 @@ class Settings:
                     "password": os.getenv(f"{prefix}_PASSWORD"),
                     "server": os.getenv(f"{prefix}_SERVER"),
                     "terminal_path": os.getenv(f"{prefix}_TERMINAL_PATH"),
-                    "demo_mode": self._get_bool(None, os.getenv(f"{prefix}_DEMO_MODE"), True),
+                    "demo_mode": self._get_bool(
+                        None, os.getenv(f"{prefix}_DEMO_MODE"), True
+                    ),
                 }
-            profile["enabled"] = self._get_bool(None, os.getenv(f"{prefix}_ENABLED"), True)
+            profile["enabled"] = self._get_bool(
+                None, os.getenv(f"{prefix}_ENABLED"), True
+            )
             profiles.append(profile)
         return profiles
 

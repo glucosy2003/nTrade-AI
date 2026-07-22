@@ -9,15 +9,16 @@ __all__ = [
     "FeatureEngineeringResult",
     "GoldFeatureEngineer",
     "engineer_price_features",
-    "GoldModelTrainer",
-    "TrainingResult",
-    "GoldRandomForestModel",
-    "GoldXGBoostModel",
 ]
 
 
 def __getattr__(name: str) -> Any:
-    if name in {"GOLD_FEATURE_COLUMNS", "FeatureEngineeringResult", "GoldFeatureEngineer", "engineer_price_features"}:
+    if name in {
+        "GOLD_FEATURE_COLUMNS",
+        "FeatureEngineeringResult",
+        "GoldFeatureEngineer",
+        "engineer_price_features",
+    }:
         from backend.ai.feature_engineering import (  # noqa: WPS433
             GOLD_FEATURE_COLUMNS,
             FeatureEngineeringResult,
@@ -32,22 +33,5 @@ def __getattr__(name: str) -> Any:
             "engineer_price_features": engineer_price_features,
         }
         return exported[name]
-
-    if name in {"GoldModelTrainer", "TrainingResult"}:
-        from backend.ai.training import GoldModelTrainer, TrainingResult  # noqa: WPS433
-
-        exported = {
-            "GoldModelTrainer": GoldModelTrainer,
-            "TrainingResult": TrainingResult,
-        }
-        return exported[name]
-
-    if name in {"GoldRandomForestModel", "GoldXGBoostModel"}:
-        from backend.ai.models import GoldRandomForestModel, GoldXGBoostModel  # noqa: WPS433
-
-        return {
-            "GoldRandomForestModel": GoldRandomForestModel,
-            "GoldXGBoostModel": GoldXGBoostModel,
-        }[name]
 
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

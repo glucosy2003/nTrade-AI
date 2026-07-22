@@ -14,16 +14,12 @@ import pandas as pd
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from backend.ai.feature_engineering import engineer_price_features
-from backend.ai.models import GoldRandomForestModel
-from backend.ai.training import GoldModelTrainer
 from backend.core.logger import setup_logger
 from backend.core.settings import settings
 from backend.market_data.data_collector import mt5_collector
-from backend.strategies.gold_strategy_v1 import GoldStrategyV1
 from backend.risk.risk_manager import RiskManager
+from backend.strategies.simple_ma_crossover import SimpleMAcrossover
 from database.database_manager import db_manager
-
 
 logger = setup_logger(__name__)
 
@@ -86,9 +82,11 @@ def build_trade_setup(
     market_entry_price = float(
         trade_context.get("ask")
         if signal > 0 and trade_context.get("ask") is not None
-        else trade_context.get("bid")
-        if signal < 0 and trade_context.get("bid") is not None
-        else entry_price
+        else (
+            trade_context.get("bid")
+            if signal < 0 and trade_context.get("bid") is not None
+            else entry_price
+        )
     )
     stop_distance = market_entry_price * 0.005
     if signal > 0:
@@ -111,21 +109,33 @@ def build_trade_setup(
 
     min_volume = float(trade_context.get("volume_min") or 0.01)
     raw_position_size = float(trade_plan["position_size"])
-    max_volume = float(trade_context.get("volume_max") or max(raw_position_size, min_volume))
+    max_volume = float(
+        trade_context.get("volume_max") or max(raw_position_size, min_volume)
+    )
     volume_step = float(trade_context.get("volume_step") or 0.01)
     trade_contract_size = float(trade_context.get("trade_contract_size") or 0.0)
-    trade_tick_size = float(trade_context.get("trade_tick_size") or trade_context.get("point") or 0.0)
+    trade_tick_size = float(
+        trade_context.get("trade_tick_size") or trade_context.get("point") or 0.0
+    )
     trade_tick_value = float(trade_context.get("trade_tick_value") or 0.0)
 
     if trade_tick_size > 0 and trade_tick_value > 0:
-        risk_per_lot = abs(market_entry_price - stop_loss) / trade_tick_size * trade_tick_value
+        risk_per_lot = (
+            abs(market_entry_price - stop_loss) / trade_tick_size * trade_tick_value
+        )
     elif trade_contract_size > 0:
         risk_per_lot = abs(market_entry_price - stop_loss) * trade_contract_size
     else:
         risk_per_lot = abs(market_entry_price - stop_loss)
 
-    raw_lot_size = trade_plan["risk_amount"] / risk_per_lot if risk_per_lot > 0 else raw_position_size
-    normalized_lot_size = _normalize_volume(raw_lot_size, min_volume, max_volume, volume_step)
+    raw_lot_size = (
+        trade_plan["risk_amount"] / risk_per_lot
+        if risk_per_lot > 0
+        else raw_position_size
+    )
+    normalized_lot_size = _normalize_volume(
+        raw_lot_size, min_volume, max_volume, volume_step
+    )
     actual_risk_amount = risk_per_lot * normalized_lot_size
     spread_points = trade_context.get("spread")
     spread_price = None
@@ -136,12 +146,18 @@ def build_trade_setup(
     if normalized_lot_size <= 0:
         warnings.append("Calculated lot size is zero")
     if normalized_lot_size == min_volume and raw_lot_size < min_volume:
-        warnings.append("Calculated lot size is below broker minimum; rounded up to minimum")
+        warnings.append(
+            "Calculated lot size is below broker minimum; rounded up to minimum"
+        )
     if normalized_lot_size == max_volume and raw_lot_size > max_volume:
         warnings.append("Calculated lot size exceeded broker maximum; capped")
     if actual_risk_amount > trade_plan["risk_amount"] * 1.05:
         warnings.append("Rounded lot size risks more than planned budget")
-    if max_spread_points is not None and spread_points is not None and float(spread_points) > float(max_spread_points):
+    if (
+        max_spread_points is not None
+        and spread_points is not None
+        and float(spread_points) > float(max_spread_points)
+    ):
         warnings.append("Spread is above the configured maximum")
 
     return {
@@ -175,7 +191,9 @@ def build_trade_setup(
     }
 
 
-def _normalize_volume(raw_volume: float, min_volume: float, max_volume: float, volume_step: float) -> float:
+def _normalize_volume(
+    raw_volume: float, min_volume: float, max_volume: float, volume_step: float
+) -> float:
     """Clamp and round a volume to broker-supported lot increments."""
     if raw_volume <= 0:
         return 0.0
@@ -191,113 +209,98 @@ def _normalize_volume(raw_volume: float, min_volume: float, max_volume: float, v
     normalized = min_volume + (steps * volume_step)
     normalized = max(min_volume, min(normalized, max_volume))
 
-    precision = max(0, min(8, len(str(volume_step).split(".")[-1].rstrip("0")) if "." in str(volume_step) else 0))
+    precision = max(
+        0,
+        min(
+            8,
+            (
+                len(str(volume_step).split(".")[-1].rstrip("0"))
+                if "." in str(volume_step)
+                else 0
+            ),
+        ),
+    )
     return round(normalized, precision)
 
 
 def resolve_or_train_model(model_path: str, symbol: str, timeframe: int) -> str:
-    """Resolve an existing model or train a new one from stored data."""
-    candidate = Path(model_path)
-    if candidate.exists():
-        return str(candidate)
-
-    models_dir = candidate.parent if candidate.parent != Path(".") else Path("models")
-    if models_dir.exists():
-        existing_models = sorted(models_dir.glob("gold_xgboost_*.pkl"), key=lambda path: path.stat().st_mtime, reverse=True)
-        if existing_models:
-            logger.info("Using latest available model: %s", existing_models[0])
-            return str(existing_models[0])
-
-    logger.warning("No saved model found; training a fresh one from stored price data.")
-    db_manager.initialize()
-    try:
-        records = db_manager.get_price_data(symbol=symbol, timeframe=timeframe, limit=5000)
-        if not records:
-            raise RuntimeError(
-                f"No stored price data found for {symbol} on timeframe {timeframe}. "
-                "Run the history sync first, then train the model."
-            )
-
-        price_frame = pd.DataFrame(
-            [
-                {
-                    "time": record.timestamp,
-                    "open": record.open,
-                    "high": record.high,
-                    "low": record.low,
-                    "close": record.close,
-                    "volume": record.volume,
-                    "symbol": record.symbol,
-                    "timeframe": record.timeframe,
-                }
-                for record in records
-            ]
-        )
-    finally:
-        db_manager.close()
-
-    trainer = GoldModelTrainer(
-        model_output_dir=models_dir,
-        metrics_output_dir=models_dir / "metrics",
-    )
-    resolved_name = candidate.name if candidate.name != "." else f"gold_xgboost_{symbol}_{timeframe}.pkl"
-    training_result = trainer.train_from_dataframe(price_frame, model_name=resolved_name)
-    logger.info("Trained new model: %s", training_result.model_path)
-    return str(training_result.model_path)
+    """Resolve an existing model path for the synthetic specialist workflow."""
+    return model_path
 
 
 def main() -> int:
     """Generate one live trade setup and optionally store it."""
     parser = ArgumentParser(description="Generate a live trade suggestion")
-    parser.add_argument("--symbol", default=settings.gold_history_symbol, help="Trading symbol")
-    parser.add_argument("--timeframe", type=int, default=60, help="Timeframe in minutes")
-    parser.add_argument("--lookback-days", type=int, default=120, help="History window for analysis")
-    parser.add_argument("--model-path", default=None, help="Path to a trained model file")
-    parser.add_argument("--confidence-threshold", type=float, default=0.55, help="Minimum signal confidence")
-    parser.add_argument("--account-balance", type=float, default=10000.0, help="Account balance for sizing")
-    parser.add_argument("--risk-per-trade", type=float, default=settings.max_risk_per_trade, help="Risk per trade percent")
-    parser.add_argument("--reward-to-risk", type=float, default=2.0, help="Reward-to-risk ratio")
-    parser.add_argument("--max-spread-points", type=float, default=50.0, help="Maximum acceptable spread in points")
-    parser.add_argument("--store-signal", action="store_true", help="Save the generated signal to the database")
+    parser.add_argument(
+        "--symbol", default=settings.synthetic_index_20_symbol, help="Trading symbol"
+    )
+    parser.add_argument(
+        "--timeframe", type=int, default=60, help="Timeframe in minutes"
+    )
+    parser.add_argument(
+        "--lookback-days", type=int, default=120, help="History window for analysis"
+    )
+    parser.add_argument(
+        "--model-path", default=None, help="Path to a trained model file"
+    )
+    parser.add_argument(
+        "--confidence-threshold",
+        type=float,
+        default=0.55,
+        help="Minimum signal confidence",
+    )
+    parser.add_argument(
+        "--account-balance",
+        type=float,
+        default=10000.0,
+        help="Account balance for sizing",
+    )
+    parser.add_argument(
+        "--risk-per-trade",
+        type=float,
+        default=settings.max_risk_per_trade,
+        help="Risk per trade percent",
+    )
+    parser.add_argument(
+        "--reward-to-risk", type=float, default=2.0, help="Reward-to-risk ratio"
+    )
+    parser.add_argument(
+        "--max-spread-points",
+        type=float,
+        default=50.0,
+        help="Maximum acceptable spread in points",
+    )
+    parser.add_argument(
+        "--store-signal",
+        action="store_true",
+        help="Save the generated signal to the database",
+    )
     args = parser.parse_args()
 
     logger.info("Loading live candles for %s (%s min)...", args.symbol, args.timeframe)
     live_data = load_live_data(args.symbol, args.timeframe, args.lookback_days)
-    engineered = engineer_price_features(live_data)
     terminal_info = mt5_collector.service.terminal_info() or {}
     account_info = mt5_collector.get_account_info() or {}
     trade_context = mt5_collector.service.symbol_trade_context(args.symbol) or {}
-    model = None
     raw_prediction = 0
     confidence_score = 0.0
     signal_source = "fallback"
 
     try:
-        resolved_model_path = resolve_or_train_model(
-            args.model_path or f"models/gold_xgboost_{args.symbol}_{args.timeframe}.pkl",
-            args.symbol,
-            args.timeframe,
-        )
-        logger.info("Loading model from %s", resolved_model_path)
-        model = GoldRandomForestModel().load(resolved_model_path)
-        available_columns = [column for column in model.feature_columns if column in engineered.columns]
-        if available_columns:
-            latest_features = engineered[available_columns].tail(1)
-            raw_prediction = int(model.predict(latest_features)[0])
-            confidence = model.predict_proba(latest_features)
-            confidence_score = float(confidence.max()) if confidence is not None and len(confidence) else 0.0
-            signal_source = model.model_family
-    except Exception as exc:
-        logger.warning("Model path unavailable or training failed: %s", exc)
-
-    if raw_prediction == 0:
-        strategy_fallback = GoldStrategyV1()
-        fallback_signals = strategy_fallback.generate_signals(live_data)
+        strategy = SimpleMAcrossover(fast_period=10, slow_period=20)
+        fallback_signals = strategy.generate_signals(live_data)
         if len(fallback_signals) > 0:
             raw_prediction = int(fallback_signals.iloc[-1])
-            signal_source = "gold_strategy_v1"
+            confidence_score = 0.6
+            signal_source = "simple_ma_crossover"
+    except Exception as exc:
+        logger.warning("Synthetic fallback strategy failed: %s", exc)
 
-    signal = raw_prediction if confidence_score >= args.confidence_threshold or signal_source != "xgboost" else 0
+    signal = (
+        raw_prediction
+        if confidence_score >= args.confidence_threshold or signal_source != "fallback"
+        else 0
+    )
 
     latest_row = live_data.iloc[-1]
     entry_price = float(latest_row["close"])
@@ -320,7 +323,11 @@ def main() -> int:
     )
     trade_setup["margin_required"] = margin_required
     trade_setup["free_margin"] = account_info.get("free_margin")
-    if margin_required is not None and trade_setup["free_margin"] is not None and trade_setup["free_margin"] < margin_required:
+    if (
+        margin_required is not None
+        and trade_setup["free_margin"] is not None
+        and trade_setup["free_margin"] < margin_required
+    ):
         trade_setup["warnings"].append("Free margin is below estimated required margin")
     if terminal_info.get("trade_allowed") is False:
         trade_setup["warnings"].append("Terminal trading is disabled")
@@ -328,7 +335,9 @@ def main() -> int:
         trade_setup["warnings"].append("Account trading is disabled")
     if trade_context.get("visible") is False:
         trade_setup["warnings"].append("Symbol is not visible in Market Watch")
-    if trade_context.get("trade_mode") is not None and str(trade_context.get("trade_mode")).lower() in {"0", "disabled"}:
+    if trade_context.get("trade_mode") is not None and str(
+        trade_context.get("trade_mode")
+    ).lower() in {"0", "disabled"}:
         trade_setup["warnings"].append("Symbol trade mode appears disabled")
     if trade_setup["spread_points"] is not None and args.max_spread_points is not None:
         if float(trade_setup["spread_points"]) > float(args.max_spread_points):
@@ -349,7 +358,12 @@ def main() -> int:
         logger.info("Risk amount: %.2f", trade_setup["risk_amount"])
         logger.info("Actual risk amount: %.2f", trade_setup["actual_risk_amount"])
         logger.info("Risk/reward: %.2f", trade_setup["risk_reward_ratio"])
-        logger.info("Lot range: %.2f - %.2f step %.2f", trade_setup["volume_min"], trade_setup["volume_max"], trade_setup["volume_step"])
+        logger.info(
+            "Lot range: %.2f - %.2f step %.2f",
+            trade_setup["volume_min"],
+            trade_setup["volume_max"],
+            trade_setup["volume_step"],
+        )
         logger.info("Spread: %s points", trade_setup["spread_points"])
         logger.info("Deviation: %s points", trade_setup["deviation_points"])
         logger.info("Filling mode: %s", trade_setup["filling_mode"])
@@ -373,10 +387,13 @@ def main() -> int:
                     "take_profit": trade_setup["take_profit"],
                     "position_size": trade_setup["position_size"],
                     "risk_amount": trade_setup["risk_amount"],
-                    "reward_amount": abs(trade_setup["take_profit"] - trade_setup["entry_price"]) * trade_setup["position_size"],
+                    "reward_amount": abs(
+                        trade_setup["take_profit"] - trade_setup["entry_price"]
+                    )
+                    * trade_setup["position_size"],
                     "risk_reward_ratio": trade_setup["risk_reward_ratio"],
                     "confidence_score": confidence_score,
-                    "model_version": model.model_family if model is not None else signal_source,
+                    "model_version": signal_source,
                     "reasoning": "; ".join(
                         [
                             "Live trade preview from latest MT5 candles",

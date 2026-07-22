@@ -1420,3 +1420,751 @@ sqlalchemy.exc.DataError: (psycopg.errors.StringDataRightTruncation) value too l
 2026-07-19 14:35:39 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:523 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
 2026-07-19 14:37:01 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:523 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
 2026-07-19 14:37:20 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:523 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 14:47:50 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 14:47:50 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T14:47:50
+2026-07-19 14:48:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 14:48:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 14:48:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 14:48:03 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 14:53:03 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 2 at 2026-07-19T14:53:03
+2026-07-19 14:53:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 14:53:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 14:53:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 14:53:04 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-19 14:58:04 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 3 at 2026-07-19T14:58:04
+2026-07-19 14:58:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 14:58:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 14:58:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 14:58:04 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 3 with exit code 0
+2026-07-19 15:03:04 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 4 at 2026-07-19T15:03:04
+2026-07-19 15:03:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 15:03:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 15:03:04 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 15:03:04 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 4 with exit code 0
+2026-07-19 15:08:04 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 5 at 2026-07-19T15:08:04
+2026-07-19 15:08:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 15:08:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 15:08:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 15:08:05 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 5 with exit code 0
+2026-07-19 15:13:05 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 6 at 2026-07-19T15:13:05
+2026-07-19 15:13:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 15:13:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 15:13:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 15:13:05 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 6 with exit code 0
+2026-07-19 15:18:05 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 7 at 2026-07-19T15:18:05
+2026-07-19 15:18:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 15:18:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 15:18:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 15:18:05 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 7 with exit code 0
+2026-07-19 15:22:05 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 15:22:06 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 15:36:32 | __main__ | INFO     | main:116 | Starting synthetic worker for account=acc1 terminal=C:\MT5\Account1\terminal64.exe
+2026-07-19 15:36:32 | __main__ | INFO     | main:116 | Starting synthetic worker for account=acc2 terminal=default
+2026-07-19 15:36:37 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=acc2 | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 15:36:37 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T15:36:37
+2026-07-19 15:36:37 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T15:36:37
+2026-07-19 15:36:37 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:568 | Could not connect to MT5
+2026-07-19 15:36:37 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 1
+2026-07-19 15:36:37 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:579 | Terminal trading is disabled
+2026-07-19 15:36:37 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 1
+2026-07-19 15:37:01 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 15:37:01 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 15:37:01 | __main__ | INFO     | _request_stop:28 | Stop requested; stopping account workers
+2026-07-19 15:37:01 | __main__ | INFO     | main:147 | Synthetic multi-account runner stopped
+2026-07-19 15:37:33 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 15:37:33 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T15:37:33
+2026-07-19 15:37:33 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:561 | Synthetic MT5 account profile is incomplete. Set SYNTHETIC_MT5_ACCOUNT_NUMBER, SYNTHETIC_MT5_PASSWORD, and SYNTHETIC_MT5_SERVER.
+2026-07-19 15:37:33 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 1
+2026-07-19 15:42:33 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 2 at 2026-07-19T15:42:33
+2026-07-19 15:42:33 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:561 | Synthetic MT5 account profile is incomplete. Set SYNTHETIC_MT5_ACCOUNT_NUMBER, SYNTHETIC_MT5_PASSWORD, and SYNTHETIC_MT5_SERVER.
+2026-07-19 15:42:33 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 2 with exit code 1
+2026-07-19 15:47:33 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 3 at 2026-07-19T15:47:33
+2026-07-19 15:47:33 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:561 | Synthetic MT5 account profile is incomplete. Set SYNTHETIC_MT5_ACCOUNT_NUMBER, SYNTHETIC_MT5_PASSWORD, and SYNTHETIC_MT5_SERVER.
+2026-07-19 15:47:33 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 3 with exit code 1
+2026-07-19 15:52:33 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 4 at 2026-07-19T15:52:33
+2026-07-19 15:52:33 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:561 | Synthetic MT5 account profile is incomplete. Set SYNTHETIC_MT5_ACCOUNT_NUMBER, SYNTHETIC_MT5_PASSWORD, and SYNTHETIC_MT5_SERVER.
+2026-07-19 15:52:33 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 4 with exit code 1
+2026-07-19 15:57:33 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 5 at 2026-07-19T15:57:33
+2026-07-19 15:57:33 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:561 | Synthetic MT5 account profile is incomplete. Set SYNTHETIC_MT5_ACCOUNT_NUMBER, SYNTHETIC_MT5_PASSWORD, and SYNTHETIC_MT5_SERVER.
+2026-07-19 15:57:33 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 5 with exit code 1
+2026-07-19 16:02:33 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 6 at 2026-07-19T16:02:33
+2026-07-19 16:02:33 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:561 | Synthetic MT5 account profile is incomplete. Set SYNTHETIC_MT5_ACCOUNT_NUMBER, SYNTHETIC_MT5_PASSWORD, and SYNTHETIC_MT5_SERVER.
+2026-07-19 16:02:33 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 6 with exit code 1
+2026-07-19 16:06:32 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 16:06:33 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 16:06:50 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 16:06:50 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T16:06:50
+2026-07-19 16:06:53 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:579 | Terminal trading is disabled
+2026-07-19 16:06:53 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 1
+2026-07-19 16:11:53 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 2 at 2026-07-19T16:11:53
+2026-07-19 16:11:53 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:579 | Terminal trading is disabled
+2026-07-19 16:11:53 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 2 with exit code 1
+2026-07-19 16:13:55 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 16:13:56 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 16:15:02 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 16:15:02 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T16:15:02
+2026-07-19 16:15:02 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:579 | Terminal trading is disabled
+2026-07-19 16:15:02 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 1
+2026-07-19 16:20:02 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 2 at 2026-07-19T16:20:02
+2026-07-19 16:20:02 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:579 | Terminal trading is disabled
+2026-07-19 16:20:02 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 2 with exit code 1
+2026-07-19 16:25:02 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 3 at 2026-07-19T16:25:02
+2026-07-19 16:25:02 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:579 | Terminal trading is disabled
+2026-07-19 16:25:02 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 3 with exit code 1
+2026-07-19 16:25:08 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 16:25:08 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 16:36:50 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 16:36:50 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T16:36:50
+2026-07-19 16:36:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 16:36:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 16:36:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:610 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 16:36:52 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 16:37:27 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:523 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 16:37:27 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:579 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-19 16:38:12 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 16:38:13 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 16:38:26 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:524 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 16:38:26 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:580 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-19 16:39:16 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 16:39:16 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T16:39:16
+2026-07-19 16:39:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 16:39:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 16:39:17 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 16:39:17 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 16:40:00 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 16:40:01 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 16:40:08 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 16:40:08 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T16:40:08
+2026-07-19 16:40:14 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 16:40:14 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 16:40:14 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 16:40:14 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 16:45:14 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 2 at 2026-07-19T16:45:14
+2026-07-19 16:45:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 16:45:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 16:45:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 16:45:15 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-19 16:50:15 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 3 at 2026-07-19T16:50:15
+2026-07-19 16:50:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 16:50:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 16:50:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 16:50:15 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 3 with exit code 0
+2026-07-19 16:51:41 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:534 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 16:51:41 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:580 | Could not connect to MT5
+2026-07-19 16:52:15 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:534 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 16:52:15 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:591 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-19 16:55:15 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 4 at 2026-07-19T16:55:15
+2026-07-19 16:55:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 16:55:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 16:55:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:611 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 16:55:15 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 4 with exit code 0
+2026-07-19 16:55:46 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 16:55:46 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 16:55:55 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 16:55:55 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T16:55:55
+2026-07-19 16:55:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:622 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 16:55:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:622 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 16:55:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:622 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 16:55:55 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 16:56:33 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 16:56:34 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 16:56:43 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 16:56:43 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T16:56:43
+2026-07-19 16:56:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:789 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 16:56:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:789 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 16:56:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:789 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 16:56:44 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 16:58:22 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 16:58:23 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 16:58:39 | __main__ | INFO     | main:65 | Synthetic auto runner started | account=synthetic | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 16:58:39 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 1 at 2026-07-19T16:58:39
+2026-07-19 16:58:48 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:789 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 16:58:48 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:789 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 16:58:48 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:789 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 16:58:48 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 17:03:48 | __main__ | INFO     | main:78 | Starting synthetic scan cycle 2 at 2026-07-19T17:03:48
+2026-07-19 17:03:48 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:789 | Skipping FX Vol 20 on synthetic because an open position already exists
+2026-07-19 17:03:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:789 | Skipping FX Vol 40 on synthetic because an open position already exists
+2026-07-19 17:03:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:789 | Skipping FX Vol 80 on synthetic because an open position already exists
+2026-07-19 17:03:49 | __main__ | INFO     | main:97 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-19 17:03:53 | __main__ | INFO     | _request_stop:28 | Stop requested; runner will exit after the current cycle
+2026-07-19 17:03:54 | __main__ | INFO     | main:107 | Synthetic auto runner stopped
+2026-07-19 17:05:24 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:642 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 17:05:24 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:764 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-19 17:06:43 | __main__ | INFO     | main:127 | Synthetic auto runner started | account=synthetic_43065997 | mt5_account=43065997 | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 17:06:43 | __main__ | INFO     | main:141 | Starting synthetic scan cycle 1 at 2026-07-19T17:06:43
+2026-07-19 17:06:54 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:887 | Deep analysis approved FX Vol 20 SELL on synthetic_43065997 | score=1.00 | primary strategy signal; EMA trend aligned; short momentum aligned; RSI aligned (25.1); ATR active (0.0999%); volatility not extreme
+2026-07-19 17:06:54 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:911 | FX Vol 20: Calculated lot size is below broker minimum; rounded up to minimum; Rounded lot size risks more than planned budget
+2026-07-19 17:06:54 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:542 | FX Vol 20 order check retcode=0 type_filling=0
+2026-07-19 17:06:54 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:954 | Order result FX Vol 20 retcode=10009 order=435340486 deal=414433039 price=119372.0
+2026-07-19 17:06:54 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1022 | Stored synthetic demo trade for FX Vol 20 | symbol cap 1/2 | total cap 1/6
+2026-07-19 17:07:00 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:848 | Hold signal for FX Vol 40 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 07:45:00 | latest_close=187045.02000
+2026-07-19 17:07:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:858 | Using recent SELL signal for FX Vol 80 from 1 candle(s) ago at 25804
+2026-07-19 17:07:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:887 | Deep analysis approved FX Vol 80 SELL on synthetic_43065997 | score=1.00 | primary strategy signal; EMA trend aligned; short momentum aligned; RSI aligned (38.5); ATR active (0.3441%); volatility not extreme
+2026-07-19 17:07:06 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:911 | FX Vol 80: Calculated lot size is below broker minimum; rounded up to minimum; Rounded lot size risks more than planned budget
+2026-07-19 17:07:06 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:542 | FX Vol 80 order check retcode=0 type_filling=0
+2026-07-19 17:07:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:954 | Order result FX Vol 80 retcode=10009 order=435340640 deal=414433174 price=40007.52
+2026-07-19 17:07:06 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1022 | Stored synthetic demo trade for FX Vol 80 | symbol cap 1/2 | total cap 2/6
+2026-07-19 17:07:06 | __main__ | INFO     | main:164 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 17:12:06 | __main__ | INFO     | main:141 | Starting synthetic scan cycle 2 at 2026-07-19T17:12:06
+2026-07-19 17:12:07 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:807 | Skipping FX Vol 20 on synthetic_43065997 because an open position already exists
+2026-07-19 17:12:12 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:858 | Using recent SELL signal for FX Vol 40 from 1 candle(s) ago at 25891
+2026-07-19 17:12:12 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:887 | Deep analysis approved FX Vol 40 SELL on synthetic_43065997 | score=0.65 | primary strategy signal; EMA trend disagrees; short momentum aligned; RSI not ideal (53.8); ATR active (0.1970%); volatility not extreme
+2026-07-19 17:12:12 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:911 | FX Vol 40: Calculated lot size is below broker minimum; rounded up to minimum; Rounded lot size risks more than planned budget
+2026-07-19 17:12:12 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:542 | FX Vol 40 order check retcode=0 type_filling=0
+2026-07-19 17:12:13 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:954 | Order result FX Vol 40 retcode=10009 order=435344555 deal=414437059 price=186491.79
+2026-07-19 17:12:13 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1022 | Stored synthetic demo trade for FX Vol 40 | symbol cap 1/2 | total cap 3/6
+2026-07-19 17:12:13 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:807 | Skipping FX Vol 80 on synthetic_43065997 because an open position already exists
+2026-07-19 17:12:13 | __main__ | INFO     | main:164 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-19 17:14:26 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-19 17:14:26 | __main__ | INFO     | main:178 | Synthetic auto runner stopped
+2026-07-19 17:17:17 | __main__ | INFO     | main:127 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 17:17:17 | __main__ | INFO     | main:141 | Starting synthetic scan cycle 1 at 2026-07-19T17:17:17
+2026-07-19 17:17:17 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:764 | Terminal trading is disabled; skipping this cycle because trading is disabled
+2026-07-19 17:17:17 | __main__ | INFO     | main:164 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 17:17:23 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-19 17:17:23 | __main__ | INFO     | main:178 | Synthetic auto runner stopped
+2026-07-19 17:17:38 | __main__ | INFO     | main:127 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 17:17:38 | __main__ | INFO     | main:141 | Starting synthetic scan cycle 1 at 2026-07-19T17:17:38
+2026-07-19 17:17:39 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:642 | Synced open broker position for FX Vol 20 into local trade log | ticket=434870380
+2026-07-19 17:17:39 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:807 | Skipping FX Vol 20 on synthetic_43038518 because an open position already exists
+2026-07-19 17:17:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:858 | Using recent SELL signal for FX Vol 40 from 2 candle(s) ago at 25890
+2026-07-19 17:17:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:887 | Deep analysis approved FX Vol 40 SELL on synthetic_43038518 | score=0.65 | primary strategy signal; EMA trend disagrees; short momentum aligned; RSI not ideal (58.6); ATR active (0.1945%); volatility not extreme
+2026-07-19 17:17:45 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:542 | FX Vol 40 order check retcode=0 type_filling=0
+2026-07-19 17:17:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:954 | Order result FX Vol 40 retcode=10009 order=435348218 deal=414440646 price=186775.37
+2026-07-19 17:17:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1022 | Stored synthetic demo trade for FX Vol 40 | symbol cap 1/2 | total cap 2/6
+2026-07-19 17:17:51 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:858 | Using recent BUY signal for FX Vol 80 from 2 candle(s) ago at 25890
+2026-07-19 17:17:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:887 | Deep analysis approved FX Vol 80 BUY on synthetic_43038518 | score=0.85 | primary strategy signal; EMA trend aligned; short momentum disagrees; RSI aligned (54.1); ATR active (0.3964%); volatility not extreme
+2026-07-19 17:17:52 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:911 | FX Vol 80: Calculated lot size exceeded broker maximum; capped
+2026-07-19 17:17:52 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:542 | FX Vol 80 order check retcode=0 type_filling=0
+2026-07-19 17:17:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:954 | Order result FX Vol 80 retcode=10009 order=435348269 deal=414440699 price=40119.14
+2026-07-19 17:17:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1022 | Stored synthetic demo trade for FX Vol 80 | symbol cap 1/2 | total cap 3/6
+2026-07-19 17:17:52 | __main__ | INFO     | main:164 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 17:20:22 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-19 17:20:22 | __main__ | INFO     | main:178 | Synthetic auto runner stopped
+2026-07-19 18:04:57 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:642 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 18:04:57 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:764 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-19 22:06:03 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:642 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 22:06:04 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:764 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-19 22:15:21 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:699 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-19 22:15:21 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:821 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-19 22:20:24 | __main__ | INFO     | main:122 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 22:20:24 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 1 at 2026-07-19T22:20:24
+2026-07-19 22:20:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (2/2)
+2026-07-19 22:20:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (4/2)
+2026-07-19 22:20:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (5/2)
+2026-07-19 22:20:33 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 22:25:33 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 2 at 2026-07-19T22:25:33
+2026-07-19 22:25:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (2/2)
+2026-07-19 22:25:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (4/2)
+2026-07-19 22:25:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (5/2)
+2026-07-19 22:25:33 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-19 22:30:33 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 3 at 2026-07-19T22:30:33
+2026-07-19 22:30:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (2/2)
+2026-07-19 22:30:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (4/2)
+2026-07-19 22:30:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (5/2)
+2026-07-19 22:30:33 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 3 with exit code 0
+2026-07-19 22:35:33 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 4 at 2026-07-19T22:35:33
+2026-07-19 22:35:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (2/2)
+2026-07-19 22:35:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (4/2)
+2026-07-19 22:35:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (5/2)
+2026-07-19 22:35:33 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 4 with exit code 0
+2026-07-19 22:39:13 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-19 22:39:14 | __main__ | INFO     | main:173 | Synthetic auto runner stopped
+2026-07-19 22:41:01 | __main__ | INFO     | main:122 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 22:41:01 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 1 at 2026-07-19T22:41:01
+2026-07-19 22:41:01 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:821 | Terminal trading is disabled; skipping this cycle because trading is disabled
+2026-07-19 22:41:01 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 22:41:07 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-19 22:41:08 | __main__ | INFO     | main:173 | Synthetic auto runner stopped
+2026-07-19 22:41:22 | __main__ | INFO     | main:122 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-19 22:41:22 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 1 at 2026-07-19T22:41:22
+2026-07-19 22:41:25 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:905 | Hold signal for FX Vol 20 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 18:15:00 | latest_close=119586.01000
+2026-07-19 22:41:27 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:905 | Hold signal for FX Vol 40 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 18:15:00 | latest_close=186723.32000
+2026-07-19 22:41:31 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:905 | Hold signal for FX Vol 80 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 18:15:00 | latest_close=40107.69000
+2026-07-19 22:41:31 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-19 22:46:31 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 2 at 2026-07-19T22:46:31
+2026-07-19 22:46:33 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:944 | Deep analysis approved FX Vol 20 SELL on synthetic_43114003 | score=1.00 | primary strategy signal; EMA trend aligned; short momentum aligned; RSI aligned (33.4); ATR active (0.0884%); volatility not extreme
+2026-07-19 22:46:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:968 | FX Vol 20: Calculated lot size is below broker minimum; rounded up to minimum; Rounded lot size risks more than planned budget
+2026-07-19 22:46:33 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:549 | FX Vol 20 order check retcode=0 type_filling=0
+2026-07-19 22:46:34 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1011 | Order result FX Vol 20 retcode=10009 order=435568546 deal=414658042 price=118670.57
+2026-07-19 22:46:34 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1079 | Stored synthetic demo trade for FX Vol 20 | symbol cap 1/2 | total cap 1/6
+2026-07-19 22:46:36 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:905 | Hold signal for FX Vol 40 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 20:45:00 | latest_close=185528.54000
+2026-07-19 22:46:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:944 | Deep analysis approved FX Vol 80 SELL on synthetic_43114003 | score=1.00 | primary strategy signal; EMA trend aligned; short momentum aligned; RSI aligned (39.2); ATR active (0.3947%); volatility not extreme
+2026-07-19 22:46:40 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:549 | FX Vol 80 order check retcode=0 type_filling=0
+2026-07-19 22:46:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1011 | Order result FX Vol 80 retcode=10009 order=435568611 deal=414658108 price=38695.37
+2026-07-19 22:46:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1079 | Stored synthetic demo trade for FX Vol 80 | symbol cap 1/2 | total cap 2/6
+2026-07-19 22:46:40 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-19 22:51:40 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 3 at 2026-07-19T22:51:40
+2026-07-19 22:51:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 22:51:46 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:905 | Hold signal for FX Vol 40 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 20:50:00 | latest_close=185664.30000
+2026-07-19 22:51:46 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 22:51:46 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 3 with exit code 0
+2026-07-19 22:56:46 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 4 at 2026-07-19T22:56:46
+2026-07-19 22:56:46 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 22:56:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:905 | Hold signal for FX Vol 40 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 20:55:00 | latest_close=185615.91000
+2026-07-19 22:56:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 22:56:49 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 4 with exit code 0
+2026-07-19 23:01:49 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 5 at 2026-07-19T23:01:49
+2026-07-19 23:01:49 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:01:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:905 | Hold signal for FX Vol 40 | inspected_candles=3 | recent_nonzero=0 | latest_time=2026-07-19 21:00:00 | latest_close=185378.09000
+2026-07-19 23:01:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:01:52 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 5 with exit code 0
+2026-07-19 23:06:52 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 6 at 2026-07-19T23:06:52
+2026-07-19 23:06:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:06:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:944 | Deep analysis approved FX Vol 40 SELL on synthetic_43114003 | score=1.00 | primary strategy signal; EMA trend aligned; short momentum aligned; RSI aligned (37.4); ATR active (0.2038%); volatility not extreme
+2026-07-19 23:06:55 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:968 | FX Vol 40: Calculated lot size is below broker minimum; rounded up to minimum; Rounded lot size risks more than planned budget
+2026-07-19 23:06:55 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:549 | FX Vol 40 order check retcode=0 type_filling=0
+2026-07-19 23:06:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1011 | Order result FX Vol 40 retcode=10009 order=435579823 deal=414668822 price=187684.72
+2026-07-19 23:06:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1079 | Stored synthetic demo trade for FX Vol 40 | symbol cap 1/2 | total cap 3/6
+2026-07-19 23:06:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:06:55 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 6 with exit code 0
+2026-07-19 23:11:55 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 7 at 2026-07-19T23:11:55
+2026-07-19 23:11:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:11:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:11:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:11:55 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 7 with exit code 0
+2026-07-19 23:16:55 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 8 at 2026-07-19T23:16:55
+2026-07-19 23:16:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:16:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:16:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:16:56 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 8 with exit code 0
+2026-07-19 23:21:56 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 9 at 2026-07-19T23:21:56
+2026-07-19 23:21:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:21:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:21:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:21:56 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 9 with exit code 0
+2026-07-19 23:26:56 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 10 at 2026-07-19T23:26:56
+2026-07-19 23:26:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:26:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:26:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:26:56 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 10 with exit code 0
+2026-07-19 23:31:56 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 11 at 2026-07-19T23:31:56
+2026-07-19 23:31:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:31:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:31:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:31:56 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 11 with exit code 0
+2026-07-19 23:36:56 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 12 at 2026-07-19T23:36:56
+2026-07-19 23:36:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:36:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:36:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:36:56 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 12 with exit code 0
+2026-07-19 23:41:56 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 13 at 2026-07-19T23:41:56
+2026-07-19 23:41:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:41:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:41:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:41:56 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 13 with exit code 0
+2026-07-19 23:46:56 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 14 at 2026-07-19T23:46:56
+2026-07-19 23:46:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:46:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:46:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:46:57 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 14 with exit code 0
+2026-07-19 23:51:57 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 15 at 2026-07-19T23:51:57
+2026-07-19 23:51:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:51:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:51:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:51:57 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 15 with exit code 0
+2026-07-19 23:56:57 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 16 at 2026-07-19T23:56:57
+2026-07-19 23:56:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-19 23:56:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-19 23:56:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-19 23:56:57 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 16 with exit code 0
+2026-07-20 00:01:57 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 17 at 2026-07-20T00:01:57
+2026-07-20 00:01:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-20 00:01:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-20 00:01:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-20 00:01:57 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 17 with exit code 0
+2026-07-20 00:06:57 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 18 at 2026-07-20T00:06:57
+2026-07-20 00:06:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-20 00:06:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 40 on synthetic_43114003 because an open position already exists
+2026-07-20 00:06:57 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:864 | Skipping FX Vol 80 on synthetic_43114003 because an open position already exists
+2026-07-20 00:06:57 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 18 with exit code 0
+2026-07-20 00:07:42 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-20 00:07:43 | __main__ | INFO     | main:173 | Synthetic auto runner stopped
+2026-07-20 05:36:45 | __main__ | INFO     | main:122 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-20 05:36:45 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 1 at 2026-07-20T05:36:45
+2026-07-20 05:36:52 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:699 | Synced open broker position for FX Vol 20 into local trade log | ticket=435568546
+2026-07-20 05:36:52 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (10/6); Daily symbol cap reached (3/2)
+2026-07-20 05:36:52 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (10/6); Daily symbol cap reached (3/2)
+2026-07-20 05:36:52 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (10/6); Daily symbol cap reached (3/2)
+2026-07-20 05:36:52 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-20 05:41:52 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 2 at 2026-07-20T05:41:52
+2026-07-20 05:41:52 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:699 | Synced open broker position for FX Vol 20 into local trade log | ticket=435568546
+2026-07-20 05:41:52 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (4/2)
+2026-07-20 05:41:52 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (3/2)
+2026-07-20 05:41:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (11/6); Daily symbol cap reached (3/2)
+2026-07-20 05:41:53 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 2 with exit code 0
+2026-07-20 05:46:53 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 3 at 2026-07-20T05:46:53
+2026-07-20 05:46:53 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:699 | Synced open broker position for FX Vol 20 into local trade log | ticket=435568546
+2026-07-20 05:46:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (12/6); Daily symbol cap reached (5/2)
+2026-07-20 05:46:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (12/6); Daily symbol cap reached (3/2)
+2026-07-20 05:46:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (12/6); Daily symbol cap reached (3/2)
+2026-07-20 05:46:53 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 3 with exit code 0
+2026-07-20 05:51:53 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 4 at 2026-07-20T05:51:53
+2026-07-20 05:51:53 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:699 | Synced open broker position for FX Vol 20 into local trade log | ticket=435568546
+2026-07-20 05:51:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (13/6); Daily symbol cap reached (6/2)
+2026-07-20 05:51:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (13/6); Daily symbol cap reached (3/2)
+2026-07-20 05:51:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (13/6); Daily symbol cap reached (3/2)
+2026-07-20 05:51:53 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 4 with exit code 0
+2026-07-20 05:56:53 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 5 at 2026-07-20T05:56:53
+2026-07-20 05:56:53 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:699 | Synced open broker position for FX Vol 20 into local trade log | ticket=435568546
+2026-07-20 05:56:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (14/6); Daily symbol cap reached (7/2)
+2026-07-20 05:56:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (14/6); Daily symbol cap reached (3/2)
+2026-07-20 05:56:53 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (14/6); Daily symbol cap reached (3/2)
+2026-07-20 05:56:53 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 5 with exit code 0
+2026-07-20 07:13:25 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 6 at 2026-07-20T07:13:25
+2026-07-20 07:13:34 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:699 | Synced open broker position for FX Vol 20 into local trade log | ticket=435568546
+2026-07-20 07:13:34 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (15/6); Daily symbol cap reached (8/2)
+2026-07-20 07:13:34 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (15/6); Daily symbol cap reached (3/2)
+2026-07-20 07:13:34 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (15/6); Daily symbol cap reached (3/2)
+2026-07-20 07:13:34 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 6 with exit code 0
+2026-07-20 07:18:34 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 7 at 2026-07-20T07:18:34
+2026-07-20 07:18:34 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:699 | Synced open broker position for FX Vol 20 into local trade log | ticket=435568546
+2026-07-20 07:18:34 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (16/6); Daily symbol cap reached (9/2)
+2026-07-20 07:18:34 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (16/6); Daily symbol cap reached (3/2)
+2026-07-20 07:18:34 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (16/6); Daily symbol cap reached (3/2)
+2026-07-20 07:18:34 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 7 with exit code 0
+2026-07-20 07:23:34 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 8 at 2026-07-20T07:23:34
+2026-07-20 07:23:35 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:699 | Synced open broker position for FX Vol 20 into local trade log | ticket=435568546
+2026-07-20 07:23:35 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (17/6); Daily symbol cap reached (10/2)
+2026-07-20 07:23:35 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (17/6); Daily symbol cap reached (3/2)
+2026-07-20 07:23:35 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:860 | Daily trade cap reached (17/6); Daily symbol cap reached (3/2)
+2026-07-20 07:23:35 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 8 with exit code 0
+2026-07-20 07:25:42 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-20 07:25:43 | __main__ | INFO     | main:173 | Synthetic auto runner stopped
+2026-07-20 07:30:28 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:692 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-20 07:30:28 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:814 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-20 07:40:32 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:695 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-20 07:40:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:817 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-20 07:41:34 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:695 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-20 07:41:34 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:616 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-20 07:41:34 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:817 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-20 07:42:49 | __main__ | INFO     | main:122 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-20 07:42:49 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 1 at 2026-07-20T07:42:49
+2026-07-20 07:42:50 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:639 | Synced closed broker trade for FX Vol 20 into local trade log | ticket=414658042
+2026-07-20 07:42:50 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:639 | Synced closed broker trade for FX Vol 80 into local trade log | ticket=414658108
+2026-07-20 07:42:50 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:639 | Synced closed broker trade for FX Vol 40 into local trade log | ticket=414668822
+2026-07-20 07:42:50 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:639 | Synced closed broker trade for FX Vol 80 into local trade log | ticket=414725466
+2026-07-20 07:42:50 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:639 | Synced closed broker trade for FX Vol 40 into local trade log | ticket=414754432
+2026-07-20 07:42:50 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:856 | Daily trade cap reached (16/6); Daily symbol cap reached (10/2)
+2026-07-20 07:42:50 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:856 | Daily trade cap reached (16/6); Daily symbol cap reached (3/2)
+2026-07-20 07:42:50 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:856 | Daily trade cap reached (16/6); Daily symbol cap reached (3/2)
+2026-07-20 07:42:50 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-20 07:43:12 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-20 07:43:13 | __main__ | INFO     | main:173 | Synthetic auto runner stopped
+2026-07-20 14:19:11 | __main__ | INFO     | main:122 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-20 14:19:11 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 1 at 2026-07-20T14:19:11
+2026-07-20 14:19:26 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:856 | Daily trade cap reached (16/6); Daily symbol cap reached (10/2)
+2026-07-20 14:19:26 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:856 | Daily trade cap reached (16/6); Daily symbol cap reached (3/2)
+2026-07-20 14:19:26 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:856 | Daily trade cap reached (16/6); Daily symbol cap reached (3/2)
+2026-07-20 14:19:26 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-20 14:20:48 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-20 14:20:49 | __main__ | INFO     | main:173 | Synthetic auto runner stopped
+2026-07-20 14:20:59 | __main__ | INFO     | main:122 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-20 14:20:59 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 1 at 2026-07-20T14:20:59
+2026-07-20 14:21:06 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:870 | Daily trade cap reached (16/6); Daily symbol cap reached (10/2)
+2026-07-20 14:21:06 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:870 | Daily trade cap reached (16/6); Daily symbol cap reached (3/2)
+2026-07-20 14:21:06 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:870 | Daily trade cap reached (16/6); Daily symbol cap reached (3/2)
+2026-07-20 14:21:06 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-20 14:24:17 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:758 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-20 14:24:17 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:675 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-20 14:24:18 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:880 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-20 14:24:56 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:761 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-20 14:24:56 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:678 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-20 14:24:56 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:883 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-20 14:31:51 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-20 14:31:51 | __main__ | INFO     | main:173 | Synthetic auto runner stopped
+2026-07-20 14:33:19 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:745 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-20 14:33:19 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:662 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-20 14:33:19 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:867 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-20 14:36:25 | __main__ | INFO     | main:122 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-20 14:36:25 | __main__ | INFO     | main:136 | Starting synthetic scan cycle 1 at 2026-07-20T14:36:25
+2026-07-20 14:36:25 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:918 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-20 14:36:25 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:906 | Cap block for FX Vol 40 | Daily symbol cap reached (2/2) | total=5/6 | symbol=2/2
+2026-07-20 14:36:25 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:906 | Cap block for FX Vol 80 | Daily symbol cap reached (2/2) | total=5/6 | symbol=2/2
+2026-07-20 14:36:25 | __main__ | INFO     | main:159 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-20 14:42:00 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:745 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-20 14:42:00 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:662 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-20 14:42:00 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:867 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-20 14:42:41 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:745 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-20 14:42:41 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:662 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-20 14:42:41 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:867 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-20 14:43:20 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:745 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-20 14:43:20 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:662 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-20 14:43:20 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:867 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-20 14:43:58 | __main__ | INFO     | _request_stop:32 | Stop requested; runner will exit after the current cycle
+2026-07-20 14:43:59 | __main__ | INFO     | main:173 | Synthetic auto runner stopped
+2026-07-20 14:44:43 | __main__ | INFO     | main:169 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-20 14:44:43 | __main__ | INFO     | main:193 | Starting synthetic scan cycle 1 at 2026-07-20T14:44:43
+2026-07-20 14:44:43 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:918 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-20 14:44:43 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:906 | Cap block for FX Vol 40 | Daily symbol cap reached (2/2) | total=5/6 | symbol=2/2
+2026-07-20 14:44:43 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:906 | Cap block for FX Vol 80 | Daily symbol cap reached (2/2) | total=5/6 | symbol=2/2
+2026-07-20 14:44:43 | __main__ | INFO     | main:216 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-20 14:44:43 | __main__ | INFO     | main:184 | Waiting 86399 seconds before the next synthetic scan
+2026-07-20 14:49:29 | __main__ | INFO     | _request_stop:36 | Stop requested; runner will exit after the current cycle
+2026-07-20 14:49:29 | __main__ | INFO     | main:230 | Synthetic auto runner stopped
+2026-07-21 20:42:48 | __main__ | INFO     | main:169 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-21 20:42:48 | __main__ | INFO     | main:193 | Starting synthetic scan cycle 1 at 2026-07-21T20:42:48
+2026-07-21 20:43:01 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:689 | Synced closed broker trade for FX Vol 20 into local trade log | ticket=415704900
+2026-07-21 20:43:01 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:918 | Skipping FX Vol 20 on synthetic_43114003 because an open position already exists
+2026-07-21 20:43:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:998 | Deep analysis approved FX Vol 40 BUY on synthetic_43114003 | score=1.00 | primary strategy signal; EMA trend aligned; short momentum aligned; RSI aligned (54.4); ATR active (0.1773%); volatility not extreme
+2026-07-21 20:43:08 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1022 | FX Vol 40: Calculated lot size is below broker minimum; rounded up to minimum; Rounded lot size risks more than planned budget
+2026-07-21 20:43:08 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:578 | FX Vol 40 order check retcode=0 type_filling=0
+2026-07-21 20:43:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1065 | Order result FX Vol 40 retcode=10009 order=437860597 deal=416523221 price=186992.63
+2026-07-21 20:43:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1133 | Stored synthetic demo trade for FX Vol 40 | symbol cap 1/2 | total cap 2/6
+2026-07-21 20:43:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:969 | Using recent SELL signal for FX Vol 80 from 1 candle(s) ago at 25392
+2026-07-21 20:43:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:998 | Deep analysis approved FX Vol 80 SELL on synthetic_43114003 | score=1.00 | primary strategy signal; EMA trend aligned; short momentum aligned; RSI aligned (31.8); ATR active (0.3812%); volatility not extreme
+2026-07-21 20:43:15 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:578 | FX Vol 80 order check retcode=0 type_filling=0
+2026-07-21 20:43:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1065 | Order result FX Vol 80 retcode=10009 order=437860641 deal=416523268 price=39423.91
+2026-07-21 20:43:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1133 | Stored synthetic demo trade for FX Vol 80 | symbol cap 1/2 | total cap 3/6
+2026-07-21 20:43:16 | __main__ | INFO     | main:216 | Finished synthetic scan cycle 1 with exit code 0
+2026-07-21 20:43:16 | __main__ | INFO     | main:184 | Waiting 86399 seconds before the next synthetic scan
+2026-07-21 21:05:46 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:780 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 21:05:46 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:697 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 21:05:48 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:905 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 21:06:13 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:780 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 21:06:13 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:697 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 21:06:13 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:905 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 21:08:17 | __main__ | INFO     | _request_stop:36 | Stop requested; runner will exit after the current cycle
+2026-07-21 21:08:17 | __main__ | INFO     | main:230 | Synthetic auto runner stopped
+2026-07-21 21:08:23 | __main__ | INFO     | main:172 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=60 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-21 21:08:23 | __main__ | INFO     | main:187 | Waiting 84893 seconds before the next synthetic scan
+2026-07-21 21:09:41 | __main__ | INFO     | _request_stop:36 | Stop requested; runner will exit after the current cycle
+2026-07-21 21:09:42 | __main__ | INFO     | main:233 | Synthetic auto runner stopped
+2026-07-21 21:22:55 | __main__ | INFO     | main:169 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-21 21:22:55 | __main__ | INFO     | main:184 | Waiting 84020 seconds before the next synthetic scan
+2026-07-21 21:27:33 | __main__ | INFO     | _request_stop:36 | Stop requested; runner will exit after the current cycle
+2026-07-21 21:27:33 | __main__ | INFO     | main:230 | Synthetic auto runner stopped
+2026-07-21 22:06:20 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:820 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 22:06:20 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:737 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 22:06:20 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:942 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 22:06:55 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:823 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 22:06:55 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:740 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 22:06:56 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:951 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 22:07:30 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:823 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 22:07:30 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:740 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 22:07:30 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:951 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 22:12:34 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:829 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 22:12:34 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:746 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 22:12:34 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:951 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 22:13:15 | __main__ | INFO     | main:169 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-21 22:13:15 | __main__ | INFO     | main:184 | Waiting 81000 seconds before the next synthetic scan
+2026-07-21 22:13:38 | __main__ | INFO     | _request_stop:36 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:13:39 | __main__ | INFO     | main:230 | Synthetic auto runner stopped
+2026-07-21 22:14:53 | __main__ | INFO     | main:169 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-21 22:14:53 | __main__ | INFO     | main:184 | Waiting 80902 seconds before the next synthetic scan
+2026-07-21 22:15:32 | __main__ | INFO     | _request_stop:36 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:15:33 | __main__ | INFO     | main:230 | Synthetic auto runner stopped
+2026-07-21 22:15:38 | __main__ | INFO     | main:169 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-21 22:15:38 | __main__ | INFO     | main:184 | Waiting 80857 seconds before the next synthetic scan
+2026-07-21 22:20:43 | __main__ | INFO     | _request_stop:36 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:20:44 | __main__ | INFO     | main:230 | Synthetic auto runner stopped
+2026-07-21 22:20:52 | __main__ | INFO     | main:169 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | min_analysis=0.65 | dry_run=False | symbol=all
+2026-07-21 22:20:52 | __main__ | INFO     | main:184 | Waiting 80543 seconds before the next synthetic scan
+2026-07-21 22:24:01 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:833 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 22:24:01 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:750 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 22:24:02 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:955 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 22:25:22 | __main__ | INFO     | _request_stop:36 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:25:23 | __main__ | INFO     | main:230 | Synthetic auto runner stopped
+2026-07-21 22:25:28 | __main__ | INFO     | main:182 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-21 22:25:28 | __main__ | INFO     | main:199 | Waiting 80267 seconds before the next synthetic scan
+2026-07-21 22:28:37 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:833 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 22:28:37 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:750 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 22:28:37 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:955 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 22:30:01 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:30:01 | __main__ | INFO     | main:254 | Synthetic auto runner stopped
+2026-07-21 22:30:20 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True | symbol=all
+2026-07-21 22:30:20 | __main__ | INFO     | main:217 | Starting synthetic scan cycle 1 at 2026-07-21T22:30:20 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True
+2026-07-21 22:30:21 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:951 | Terminal trading is disabled; continuing because --dry-run will not submit orders
+2026-07-21 22:30:21 | __main__ | INFO     | main:245 | Finished synthetic scan cycle 1 with exit code 0 | deep_analysis=enabled | min_analysis=0.70
+2026-07-21 22:30:21 | __main__ | INFO     | main:262 | Completed first synthetic scan; stopping because --skip-wait was requested
+2026-07-21 22:30:21 | __main__ | INFO     | main:267 | Synthetic auto runner stopped
+2026-07-21 22:30:46 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True | symbol=all
+2026-07-21 22:30:46 | __main__ | INFO     | main:217 | Starting synthetic scan cycle 1 at 2026-07-21T22:30:46 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True
+2026-07-21 22:30:46 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:951 | Terminal trading is disabled; continuing because --dry-run will not submit orders
+2026-07-21 22:30:46 | __main__ | INFO     | main:245 | Finished synthetic scan cycle 1 with exit code 0 | deep_analysis=enabled | min_analysis=0.70
+2026-07-21 22:30:46 | __main__ | INFO     | main:262 | Completed first synthetic scan; stopping because --skip-wait was requested
+2026-07-21 22:30:46 | __main__ | INFO     | main:267 | Synthetic auto runner stopped
+2026-07-21 22:31:00 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-21 22:31:00 | __main__ | INFO     | main:208 | Waiting 79935 seconds before the next synthetic scan
+2026-07-21 22:32:05 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:32:05 | __main__ | INFO     | main:267 | Synthetic auto runner stopped
+2026-07-21 22:32:11 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43114003 | mt5_account=43114003 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-21 22:32:11 | __main__ | INFO     | main:208 | Waiting 79864 seconds before the next synthetic scan
+2026-07-21 22:35:45 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:35:46 | __main__ | INFO     | main:267 | Synthetic auto runner stopped
+2026-07-21 22:36:12 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-21 22:36:12 | __main__ | INFO     | main:208 | Waiting 79623 seconds before the next synthetic scan
+2026-07-21 22:36:30 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:36:31 | __main__ | INFO     | main:267 | Synthetic auto runner stopped
+2026-07-21 22:36:37 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-21 22:36:37 | __main__ | INFO     | main:208 | Waiting 79598 seconds before the next synthetic scan
+2026-07-21 22:38:35 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True | symbol=all
+2026-07-21 22:38:35 | __main__ | INFO     | main:219 | Starting synthetic scan cycle 1 at 2026-07-21T22:38:35 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True
+2026-07-21 22:38:35 | scripts.synthetic_demo_trade | ERROR    | run_trade_cycle:942 | Could not connect to MT5
+2026-07-21 22:38:35 | __main__ | INFO     | main:247 | Finished synthetic scan cycle 1 with exit code 1 | deep_analysis=enabled | min_analysis=0.70
+2026-07-21 22:38:35 | __main__ | INFO     | main:264 | Completed first synthetic scan; stopping because --skip-wait was requested
+2026-07-21 22:38:35 | __main__ | INFO     | main:271 | Synthetic auto runner stopped
+2026-07-21 22:48:18 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:48:18 | __main__ | INFO     | main:267 | Synthetic auto runner stopped
+2026-07-21 22:48:29 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True | symbol=all
+2026-07-21 22:48:29 | __main__ | INFO     | main:219 | Starting synthetic scan cycle 1 at 2026-07-21T22:48:29 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True
+2026-07-21 22:48:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1106 | Multi-timeframe analysis blocked FX Vol 20 BUY on synthetic_43038518 | score=0.36 minimum=0.70 | multi-timeframe confluence (2/7 aligned, 1 neutral); higher timeframes are mixed; opposition detected on lower timeframes
+2026-07-21 22:49:02 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1106 | Multi-timeframe analysis blocked FX Vol 40 BUY on synthetic_43038518 | score=0.64 minimum=0.70 | multi-timeframe confluence (5/7 aligned, 1 neutral); higher timeframes agree; opposition detected on lower timeframes
+2026-07-21 22:49:24 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1106 | Multi-timeframe analysis blocked FX Vol 80 SELL on synthetic_43038518 | score=0.36 minimum=0.70 | multi-timeframe confluence (1/7 aligned, 4 neutral); higher timeframes are mixed; opposition detected on lower timeframes
+2026-07-21 22:49:24 | __main__ | INFO     | main:247 | Finished synthetic scan cycle 1 with exit code 0 | deep_analysis=enabled | min_analysis=0.70
+2026-07-21 22:49:24 | __main__ | INFO     | main:264 | Completed first synthetic scan; stopping because --skip-wait was requested
+2026-07-21 22:49:24 | __main__ | INFO     | main:271 | Synthetic auto runner stopped
+2026-07-21 22:50:06 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-21 22:50:06 | __main__ | INFO     | main:210 | Waiting 78789 seconds before the next synthetic scan
+2026-07-21 22:53:55 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:833 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 22:53:55 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:750 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 22:53:55 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:955 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 22:54:13 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:833 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 22:54:13 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:750 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 22:54:13 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:955 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 22:58:00 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 22:58:01 | __main__ | INFO     | main:271 | Synthetic auto runner stopped
+2026-07-21 22:58:08 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-21 22:58:08 | __main__ | INFO     | main:210 | Waiting 78307 seconds before the next synthetic scan
+2026-07-21 23:00:28 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:833 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 23:00:28 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:750 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 23:00:28 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:955 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 23:01:55 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 23:01:55 | __main__ | INFO     | main:271 | Synthetic auto runner stopped
+2026-07-21 23:01:59 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-21 23:01:59 | __main__ | INFO     | main:210 | Waiting 78076 seconds before the next synthetic scan
+2026-07-21 23:02:04 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 23:02:04 | __main__ | INFO     | main:271 | Synthetic auto runner stopped
+2026-07-21 23:02:11 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True | symbol=all
+2026-07-21 23:02:11 | __main__ | INFO     | main:219 | Starting synthetic scan cycle 1 at 2026-07-21T23:02:11 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True
+2026-07-21 23:02:15 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1089 | Using recent SELL signal for FX Vol 20 from 2 candle(s) ago at 25890
+2026-07-21 23:02:25 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1131 | Deep analysis rejected FX Vol 20 SELL for synthetic_43038518: confidence 0.49 is below the required 0.70. 3/7 timeframes agree with the signal; 2 are neutral; higher timeframes are mixed; lower timeframes show conflicting pressure
+2026-07-21 23:02:44 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1131 | Deep analysis rejected FX Vol 40 BUY for synthetic_43038518: confidence 0.64 is below the required 0.70. 5/7 timeframes agree with the signal; 1 are neutral; higher timeframes support the move; lower timeframes show conflicting pressure
+2026-07-21 23:02:53 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 23:03:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1131 | Deep analysis rejected FX Vol 80 SELL for synthetic_43038518: confidence 0.48 is below the required 0.70. 2/7 timeframes agree with the signal; 5 are neutral; higher timeframes are mixed; no strong conflict from lower timeframes
+2026-07-21 23:03:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1348 | Scan summary: checked=3 approved=0 rejected=3 skipped=0
+2026-07-21 23:03:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1356 |   - FX Vol 20: rejected (confidence 0.49 below 0.70)
+2026-07-21 23:03:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1356 |   - FX Vol 40: rejected (confidence 0.64 below 0.70)
+2026-07-21 23:03:05 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1356 |   - FX Vol 80: rejected (confidence 0.48 below 0.70)
+2026-07-21 23:03:05 | __main__ | INFO     | main:247 | Finished synthetic scan cycle 1 with exit code 0 | deep_analysis=enabled | min_analysis=0.70
+2026-07-21 23:03:05 | __main__ | INFO     | main:264 | Completed first synthetic scan; stopping because --skip-wait was requested
+2026-07-21 23:03:05 | __main__ | INFO     | main:271 | Synthetic auto runner stopped
+2026-07-21 23:03:57 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True | symbol=all
+2026-07-21 23:03:57 | __main__ | INFO     | main:219 | Starting synthetic scan cycle 1 at 2026-07-21T23:03:57 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=True
+2026-07-21 23:04:01 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1089 | Using recent SELL signal for FX Vol 20 from 2 candle(s) ago at 25890
+2026-07-21 23:04:11 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1131 | Deep analysis rejected FX Vol 20 SELL for synthetic_43038518: confidence 0.49 is below the required 0.70. 3/7 timeframes agree with the signal; 2 are neutral; higher timeframes are mixed; lower timeframes show conflicting pressure
+2026-07-21 23:04:30 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1131 | Deep analysis rejected FX Vol 40 BUY for synthetic_43038518: confidence 0.64 is below the required 0.70. 5/7 timeframes agree with the signal; 1 are neutral; higher timeframes support the move; lower timeframes show conflicting pressure
+2026-07-21 23:04:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1131 | Deep analysis rejected FX Vol 80 SELL for synthetic_43038518: confidence 0.48 is below the required 0.70. 2/7 timeframes agree with the signal; 5 are neutral; higher timeframes are mixed; no strong conflict from lower timeframes
+2026-07-21 23:04:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1348 | Scan summary: checked=3 approved=0 rejected=3 skipped=0
+2026-07-21 23:04:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1356 |   - FX Vol 20: rejected (confidence 0.49 below 0.70)
+2026-07-21 23:04:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1356 |   - FX Vol 40: rejected (confidence 0.64 below 0.70)
+2026-07-21 23:04:52 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1356 |   - FX Vol 80: rejected (confidence 0.48 below 0.70)
+2026-07-21 23:04:52 | __main__ | INFO     | main:247 | Finished synthetic scan cycle 1 with exit code 0 | deep_analysis=enabled | min_analysis=0.70
+2026-07-21 23:04:52 | __main__ | INFO     | main:264 | Completed first synthetic scan; stopping because --skip-wait was requested
+2026-07-21 23:04:52 | __main__ | INFO     | main:271 | Synthetic auto runner stopped
+2026-07-21 23:06:07 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.70 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-21 23:06:07 | __main__ | INFO     | main:210 | Waiting 77829 seconds before the next synthetic scan
+2026-07-21 23:07:21 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:833 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-21 23:07:21 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:750 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-21 23:07:22 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:955 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-21 23:14:39 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-21 23:14:40 | __main__ | INFO     | main:271 | Synthetic auto runner stopped
+2026-07-22 10:28:06 | __main__ | INFO     | main:187 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.45 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-22 10:28:06 | __main__ | INFO     | main:210 | Waiting 36909 seconds before the next synthetic scan
+2026-07-22 10:33:46 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-22 10:33:47 | __main__ | INFO     | main:271 | Synthetic auto runner stopped
+2026-07-22 10:34:04 | __main__ | INFO     | main:199 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.45 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-22 10:34:04 | __main__ | INFO     | main:233 | Starting synthetic scan cycle 1 at 2026-07-22T10:34:04 | deep_analysis=enabled | min_analysis=0.45 | analysis_delay=35.0 | dry_run=False
+2026-07-22 10:34:23 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1146 | Deep analysis approved FX Vol 20 BUY for synthetic_43038518: confidence 0.67. 5/7 timeframes agree with the signal; 2 are neutral; higher timeframes support the move; no strong conflict from lower timeframes
+2026-07-22 10:34:23 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1234 | Pausing for 35.0 seconds to complete deep analysis before FX Vol 20
+2026-07-22 10:34:58 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:666 | FX Vol 20 order check retcode=0 type_filling=0
+2026-07-22 10:34:58 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1270 | Order result FX Vol 20 retcode=10009 order=438474741 deal=417077250 price=118313.68
+2026-07-22 10:34:58 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1338 | Stored synthetic demo trade for FX Vol 20 | symbol cap 1/2 | total cap 1/6
+2026-07-22 10:35:33 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1133 | Deep analysis rejected FX Vol 40 SELL for synthetic_43038518: confidence 0.33 is below the required 0.45. 1/7 timeframes agree with the signal; 3 are neutral; higher timeframes are mixed; lower timeframes show conflicting pressure
+2026-07-22 10:35:42 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1091 | Using recent SELL signal for FX Vol 80 from 1 candle(s) ago at 25788
+2026-07-22 10:36:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1133 | Deep analysis rejected FX Vol 80 SELL for synthetic_43038518: confidence 0.29 is below the required 0.45. 0/7 timeframes agree with the signal; 5 are neutral; higher timeframes are mixed; lower timeframes show conflicting pressure
+2026-07-22 10:36:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1350 | Scan summary: checked=3 approved=1 rejected=2 skipped=0
+2026-07-22 10:36:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 20: approved (confidence 0.67)
+2026-07-22 10:36:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 40: rejected (confidence 0.33 below 0.45)
+2026-07-22 10:36:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 80: rejected (confidence 0.29 below 0.45)
+2026-07-22 10:36:08 | __main__ | INFO     | main:261 | Finished synthetic scan cycle 1 with exit code 0 | deep_analysis=enabled | min_analysis=0.45
+2026-07-22 10:36:08 | __main__ | INFO     | main:274 | Reached --max-cycles=1; stopping runner
+2026-07-22 10:36:08 | __main__ | INFO     | main:285 | Synthetic auto runner stopped
+2026-07-22 10:57:02 | __main__ | INFO     | main:199 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=1440.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.45 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-22 10:57:02 | __main__ | INFO     | main:233 | Starting synthetic scan cycle 1 at 2026-07-22T10:57:02 | deep_analysis=enabled | min_analysis=0.45 | analysis_delay=35.0 | dry_run=False
+2026-07-22 10:57:03 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1020 | Skipping FX Vol 20 on synthetic_43038518 because an open position already exists
+2026-07-22 10:57:20 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1133 | Deep analysis rejected FX Vol 40 SELL for synthetic_43038518: confidence 0.36 is below the required 0.45. 1/7 timeframes agree with the signal; 4 are neutral; higher timeframes are mixed; lower timeframes show conflicting pressure
+2026-07-22 10:57:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1146 | Deep analysis approved FX Vol 80 BUY for synthetic_43038518: confidence 0.54. 3/7 timeframes agree with the signal; 4 are neutral; higher timeframes are mixed; no strong conflict from lower timeframes
+2026-07-22 10:57:40 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1215 | FX Vol 80: Calculated lot size exceeded broker maximum; capped
+2026-07-22 10:57:40 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1234 | Pausing for 35.0 seconds to complete deep analysis before FX Vol 80
+2026-07-22 10:58:15 | scripts.synthetic_demo_trade | INFO     | _order_check_with_filling_retry:666 | FX Vol 80 order check retcode=0 type_filling=0
+2026-07-22 10:58:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1270 | Order result FX Vol 80 retcode=10009 order=438495230 deal=417095539 price=39294.11
+2026-07-22 10:58:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1338 | Stored synthetic demo trade for FX Vol 80 | symbol cap 1/2 | total cap 2/6
+2026-07-22 10:58:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1350 | Scan summary: checked=3 approved=1 rejected=1 skipped=1
+2026-07-22 10:58:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 20: skipped (open position already exists)
+2026-07-22 10:58:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 40: rejected (confidence 0.36 below 0.45)
+2026-07-22 10:58:16 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 80: approved (confidence 0.54)
+2026-07-22 10:58:16 | __main__ | INFO     | main:261 | Finished synthetic scan cycle 1 with exit code 0 | deep_analysis=enabled | min_analysis=0.45
+2026-07-22 10:58:16 | __main__ | INFO     | main:224 | Waiting 86399 seconds before the next synthetic scan
+2026-07-22 11:08:00 | __main__ | INFO     | _request_stop:37 | Stop requested; runner will exit after the current cycle
+2026-07-22 11:08:01 | __main__ | INFO     | main:285 | Synthetic auto runner stopped
+2026-07-22 11:09:22 | __main__ | INFO     | main:200 | Synthetic auto runner started | account=synthetic_43038518 | mt5_account=43038518 | interval=5.00 minutes | timeframe=5 | signal_lookback=3 | deep_analysis=enabled | min_analysis=0.45 | analysis_delay=35.0 | dry_run=False | symbol=all
+2026-07-22 11:09:22 | __main__ | INFO     | main:234 | Starting synthetic scan cycle 1 at 2026-07-22T11:09:22 | deep_analysis=enabled | min_analysis=0.45 | analysis_delay=35.0 | dry_run=False
+2026-07-22 11:09:23 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1020 | Skipping FX Vol 20 on synthetic_43038518 because an open position already exists
+2026-07-22 11:09:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1133 | Deep analysis rejected FX Vol 40 SELL for synthetic_43038518: confidence 0.33 is below the required 0.45. 1/7 timeframes agree with the signal; 3 are neutral; higher timeframes are mixed; lower timeframes show conflicting pressure
+2026-07-22 11:09:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1020 | Skipping FX Vol 80 on synthetic_43038518 because an open position already exists
+2026-07-22 11:09:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1350 | Scan summary: checked=3 approved=0 rejected=1 skipped=2
+2026-07-22 11:09:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 20: skipped (open position already exists)
+2026-07-22 11:09:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 40: rejected (confidence 0.33 below 0.45)
+2026-07-22 11:09:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 80: skipped (open position already exists)
+2026-07-22 11:09:41 | __main__ | INFO     | main:262 | Finished synthetic scan cycle 1 with exit code 0 | deep_analysis=enabled | min_analysis=0.45
+2026-07-22 11:09:41 | __main__ | INFO     | main:225 | Waiting 299 seconds before the next synthetic scan
+2026-07-22 11:14:40 | __main__ | INFO     | main:234 | Starting synthetic scan cycle 2 at 2026-07-22T11:14:40 | deep_analysis=enabled | min_analysis=0.45 | analysis_delay=35.0 | dry_run=False
+2026-07-22 11:14:41 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1020 | Skipping FX Vol 20 on synthetic_43038518 because an open position already exists
+2026-07-22 11:14:45 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1091 | Using recent SELL signal for FX Vol 40 from 1 candle(s) ago at 25891
+2026-07-22 11:14:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1133 | Deep analysis rejected FX Vol 40 SELL for synthetic_43038518: confidence 0.26 is below the required 0.45. 0/7 timeframes agree with the signal; 4 are neutral; higher timeframes are mixed; lower timeframes show conflicting pressure
+2026-07-22 11:14:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1020 | Skipping FX Vol 80 on synthetic_43038518 because an open position already exists
+2026-07-22 11:14:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1350 | Scan summary: checked=3 approved=0 rejected=1 skipped=2
+2026-07-22 11:14:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 20: skipped (open position already exists)
+2026-07-22 11:14:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 40: rejected (confidence 0.26 below 0.45)
+2026-07-22 11:14:56 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 80: skipped (open position already exists)
+2026-07-22 11:14:56 | __main__ | INFO     | main:262 | Finished synthetic scan cycle 2 with exit code 0 | deep_analysis=enabled | min_analysis=0.45
+2026-07-22 11:14:56 | __main__ | INFO     | main:225 | Waiting 299 seconds before the next synthetic scan
+2026-07-22 11:15:35 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:896 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-22 11:15:35 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:813 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-22 11:15:35 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1018 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-22 11:19:55 | __main__ | INFO     | main:234 | Starting synthetic scan cycle 3 at 2026-07-22T11:19:55 | deep_analysis=enabled | min_analysis=0.45 | analysis_delay=35.0 | dry_run=False
+2026-07-22 11:19:55 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1020 | Skipping FX Vol 20 on synthetic_43038518 because an open position already exists
+2026-07-22 11:19:58 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1091 | Using recent SELL signal for FX Vol 40 from 2 candle(s) ago at 25890
+2026-07-22 11:20:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1133 | Deep analysis rejected FX Vol 40 SELL for synthetic_43038518: confidence 0.24 is below the required 0.45. 0/7 timeframes agree with the signal; 3 are neutral; higher timeframes are mixed; lower timeframes show conflicting pressure
+2026-07-22 11:20:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1020 | Skipping FX Vol 80 on synthetic_43038518 because an open position already exists
+2026-07-22 11:20:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1350 | Scan summary: checked=3 approved=0 rejected=1 skipped=2
+2026-07-22 11:20:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 20: skipped (open position already exists)
+2026-07-22 11:20:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 40: rejected (confidence 0.24 below 0.45)
+2026-07-22 11:20:08 | scripts.synthetic_demo_trade | INFO     | run_trade_cycle:1358 |   - FX Vol 80: skipped (open position already exists)
+2026-07-22 11:20:08 | __main__ | INFO     | main:262 | Finished synthetic scan cycle 3 with exit code 0 | deep_analysis=enabled | min_analysis=0.45
+2026-07-22 11:20:08 | __main__ | INFO     | main:225 | Waiting 299 seconds before the next synthetic scan
+2026-07-22 11:22:58 | __main__ | INFO     | _request_stop:38 | Stop requested; runner will exit after the current cycle
+2026-07-22 11:22:58 | __main__ | INFO     | main:286 | Synthetic auto runner stopped
+2026-07-22 11:24:25 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:921 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-22 11:24:25 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:838 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-22 11:24:26 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1043 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-22 11:24:43 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:921 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-22 11:24:43 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:838 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-22 11:24:43 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1043 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-22 11:36:07 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:921 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-22 11:36:07 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:838 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-22 11:36:07 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1043 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-22 11:36:45 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:921 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-22 11:36:45 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:838 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-22 11:36:45 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1043 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-22 11:37:23 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:921 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-22 11:37:23 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:838 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-22 11:37:23 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1043 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-22 11:37:33 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:921 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-22 11:37:33 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:838 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-22 11:37:33 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1043 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled
+2026-07-22 11:41:50 | scripts.synthetic_demo_trade | INFO     | _sync_broker_open_positions:921 | Synced open broker position for FX Vol 20 into local trade log | ticket=123
+2026-07-22 11:41:50 | scripts.synthetic_demo_trade | INFO     | _sync_closed_trades_from_mt5:838 | Updated local open trade to CLOSED for FX Vol 20 | ticket=101
+2026-07-22 11:41:50 | scripts.synthetic_demo_trade | WARNING  | run_trade_cycle:1043 | Terminal trading is disabled; Account trading is disabled; skipping this cycle because trading is disabled

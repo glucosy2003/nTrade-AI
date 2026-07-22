@@ -15,7 +15,6 @@ except ImportError:  # pragma: no cover - dependency is installed on Windows
 
 from backend.core.settings import settings
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -78,19 +77,27 @@ class MT5Service:
         if self.is_connected:
             return True
 
-        if self.profile_name != "default" and not all([self.account_number, self.password, self.server]):
+        if self.profile_name != "default" and not all(
+            [self.account_number, self.password, self.server]
+        ):
             self.last_error = f"MT5 {self.profile_name} profile is incomplete"
             logger.error(self.last_error)
             return False
 
-        initialized = mt5.initialize(path=self.terminal_path) if self.terminal_path else mt5.initialize()
+        initialized = (
+            mt5.initialize(path=self.terminal_path)
+            if self.terminal_path
+            else mt5.initialize()
+        )
         if not initialized:
             self.last_error = str(mt5.last_error())
             logger.error("MT5 initialization failed: %s", self.last_error)
             return False
 
         if self.profile_name == "default":
-            account_number = self._coerce_int(self.account_number or settings.mt5_account_number)
+            account_number = self._coerce_int(
+                self.account_number or settings.mt5_account_number
+            )
             password = self.password or settings.mt5_password
             server = self.server or settings.mt5_server
         else:
@@ -101,13 +108,19 @@ class MT5Service:
         if account_number is not None and password and server:
             if not mt5.login(login=account_number, password=password, server=server):
                 self.last_error = str(mt5.last_error())
-                logger.error("MT5 login failed for %s profile: %s", self.profile_name, self.last_error)
+                logger.error(
+                    "MT5 login failed for %s profile: %s",
+                    self.profile_name,
+                    self.last_error,
+                )
                 mt5.shutdown()
                 return False
 
         self.is_connected = True
         self.last_error = None
-        logger.info("MT5 terminal initialized successfully for %s profile", self.profile_name)
+        logger.info(
+            "MT5 terminal initialized successfully for %s profile", self.profile_name
+        )
         return True
 
     def disconnect(self) -> None:
@@ -201,7 +214,9 @@ class MT5Service:
             "visible": symbol_info.get("visible"),
         }
 
-    def estimate_order_margin(self, symbol: str, volume: float, order_type: str, price: float) -> Optional[float]:
+    def estimate_order_margin(
+        self, symbol: str, volume: float, order_type: str, price: float
+    ) -> Optional[float]:
         """Estimate required margin for a market order."""
         if not self.connect() or mt5 is None:
             return None
@@ -394,7 +409,11 @@ class MT5Service:
         if "tick_volume" in df.columns:
             df = df.rename(columns={"tick_volume": "volume"})
 
-        keep_columns = [column for column in ["time", "open", "high", "low", "close", "volume"] if column in df.columns]
+        keep_columns = [
+            column
+            for column in ["time", "open", "high", "low", "close", "volume"]
+            if column in df.columns
+        ]
         df = df[keep_columns].copy()
         df["symbol"] = symbol
         df["timeframe"] = self._timeframe_as_label(timeframe)
@@ -424,6 +443,50 @@ class MT5Service:
                     "profit": position.profit,
                     "open_time": position.time,
                     "comment": getattr(position, "comment", None),
+                }
+            )
+
+        return result
+
+    def get_trade_history(
+        self,
+        start: Optional[datetime] = None,
+        end: Optional[datetime] = None,
+        symbol: Optional[str] = None,
+    ) -> list[dict[str, Any]]:
+        """Return recent deal history from MT5 for the current account."""
+        if not self.connect() or mt5 is None:
+            return []
+
+        if end is None:
+            end = datetime.utcnow()
+        if start is None:
+            start = end - timedelta(hours=24)
+
+        try:
+            history = mt5.history_deals_get(start, end)
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("Trade history lookup failed: %s", exc)
+            return []
+
+        if history is None:
+            return []
+
+        result: list[dict[str, Any]] = []
+        for deal in history:
+            deal_symbol = getattr(deal, "symbol", None)
+            if symbol and deal_symbol != symbol:
+                continue
+            result.append(
+                {
+                    "ticket": getattr(deal, "ticket", None),
+                    "symbol": deal_symbol,
+                    "type": "BUY" if getattr(deal, "type", None) == 0 else "SELL",
+                    "entry_time": getattr(deal, "time", None),
+                    "price": getattr(deal, "price", None),
+                    "volume": getattr(deal, "volume", None),
+                    "profit": getattr(deal, "profit", None),
+                    "comment": getattr(deal, "comment", None),
                 }
             )
 
