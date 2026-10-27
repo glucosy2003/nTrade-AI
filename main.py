@@ -95,6 +95,17 @@ def main():
     parser.add_argument(
         "--years", type=int, default=1, help="Default lookback window in years"
     )
+    parser.add_argument(
+        "--mode",
+        choices=["default", "fxvol40_fast_profit"],
+        default="default",
+        help="Run the default trading system or the dedicated FX Vol 40 trend-fast-profit mode",
+    )
+    parser.add_argument(
+        "--fx-vol-40-fast-profit",
+        action="store_true",
+        help="Shortcut to launch the dedicated FX Vol 40 fast-profit mode",
+    )
     parser.add_argument("--version", action="version", version="nTrade AI v1.0.0")
 
     args = parser.parse_args()
@@ -104,7 +115,13 @@ def main():
     logger.info("=" * 60)
 
     try:
-        if args.test:
+        if args.fx_vol_40_fast_profit or args.mode == "fxvol40_fast_profit":
+            logger.info("\nLaunching FX Vol 40 fast-profit mode...")
+            from scripts.fx_vol_40_fast_profit import main as run_fx_vol_40_fast_profit
+
+            sys.exit(run_fx_vol_40_fast_profit(["--live"]))
+
+        elif args.test:
             # Run tests
             logger.info("\nRunning system validation tests...")
             success = run_tests()

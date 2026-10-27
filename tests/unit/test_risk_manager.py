@@ -25,3 +25,17 @@ def test_risk_manager_treats_one_as_one_percent():
     )
 
     assert plan["risk_amount"] == 100.0
+
+
+def test_risk_manager_assigns_micro_account_profile_for_small_balance():
+    manager = RiskManager(risk_per_trade_pct=0.01, reward_to_risk_ratio=2.0)
+
+    plan = manager.build_trade_plan(
+        account_balance=4.0,
+        entry_price=100.0,
+        stop_loss_price=99.0,
+    )
+
+    assert plan["risk_profile"]["tier"] == "micro"
+    assert plan["risk_amount"] == 0.05
+    assert plan["position_size"] == 0.05

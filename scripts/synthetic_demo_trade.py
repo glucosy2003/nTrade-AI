@@ -28,8 +28,12 @@ from backend.strategies.synthetic_indices import (
     SyntheticBreakoutStrategy,
     SyntheticTrendStrategy,
 )
+from backend.risk.risk_manager import RiskManager
 from database.database_manager import db_manager
-from scripts.live_trade_signal import build_trade_setup
+from scripts.live_trade_signal import build_trade_setup, _normalize_volume
+import random
+from statistics import mean
+from datetime import timedelta
 
 try:
     import MetaTrader5 as mt5
@@ -40,6 +44,11 @@ except ImportError:  # pragma: no cover - dependency is installed on Windows
 logger = setup_logger(__name__)
 
 DEFAULT_MIN_ANALYSIS_SCORE = 0.45
+ADAPTIVE_WINRATE_TARGET = 0.60
+ADAPTIVE_ALPHA = 0.25  # smoothing factor for adaptive offset
+EXPLORATION_EPSILON = 0.03  # chance to explore low-confidence trades
+MIN_RISK_MULTIPLIER = 0.5
+MAX_RISK_MULTIPLIER = 1.5
 
 
 def _resolve_account_id(explicit_account_id: str | None = None) -> str:
@@ -62,6 +71,7 @@ def _resolve_account_id(explicit_account_id: str | None = None) -> str:
 @dataclass(frozen=True)
 class SyntheticTradeOptions:
     symbol: str | None = None
+    focus_symbol: str | None = None
     account_id: str = "synthetic"
     timeframe: int = 5
     lookback_days: int = 90
@@ -81,6 +91,7 @@ class SyntheticTradeOptions:
     def from_namespace(cls, args: Namespace) -> "SyntheticTradeOptions":
         return cls(
             symbol=args.symbol,
+            focus_symbol=getattr(args, "focus_symbol", None),
             account_id=_resolve_account_id(args.account_id),
             timeframe=args.timeframe,
             lookback_days=args.lookback_days,
@@ -205,6 +216,46 @@ def _trading_disabled_warnings(terminal_info: dict, account_info: dict) -> list[
     if account_info.get("trade_allowed") is False:
         warnings.append("Account trading is disabled")
     return warnings
+
+
+def _balance_aware_trade_filters(
+    account_balance: float | None,
+    analysis_score: float,
+    spread_points: float | None,
+    signal_strength: int,
+    focus_profile: dict[str, float | int | str] | None = None,
+) -> tuple[bool, list[str], dict[str, float | str]]:
+    """Apply a stricter approval gate for small balances while preserving execution potential."""
+    if account_balance is None:
+        return True, [], {"tier": "standard", "min_score": 0.45, "risk_multiplier": 1.0}
+
+    profile = {"tier": "standard", "min_score": 0.45, "risk_multiplier": 1.0}
+    reasons: list[str] = []
+    if account_balance < 5.0:
+        profile = {"tier": "micro", "min_score": 0.70, "risk_multiplier": 0.75}
+    elif account_balance < 20.0:
+        profile = {"tier": "small", "min_score": 0.55, "risk_multiplier": 1.0}
+
+    if focus_profile is not None:
+        recent_trades_count = int(focus_profile.get("recent_trades_count", 0))
+        target_daily_trades = int(focus_profile.get("target_daily_trades", 4))
+        if recent_trades_count < target_daily_trades:
+            profile["min_score"] = 0.45
+            profile["risk_multiplier"] = max(float(profile["risk_multiplier"]), 1.0)
+
+    if (
+        spread_points is not None
+        and spread_points > 20.0
+        and profile["tier"] != "standard"
+    ):
+        reasons.append("spread too wide for small account")
+    if signal_strength == 0:
+        reasons.append("signal lacked directional strength")
+    if analysis_score < float(profile["min_score"]):
+        reasons.append(f"analysis below {float(profile['min_score']):.2f} threshold")
+
+    approved = not reasons
+    return approved, reasons, profile
 
 
 def _normalized_symbol_text(value: str) -> str:
@@ -520,7 +571,36 @@ def _deep_market_analysis(
 def _get_recent_closed_trade_feedback(
     symbol: str, account_id: str, now: datetime, lookback_hours: int = 24
 ) -> list[dict[str, object]]:
-    """Return recent closed trades from MT5 history for feedback analysis."""
+    """Return recent closed trades from local trade history first, then MT5 history."""
+    feedback: list[dict[str, object]] = []
+
+    try:
+        if hasattr(db_manager, "get_closed_trades"):
+            trade_days = max(1, int((lookback_hours + 23) // 24))
+            trades = db_manager.get_closed_trades(
+                symbol=symbol,
+                account_id=account_id,
+                days=trade_days,
+            )
+            for trade in trades:
+                profit_loss = getattr(trade, "profit_loss", None)
+                try:
+                    profit_value = (
+                        float(profit_loss) if profit_loss is not None else 0.0
+                    )
+                except (TypeError, ValueError):
+                    profit_value = 0.0
+                feedback.append(
+                    {
+                        "symbol": str(getattr(trade, "symbol", symbol) or symbol),
+                        "profit_loss": profit_value,
+                    }
+                )
+            if feedback:
+                return feedback
+    except Exception as exc:  # pragma: no cover - database/library failure
+        logger.debug("Local trade feedback lookup failed for %s: %s", symbol, exc)
+
     since = now - timedelta(hours=lookback_hours)
     try:
         history = mt5_collector.service.get_trade_history(start=since, end=now)
@@ -528,7 +608,6 @@ def _get_recent_closed_trade_feedback(
         logger.warning("Trade feedback lookup failed: %s", exc)
         return []
 
-    feedback: list[dict[str, object]] = []
     for deal in history:
         deal_symbol = str(deal.get("symbol") or "")
         deal_account = str(deal.get("account") or "")
@@ -543,6 +622,156 @@ def _get_recent_closed_trade_feedback(
             profit_value = 0.0
         feedback.append({"symbol": deal_symbol, "profit_loss": profit_value})
     return feedback
+
+
+def _compute_recent_win_rate(
+    account_id: str, symbol: str | None, lookback_days: int = 30
+) -> float:
+    """Compute simple recent win rate from closed trades in the DB."""
+    try:
+        trades = db_manager.get_closed_trades(
+            symbol=symbol, account_id=account_id, days=lookback_days
+        )
+    except Exception:
+        return 0.0
+
+    if not trades:
+        return 0.0
+
+    profits = []
+    for t in trades:
+        try:
+            pnl = float(getattr(t, "profit_loss", 0.0) or 0.0)
+        except Exception:
+            pnl = 0.0
+        profits.append(pnl)
+
+    wins = sum(1 for p in profits if p > 0)
+    return wins / max(len(profits), 1)
+
+
+def _compute_adaptive_offset(
+    account_id: str, symbol: str | None, base_alpha: float = ADAPTIVE_ALPHA
+) -> float:
+    """Return a clamped adaptive offset for the analysis threshold based on recent win-rate.
+
+    Positive offset lowers the required confidence (makes system looser) when win-rate is high;
+    negative offset tightens requirements when win-rate is poor. Output is clamped to [-0.08, 0.08].
+    """
+    recent_win = _compute_recent_win_rate(account_id, symbol, lookback_days=14)
+    target = ADAPTIVE_WINRATE_TARGET
+    # Fractional difference
+    diff = recent_win - target
+    # Convert diff into an offset using smoothing alpha
+    offset = base_alpha * diff
+    # Clamp offset
+    offset = max(min(offset, 0.08), -0.08)
+    return offset
+
+
+def _compute_risk_multiplier(
+    analysis_score: float,
+    feedback_profile: dict | None = None,
+    focus_profile: dict | None = None,
+) -> float:
+    """Map analysis confidence to a risk multiplier in a stable manner."""
+    base = max(0.0, min(1.0, float(analysis_score or 0.0)))
+    # simple mapping: center confidence 0.5 -> multiplier ~1.0
+    multiplier = MIN_RISK_MULTIPLIER + (
+        base * (MAX_RISK_MULTIPLIER - MIN_RISK_MULTIPLIER)
+    )
+
+    # incorporate feedback and focus multipliers if present
+    if feedback_profile:
+        try:
+            multiplier *= float(feedback_profile.get("risk_multiplier", 1.0))
+        except Exception:
+            pass
+    if focus_profile:
+        try:
+            multiplier *= float(focus_profile.get("risk_multiplier", 1.0))
+        except Exception:
+            pass
+
+    # clamp final multiplier
+    multiplier = max(MIN_RISK_MULTIPLIER, min(MAX_RISK_MULTIPLIER, multiplier))
+    return multiplier
+
+
+def _build_symbol_focus_profile(
+    recent_trades_count: int, target_daily_trades: int = 4
+) -> dict[str, float | int | str]:
+    """Build a focused-symbol profile that encourages activity until a daily target is reached."""
+    target = max(1, int(target_daily_trades))
+    if recent_trades_count >= target:
+        return {
+            "threshold_offset": 0.0,
+            "risk_multiplier": 1.0,
+            "confidence_bias": 0.0,
+            "recent_trades_count": recent_trades_count,
+            "target_daily_trades": target,
+            "summary": f"focus target reached ({recent_trades_count}/{target})",
+        }
+
+    deficit = target - recent_trades_count
+    if deficit >= 2:
+        return {
+            "threshold_offset": -0.03,
+            "risk_multiplier": 1.03,
+            "confidence_bias": 0.02,
+            "recent_trades_count": recent_trades_count,
+            "target_daily_trades": target,
+            "summary": f"focus target pending ({recent_trades_count}/{target})",
+        }
+
+    return {
+        "threshold_offset": -0.02,
+        "risk_multiplier": 1.02,
+        "confidence_bias": 0.01,
+        "recent_trades_count": recent_trades_count,
+        "target_daily_trades": target,
+        "summary": f"focus target pending ({recent_trades_count}/{target})",
+    }
+
+
+def _build_profit_target_profile(
+    account_balance: float | None, recent_trade_count: int = 0
+) -> dict[str, float | int | str]:
+    """Build a conservative profit-target profile for safer money-making."""
+    balance = float(account_balance or 100.0)
+    recent_count = max(0, int(recent_trade_count))
+
+    if balance < 20.0:
+        profit_floor = 2.0
+        daily_target = 8.0
+        daily_loss_floor = 4.0
+        threshold_offset = 0.05
+        risk_multiplier = 0.85
+        confidence_bias = -0.03
+    elif balance < 100.0:
+        profit_floor = 2.5
+        daily_target = 8.0
+        daily_loss_floor = 4.5
+        threshold_offset = 0.04 if recent_count < 2 else 0.02
+        risk_multiplier = 0.90 if recent_count < 2 else 0.95
+        confidence_bias = -0.02 if recent_count < 2 else 0.0
+    else:
+        profit_floor = 2.8
+        daily_target = 10.0
+        daily_loss_floor = 5.0
+        threshold_offset = 0.03 if recent_count < 2 else 0.0
+        risk_multiplier = 0.92 if recent_count < 2 else 0.98
+        confidence_bias = -0.01 if recent_count < 2 else 0.0
+
+    return {
+        "profit_floor": round(profit_floor, 2),
+        "daily_target": round(daily_target, 2),
+        "daily_loss_floor": round(daily_loss_floor, 2),
+        "threshold_offset": round(threshold_offset, 2),
+        "risk_multiplier": round(risk_multiplier, 2),
+        "confidence_bias": round(confidence_bias, 2),
+        "summary": "profit-target discipline: wait for stronger setups",
+    }
 
 
 def _build_feedback_profile(
@@ -635,6 +864,118 @@ def _count_recent_mt5_activity(
     return len(seen_total), len(seen_symbol)
 
 
+def _trade_setup_has_blocking_warnings(warnings: list[str]) -> bool:
+    """Return True when the trade setup has warnings that materially break execution policy."""
+    blocked_keywords = {
+        "calculated lot size exceeded broker maximum",
+        "calculated lot size is zero",
+    }
+    lowered = [str(warning).lower() for warning in warnings or []]
+    return any(
+        keyword in warning for warning in lowered for keyword in blocked_keywords
+    )
+
+
+def _trade_setup_meets_min_reward_target(
+    trade_setup: dict[str, object],
+    min_reward: float = 2.0,
+    profit_target_profile: dict[str, object] | None = None,
+) -> bool:
+    """Return True when the trade setup can reasonably reach the configured reward floor."""
+    try:
+        risk_amount = float(
+            trade_setup.get("actual_risk_amount")
+            or trade_setup.get("risk_amount")
+            or 0.0
+        )
+    except (TypeError, ValueError):
+        risk_amount = 0.0
+
+    if risk_amount <= 0.0:
+        return False
+
+    try:
+        reward_to_risk = float(trade_setup.get("risk_reward_ratio") or 0.0)
+    except (TypeError, ValueError):
+        reward_to_risk = 0.0
+
+    if reward_to_risk <= 0.0:
+        return False
+
+    effective_min_reward = float(min_reward)
+    if profit_target_profile is not None:
+        try:
+            profile_floor = float(profit_target_profile.get("profit_floor") or 0.0)
+        except (TypeError, ValueError):
+            profile_floor = 0.0
+        if profile_floor > 0.0:
+            effective_min_reward = max(effective_min_reward, profile_floor)
+
+    projected_reward = risk_amount * reward_to_risk
+    return projected_reward >= effective_min_reward
+
+
+def _apply_micro_account_policy(
+    trade_setup: dict[str, object], analysis_score: float, account_balance: float
+) -> tuple[bool, str | None]:
+    """Enforce micro-account rules: for balances <= $15 require high-confidence
+    setups that project > $3 reward, then place TP strictly in $2-$3 range.
+
+    Returns (allowed: bool, reason_or_none).
+    """
+    try:
+        if float(account_balance) > 15.0:
+            return True, None
+    except Exception:
+        return True, None
+
+    # micro account policy thresholds
+    MIN_CONFIDENCE = 0.75
+    REQUIRED_PROJECTED_REWARD = 3.0
+
+    try:
+        projected_reward = float(trade_setup.get("actual_risk_amount", 0.0)) * float(
+            trade_setup.get("risk_reward_ratio", 0.0)
+        )
+    except Exception:
+        projected_reward = 0.0
+
+    if float(analysis_score or 0.0) < MIN_CONFIDENCE:
+        return False, f"micro-account requires confidence>={MIN_CONFIDENCE:.2f}"
+
+    if projected_reward < REQUIRED_PROJECTED_REWARD:
+        return (
+            False,
+            f"projected reward ${projected_reward:.2f} below required ${REQUIRED_PROJECTED_REWARD:.2f}",
+        )
+
+    # enforce conservative TP between $2 and $3 (choose min(projected,3) but >=2)
+    desired_reward = max(2.0, min(3.0, projected_reward))
+    try:
+        entry = float(trade_setup.get("entry_price") or 0.0)
+        direction = 1 if int(trade_setup.get("signal", 0)) > 0 else -1
+        new_tp = entry + (direction * desired_reward)
+        trade_setup["take_profit"] = new_tp
+        # recompute risk_reward_ratio to reflect new TP
+        try:
+            risk = float(trade_setup.get("actual_risk_amount") or 0.0)
+            new_rr = (
+                desired_reward / risk
+                if risk > 0
+                else trade_setup.get("risk_reward_ratio")
+            )
+            trade_setup["risk_reward_ratio"] = float(new_rr)
+        except Exception:
+            pass
+        trade_setup.setdefault("warnings", []).append(
+            f"micro-account TP enforced ${desired_reward:.2f}"
+        )
+    except Exception:
+        return False, "failed to enforce micro-account TP"
+
+    return True, None
+
+
 def _trade_allowed(
     account_id: str,
     symbol: str,
@@ -663,13 +1004,91 @@ def _trade_allowed(
     return not warnings, warnings
 
 
+def _extract_trade_ticket_from_notes(notes: str | None) -> str | None:
+    """Parse an MT5 trade ticket from local trade notes."""
+    if not notes:
+        return None
+
+    for segment in str(notes).split(";"):
+        if segment.strip().startswith("trade_id="):
+            _, _, ticket = segment.partition("=")
+            return ticket.strip() or None
+
+    return None
+
+
+def _reconcile_stale_local_open_trades(
+    account_id: str,
+    symbol: str,
+    open_trades: list,
+    active_tickets: set[str],
+) -> None:
+    """Close stale local open trades that have no matching active broker ticket."""
+    for trade in open_trades:
+        ticket = _extract_trade_ticket_from_notes(getattr(trade, "notes", None))
+        if not ticket or ticket in active_tickets:
+            continue
+
+        try:
+            db_manager.update_trade(
+                trade.id,
+                {
+                    "status": "CLOSED",
+                    "exit_time": datetime.now(),
+                    "exit_price": float(getattr(trade, "entry_price", 0.0)),
+                    "profit_loss": 0.0,
+                    "profit_loss_percent": 0.0,
+                    "exit_reason": "STALE_LOCAL_RECONCILE",
+                    "notes": f"{getattr(trade, 'notes', '')}; reconciled_stale_open_trade",
+                },
+            )
+            logger.info(
+                "Closed stale local open trade %s for %s/%s",
+                ticket,
+                account_id,
+                symbol,
+            )
+        except Exception as exc:
+            logger.warning(
+                "Failed to reconcile stale local open trade %s for %s/%s: %s",
+                ticket,
+                account_id,
+                symbol,
+                exc,
+            )
+
+
 def _has_open_position(account_id: str, symbol: str) -> bool:
-    """Return True when MT5 or the local trade log already has an open position."""
+    """Return True when MT5 or the local trade log indicates an open position."""
     broker_positions = mt5_collector.get_positions()
     if any(position.get("symbol") == symbol for position in broker_positions):
         return True
 
-    return bool(db_manager.get_open_trades(symbol=symbol, account_id=account_id))
+    open_trades = db_manager.get_open_trades(symbol=symbol, account_id=account_id)
+    if not open_trades:
+        return False
+
+    if not mt5_collector.is_connected:
+        # Broker state unavailable; preserve defensive local open-position protection.
+        return True
+
+    active_tickets = {
+        str(position.get("ticket") or "")
+        for position in broker_positions
+        if position.get("symbol") == symbol
+    }
+    for trade in open_trades:
+        ticket = _extract_trade_ticket_from_notes(getattr(trade, "notes", None))
+        if ticket and ticket in active_tickets:
+            return True
+
+    _reconcile_stale_local_open_trades(account_id, symbol, open_trades, active_tickets)
+    logger.info(
+        "Ignoring stale local OPEN trades for %s/%s because broker has no matching active position",
+        account_id,
+        symbol,
+    )
+    return False
 
 
 def _build_order_request(
@@ -936,6 +1355,11 @@ def build_parser() -> ArgumentParser:
         help="Trade only one resolved symbol, or bucket: 20, 40, 80",
     )
     parser.add_argument(
+        "--focus-symbol",
+        default=None,
+        help="Restrict trading to one specific broker symbol and use a focused-symbol feedback profile",
+    )
+    parser.add_argument(
         "--account-id",
         default=str(
             settings.mt5_account_profile("synthetic").get("account_id") or "synthetic"
@@ -1056,7 +1480,8 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
             logger.info("  %s", symbol)
         return 0
 
-    targets = _resolve_trade_targets(options.symbol)
+    requested_symbol = options.focus_symbol or options.symbol
+    targets = _resolve_trade_targets(requested_symbol)
     if not targets:
         logger.error("No synthetic symbols resolved from broker symbol list")
         return 1
@@ -1189,15 +1614,47 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
             analysis_approved = False
             effective_min_score = options.min_analysis_score
             feedback_profile: dict[str, float | int | str] | None = None
+            focus_profile: dict[str, float | int | str] | None = None
+            profit_target_profile: dict[str, float | int | str] | None = None
             feedback_reasons: list[str] = []
             if options.deep_analysis:
                 feedback_trades = _get_recent_closed_trade_feedback(
                     symbol, account_id, now, lookback_hours=24
                 )
                 feedback_profile = _build_feedback_profile(feedback_trades)
+                profit_target_profile = _build_profit_target_profile(
+                    account_balance=account_balance,
+                    recent_trade_count=len(feedback_trades),
+                )
                 feedback_reasons = [str(feedback_profile.get("summary", ""))]
+                feedback_reasons.append(str(profit_target_profile.get("summary", "")))
+                if options.focus_symbol or requested_symbol not in {"20", "40", "80"}:
+                    focus_trade_count = len(feedback_trades)
+                    focus_profile = _build_symbol_focus_profile(
+                        focus_trade_count,
+                        target_daily_trades=4,
+                    )
+                    feedback_reasons.append(str(focus_profile.get("summary", "")))
+
+                # base effective threshold starts from configured minimum
+                effective_min_score = options.min_analysis_score
+
+                # incorporate adaptive controller based on recent win-rate
+                try:
+                    adaptive_offset = _compute_adaptive_offset(account_id, symbol)
+                    effective_min_score = float(effective_min_score) + float(
+                        adaptive_offset
+                    )
+                    logger.info(
+                        "Adaptive offset for %s: %.3f | recent win-rate adjusted threshold",
+                        symbol,
+                        adaptive_offset,
+                    )
+                except Exception:
+                    adaptive_offset = 0.0
+
                 if feedback_profile.get("reviewed_trades", 0):
-                    effective_min_score = options.min_analysis_score + float(
+                    effective_min_score = float(effective_min_score) + float(
                         feedback_profile.get("threshold_offset", 0.0)
                     )
                     logger.info(
@@ -1208,6 +1665,29 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                         feedback_profile.get("confidence_bias", 0.0),
                         feedback_profile.get("summary", ""),
                     )
+                if focus_profile is not None:
+                    effective_min_score = float(effective_min_score) + float(
+                        focus_profile.get("threshold_offset", 0.0)
+                    )
+                    logger.info(
+                        "Focused-symbol profile for %s: threshold_offset %.2f risk_multiplier %.2f confidence_bias %.2f | %s",
+                        symbol,
+                        focus_profile.get("threshold_offset", 0.0),
+                        focus_profile.get("risk_multiplier", 1.0),
+                        focus_profile.get("confidence_bias", 0.0),
+                        focus_profile.get("summary", ""),
+                    )
+                effective_min_score = float(effective_min_score) + float(
+                    profit_target_profile.get("threshold_offset", 0.0)
+                )
+                logger.info(
+                    "Profit-target profile for %s: threshold_offset %.2f risk_multiplier %.2f confidence_bias %.2f | %s",
+                    symbol,
+                    profit_target_profile.get("threshold_offset", 0.0),
+                    profit_target_profile.get("risk_multiplier", 1.0),
+                    profit_target_profile.get("confidence_bias", 0.0),
+                    profit_target_profile.get("summary", ""),
+                )
                 timeframe_signals: dict[str, int] = {}
                 for name, frame_data in multi_timeframe_data.items():
                     if frame_data is None or getattr(frame_data, "empty", False):
@@ -1234,35 +1714,62 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                         )
                     )
                     if not confluence_passed:
-                        summary["rejected"] += 1
-                        summary["details"].append(
-                            f"{symbol}: rejected (confidence {confluence_score:.2f} below {effective_min_score:.2f})"
+                        # exploration: allow a small-probability exploratory trade with tiny size
+                        if random.random() < EXPLORATION_EPSILON:
+                            analysis_score = max(0.0, float(confluence_score))
+                            analysis_reasons = confluence_reasons + [
+                                f"exploration epsilon {EXPLORATION_EPSILON:.3f} allowed"
+                            ]
+                            analysis_approved = True
+                            logger.info(
+                                "Exploration allowed %s %s for %s: confidence %.2f. %s",
+                                symbol,
+                                "BUY" if latest_signal > 0 else "SELL",
+                                account_id,
+                                analysis_score,
+                                "; ".join(analysis_reasons),
+                            )
+                        else:
+                            summary["rejected"] += 1
+                            summary["details"].append(
+                                f"{symbol}: rejected (confidence {confluence_score:.2f} below {effective_min_score:.2f})"
+                            )
+                            logger.info(
+                                "Deep analysis rejected %s %s for %s: confidence %.2f is below the required %.2f. %s",
+                                symbol,
+                                "BUY" if latest_signal > 0 else "SELL",
+                                account_id,
+                                confluence_score,
+                                effective_min_score,
+                                "; ".join(confluence_reasons),
+                            )
+                            continue
+                    else:
+                        analysis_score = min(
+                            1.0,
+                            confluence_score
+                            + float(feedback_profile.get("confidence_bias", 0.0))
+                            + (
+                                float(focus_profile.get("confidence_bias", 0.0))
+                                if focus_profile is not None
+                                else 0.0
+                            )
+                            + (
+                                float(profit_target_profile.get("confidence_bias", 0.0))
+                                if profit_target_profile is not None
+                                else 0.0
+                            ),
                         )
+                        analysis_reasons = confluence_reasons + feedback_reasons
+                        analysis_approved = True
                         logger.info(
-                            "Deep analysis rejected %s %s for %s: confidence %.2f is below the required %.2f. %s",
+                            "Deep analysis approved %s %s for %s: confidence %.2f. %s",
                             symbol,
                             "BUY" if latest_signal > 0 else "SELL",
                             account_id,
-                            confluence_score,
-                            effective_min_score,
-                            "; ".join(confluence_reasons),
+                            analysis_score,
+                            "; ".join(analysis_reasons),
                         )
-                        continue
-                    analysis_score = min(
-                        1.0,
-                        confluence_score
-                        + float(feedback_profile.get("confidence_bias", 0.0)),
-                    )
-                    analysis_reasons = confluence_reasons + feedback_reasons
-                    analysis_approved = True
-                    logger.info(
-                        "Deep analysis approved %s %s for %s: confidence %.2f. %s",
-                        symbol,
-                        "BUY" if latest_signal > 0 else "SELL",
-                        account_id,
-                        analysis_score,
-                        "; ".join(analysis_reasons),
-                    )
                 else:
                     analysis_passed, analysis_score, analysis_reasons = (
                         _deep_market_analysis(
@@ -1273,20 +1780,32 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                         )
                     )
                     if not analysis_passed:
-                        summary["rejected"] += 1
-                        summary["details"].append(
-                            f"{symbol}: rejected (confidence {analysis_score:.2f} below {effective_min_score:.2f})"
-                        )
-                        logger.info(
-                            "Deep analysis rejected %s %s for %s: confidence %.2f is below the required %.2f. %s",
-                            symbol,
-                            "BUY" if latest_signal > 0 else "SELL",
-                            account_id,
-                            analysis_score,
-                            effective_min_score,
-                            "; ".join(analysis_reasons),
-                        )
-                        continue
+                        # exploration path for single-timeframe analysis
+                        if random.random() < EXPLORATION_EPSILON:
+                            analysis_approved = True
+                            logger.info(
+                                "Exploration allowed (single timeframe) %s %s for %s: confidence %.2f. %s",
+                                symbol,
+                                "BUY" if latest_signal > 0 else "SELL",
+                                account_id,
+                                analysis_score,
+                                "; ".join(analysis_reasons),
+                            )
+                        else:
+                            summary["rejected"] += 1
+                            summary["details"].append(
+                                f"{symbol}: rejected (confidence {analysis_score:.2f} below {effective_min_score:.2f})"
+                            )
+                            logger.info(
+                                "Deep analysis rejected %s %s for %s: confidence %.2f is below the required %.2f. %s",
+                                symbol,
+                                "BUY" if latest_signal > 0 else "SELL",
+                                account_id,
+                                analysis_score,
+                                effective_min_score,
+                                "; ".join(analysis_reasons),
+                            )
+                            continue
                     analysis_approved = True
                     logger.info(
                         "Deep analysis approved %s %s for %s: confidence %.2f. %s",
@@ -1304,12 +1823,35 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                 summary["details"].append(f"{symbol}: rejected (analysis not approved)")
                 continue
 
+            trade_context = mt5_collector.service.symbol_trade_context(symbol) or {}
+            spread_points = float(trade_context.get("spread") or 0.0)
+            balance_filters_ok, balance_reasons, balance_profile = (
+                _balance_aware_trade_filters(
+                    account_balance,
+                    analysis_score,
+                    spread_points,
+                    latest_signal,
+                    focus_profile=focus_profile,
+                )
+            )
+            if not balance_filters_ok:
+                summary["rejected"] += 1
+                summary["details"].append(
+                    f"{symbol}: rejected by micro-account filter ({'; '.join(balance_reasons)})"
+                )
+                logger.info(
+                    "%s: rejected for account balance %.2f | %s",
+                    symbol,
+                    account_balance if account_balance is not None else 0.0,
+                    "; ".join(balance_reasons),
+                )
+                continue
+
             summary["approved"] += 1
             summary["details"].append(
                 f"{symbol}: approved (confidence {analysis_score:.2f})"
             )
 
-            trade_context = mt5_collector.service.symbol_trade_context(symbol) or {}
             trade_setup = build_trade_setup(
                 symbol=symbol,
                 signal=latest_signal,
@@ -1320,23 +1862,155 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                 trade_context=trade_context,
                 max_spread_points=options.max_spread_points,
             )
-            if feedback_profile is not None:
-                risk_multiplier = float(feedback_profile.get("risk_multiplier", 1.0))
+            risk_manager = RiskManager(risk_per_trade_pct=options.risk_per_trade)
+            trade_plan = risk_manager.build_trade_plan(
+                account_balance=float(account_balance or 0.0),
+                entry_price=float(trade_setup["entry_price"]),
+                stop_loss_price=float(trade_setup["stop_loss"]),
+                take_profit_price=float(trade_setup["take_profit"]),
+            )
+            trade_setup["risk_amount"] = float(trade_plan["risk_amount"])
+            trade_setup["actual_risk_amount"] = float(trade_plan["risk_amount"])
+            trade_setup["risk_profile"] = trade_plan["risk_profile"]
+            trade_setup["warnings"].append(
+                f"risk tier {trade_plan['risk_profile']['tier']}"
+            )
+            if (
+                feedback_profile is not None
+                or focus_profile is not None
+                or profit_target_profile is not None
+            ):
+                # compute analysis-aware risk multiplier
+                try:
+                    computed_multiplier = _compute_risk_multiplier(
+                        analysis_score,
+                        feedback_profile=feedback_profile,
+                        focus_profile=focus_profile,
+                    )
+                except Exception:
+                    computed_multiplier = 1.0
+
+                # preserve any existing profile multipliers as well
+                try:
+                    profile_mult = (
+                        float(feedback_profile.get("risk_multiplier", 1.0))
+                        if feedback_profile
+                        else 1.0
+                    )
+                except Exception:
+                    profile_mult = 1.0
+                try:
+                    focus_mult = (
+                        float(focus_profile.get("risk_multiplier", 1.0))
+                        if focus_profile
+                        else 1.0
+                    )
+                except Exception:
+                    focus_mult = 1.0
+                try:
+                    profit_mult = (
+                        float(profit_target_profile.get("risk_multiplier", 1.0))
+                        if profit_target_profile
+                        else 1.0
+                    )
+                except Exception:
+                    profit_mult = 1.0
+
+                risk_multiplier = (
+                    computed_multiplier * profile_mult * focus_mult * profit_mult
+                )
+
                 trade_setup["risk_amount"] = (
                     float(trade_setup["risk_amount"]) * risk_multiplier
                 )
-                trade_setup["lot_size"] = (
-                    float(trade_setup["lot_size"]) * risk_multiplier
+                # scale volumes and recompute normalized lot size to respect broker limits
+                scaled_lot = float(trade_setup["lot_size"]) * risk_multiplier
+                min_vol = float(trade_setup.get("volume_min") or 0.01)
+                max_vol = float(
+                    trade_setup.get("volume_max") or max(scaled_lot, min_vol)
                 )
-                trade_setup["position_size"] = (
-                    float(trade_setup["position_size"]) * risk_multiplier
-                )
-                trade_setup["actual_risk_amount"] = (
-                    float(trade_setup.get("actual_risk_amount", 0.0)) * risk_multiplier
-                )
+                vol_step = float(trade_setup.get("volume_step") or 0.01)
+                try:
+                    normalized_lot = _normalize_volume(
+                        scaled_lot, min_vol, max_vol, vol_step
+                    )
+                except Exception:
+                    normalized_lot = max(min_vol, min(scaled_lot, max_vol))
+
+                trade_setup["lot_size"] = normalized_lot
+                trade_setup["position_size"] = normalized_lot
+
+                # recompute actual risk amount based on instrument parameters
+                try:
+                    market_entry = float(trade_setup.get("entry_price") or 0.0)
+                    stop_price = float(trade_setup.get("stop_loss") or market_entry)
+                    trade_tick_size = float(trade_setup.get("trade_tick_size") or 0.0)
+                    trade_tick_value = float(trade_setup.get("trade_tick_value") or 0.0)
+                    trade_contract_size = float(
+                        trade_setup.get("trade_contract_size") or 0.0
+                    )
+                    if trade_tick_size > 0 and trade_tick_value > 0:
+                        risk_per_lot = (
+                            abs(market_entry - stop_price)
+                            / trade_tick_size
+                            * trade_tick_value
+                        )
+                    elif trade_contract_size > 0:
+                        risk_per_lot = (
+                            abs(market_entry - stop_price) * trade_contract_size
+                        )
+                    else:
+                        risk_per_lot = abs(market_entry - stop_price)
+                    actual_risk = risk_per_lot * float(trade_setup["lot_size"])
+                except Exception:
+                    actual_risk = (
+                        float(trade_setup.get("actual_risk_amount", 0.0))
+                        * risk_multiplier
+                    )
+
+                trade_setup["actual_risk_amount"] = actual_risk
+
+                # refresh warnings: if capping no longer applies remove that warning
+                refreshed_warnings: list[str] = []
+                for w in trade_setup.get("warnings", []):
+                    lw = str(w).lower()
+                    if "calculated lot size exceeded broker maximum" in lw:
+                        # if normalized lot is strictly below max, drop the capped warning
+                        if float(trade_setup.get("lot_size", 0.0)) < max_vol:
+                            continue
+                    if "calculated lot size is zero" in lw:
+                        if float(trade_setup.get("lot_size", 0.0)) > 0:
+                            continue
+                    refreshed_warnings.append(w)
+                trade_setup["warnings"] = refreshed_warnings
+
                 trade_setup["warnings"].append(
                     f"adaptive risk multiplier {risk_multiplier:.2f}"
                 )
+                # Apply micro-account policy for tiny balances
+                micro_ok, micro_reason = _apply_micro_account_policy(
+                    trade_setup, analysis_score, account_balance
+                )
+                if not micro_ok:
+                    summary["rejected"] += 1
+                    summary["details"].append(f"{symbol}: rejected ({micro_reason})")
+                    logger.info(
+                        "%s: rejected for micro-account policy (%s)",
+                        symbol,
+                        micro_reason,
+                    )
+                    continue
+            if float(trade_setup["position_size"]) <= 0:
+                summary["rejected"] += 1
+                summary["details"].append(
+                    f"{symbol}: rejected (zero or negative risk size)"
+                )
+                logger.warning(
+                    "%s: rejected because computed position size is %.5f",
+                    symbol,
+                    float(trade_setup["position_size"]),
+                )
+                continue
             trade_setup["magic"] = _synthetic_magic(account_id, bucket)
             trade_setup["comment"] = f"syn_{account_id}_{bucket}"[:31]
 
@@ -1354,6 +2028,45 @@ def run_trade_cycle(options: SyntheticTradeOptions) -> int:
                     for warning in trade_setup["warnings"]
                 ):
                     continue
+                if _trade_setup_has_blocking_warnings(trade_setup["warnings"]):
+                    summary["rejected"] += 1
+                    summary["details"].append(
+                        f"{symbol}: rejected (risk budget warning: {'; '.join(trade_setup['warnings'])})"
+                    )
+                    logger.warning(
+                        "%s: rejecting trade because the setup breaks the planned risk budget: %s",
+                        symbol,
+                        "; ".join(trade_setup["warnings"]),
+                    )
+                    continue
+
+            effective_min_reward = 2.0
+            if profit_target_profile is not None:
+                try:
+                    effective_min_reward = max(
+                        effective_min_reward,
+                        float(profit_target_profile.get("profit_floor") or 2.0),
+                    )
+                except (TypeError, ValueError):
+                    effective_min_reward = 2.0
+
+            if not _trade_setup_meets_min_reward_target(
+                trade_setup,
+                min_reward=effective_min_reward,
+                profit_target_profile=profit_target_profile,
+            ):
+                summary["rejected"] += 1
+                summary["details"].append(
+                    f"{symbol}: rejected (projected reward below ${effective_min_reward:.2f} minimum)"
+                )
+                logger.warning(
+                    "%s: rejecting trade because projected reward %.2f is below the $%.2f minimum",
+                    symbol,
+                    float(trade_setup.get("risk_amount") or 0.0)
+                    * float(trade_setup.get("risk_reward_ratio") or 0.0),
+                    effective_min_reward,
+                )
+                continue
 
             if (
                 options.deep_analysis

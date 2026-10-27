@@ -84,16 +84,6 @@ class MT5Service:
             logger.error(self.last_error)
             return False
 
-        initialized = (
-            mt5.initialize(path=self.terminal_path)
-            if self.terminal_path
-            else mt5.initialize()
-        )
-        if not initialized:
-            self.last_error = str(mt5.last_error())
-            logger.error("MT5 initialization failed: %s", self.last_error)
-            return False
-
         if self.profile_name == "default":
             account_number = self._coerce_int(
                 self.account_number or settings.mt5_account_number
@@ -105,7 +95,31 @@ class MT5Service:
             password = self.password
             server = self.server
 
-        if account_number is not None and password and server:
+        # If terminal is already initialized with a different session, shut down first
+        # to allow switching accounts cleanly
+        try:
+            term_info = mt5.terminal_info()
+            if term_info is not None:
+                # Try to shut down to force clean reinitialization for account switching
+                try:
+                    mt5.shutdown()
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+        initialize_kwargs: dict[str, Any] = {}
+        if self.terminal_path:
+            initialize_kwargs["path"] = self.terminal_path
+        
+        initialized = mt5.initialize(**initialize_kwargs)
+        if not initialized:
+            self.last_error = str(mt5.last_error())
+            logger.error("MT5 initialization failed: %s", self.last_error)
+            return False
+
+        credentials_provided = bool(account_number is not None and password and server)
+        if credentials_provided:
             if not mt5.login(login=account_number, password=password, server=server):
                 self.last_error = str(mt5.last_error())
                 logger.error(
@@ -113,7 +127,10 @@ class MT5Service:
                     self.profile_name,
                     self.last_error,
                 )
-                mt5.shutdown()
+                try:
+                    mt5.shutdown()
+                except Exception:
+                    pass
                 return False
 
         self.is_connected = True
@@ -234,6 +251,35 @@ class MT5Service:
             return float(margin) if margin is not None else None
         except Exception as exc:  # pragma: no cover - broker/library failure
             logger.warning("Margin estimate failed for %s: %s", symbol, exc)
+            return None
+
+    def estimate_order_profit(
+        self,
+        symbol: str,
+        volume: float,
+        order_type: str,
+        open_price: float,
+        close_price: float,
+    ) -> Optional[float]:
+        """Estimate order P/L in the account currency using MT5 contract rules."""
+        if not self.connect() or mt5 is None:
+            return None
+
+        order_type_map = {
+            "BUY": getattr(mt5, "ORDER_TYPE_BUY", None),
+            "SELL": getattr(mt5, "ORDER_TYPE_SELL", None),
+        }
+        mt5_order_type = order_type_map.get(order_type.upper())
+        if mt5_order_type is None:
+            return None
+
+        try:
+            profit = mt5.order_calc_profit(
+                mt5_order_type, symbol, volume, open_price, close_price
+            )
+            return float(profit) if profit is not None else None
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("P/L estimate failed for %s: %s", symbol, exc)
             return None
 
     def supported_filling_modes(self, symbol: str) -> list[int]:

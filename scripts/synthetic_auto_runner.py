@@ -120,6 +120,11 @@ def main() -> int:
         help="Trade only one resolved symbol, or bucket: 20, 40, 80",
     )
     parser.add_argument(
+        "--focus-symbol",
+        default=None,
+        help="Restrict trading to one specific broker symbol and use the focused-symbol feedback profile",
+    )
+    parser.add_argument(
         "--account-id", default=None, help="Local account identifier for DB isolation"
     )
     parser.add_argument(
@@ -208,7 +213,7 @@ def main() -> int:
         args.min_analysis_score,
         args.analysis_delay_seconds,
         args.dry_run,
-        args.symbol or "all",
+        args.focus_symbol or args.symbol or "all",
     )
 
     while not _STOP_REQUESTED:
@@ -243,6 +248,7 @@ def main() -> int:
 
         options = SyntheticTradeOptions(
             symbol=args.symbol,
+            focus_symbol=args.focus_symbol,
             account_id=args.account_id,
             timeframe=args.timeframe,
             lookback_days=args.lookback_days,

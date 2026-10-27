@@ -27,10 +27,16 @@ class FakeSymbolInfo:
         self.filling_mode = filling_mode
 
     def _asdict(self) -> dict:
-        return {"name": self.name, "visible": self.visible, "filling_mode": self.filling_mode}
+        return {
+            "name": self.name,
+            "visible": self.visible,
+            "filling_mode": self.filling_mode,
+        }
 
 
 class FakeMT5:
+    ORDER_TYPE_BUY = 0
+    ORDER_TYPE_SELL = 1
     ORDER_FILLING_FOK = 0
     ORDER_FILLING_IOC = 1
     ORDER_FILLING_RETURN = 2
@@ -43,6 +49,10 @@ class FakeMT5:
     def symbol_info_tick(self, symbol: str) -> FakeTick:
         return FakeTick()
 
+    def order_calc_profit(self, order_type, symbol, volume, open_price, close_price):
+        direction = 1 if order_type == self.ORDER_TYPE_BUY else -1
+        return (close_price - open_price) * direction * volume
+
 
 class FakeInitializableMT5:
     def __init__(self) -> None:
@@ -50,6 +60,15 @@ class FakeInitializableMT5:
 
     def initialize(self) -> bool:
         self.initialize_called = True
+        return True
+
+
+class FakeCredentialMT5:
+    def __init__(self) -> None:
+        self.initialize_kwargs = None
+
+    def initialize(self, **kwargs) -> bool:
+        self.initialize_kwargs = kwargs
         return True
 
 
@@ -62,6 +81,26 @@ def test_non_default_mt5_profile_requires_own_credentials(monkeypatch):
     assert service.connect() is False
     assert service.last_error == "MT5 synthetic profile is incomplete"
     assert fake_mt5.initialize_called is False
+
+
+def test_mt5_service_initializes_with_selected_profile_credentials(monkeypatch):
+    fake_mt5 = FakeCredentialMT5()
+    monkeypatch.setattr(mt5_module, "mt5", fake_mt5)
+    service = MT5Service(
+        account_number="123456",
+        password="demo-password",
+        server="Demo-Server",
+        terminal_path="C:/MT5/terminal64.exe",
+        profile_name="synthetic",
+    )
+
+    assert service.connect() is True
+    assert fake_mt5.initialize_kwargs == {
+        "path": "C:/MT5/terminal64.exe",
+        "login": 123456,
+        "password": "demo-password",
+        "server": "Demo-Server",
+    }
 
 
 def test_mt5_service_symbol_snapshot_includes_price_and_tick(monkeypatch):
@@ -102,3 +141,12 @@ def test_preferred_filling_mode_maps_symbol_flag_to_order_enum(monkeypatch):
 
     assert service.supported_filling_modes("FX Vol 20") == [0]
     assert service.preferred_filling_mode("FX Vol 20") == 0
+
+
+def test_estimate_order_profit_uses_mt5_contract_calculation(monkeypatch):
+    monkeypatch.setattr(mt5_module, "mt5", FakeMT5())
+
+    service = MT5Service()
+    service.is_connected = True
+
+    assert service.estimate_order_profit("FX Vol 40", 0.1, "BUY", 100, 110) == 1.0

@@ -5,7 +5,11 @@ import pandas as pd
 from scripts import synthetic_demo_trade
 from scripts.synthetic_demo_trade import (
     SyntheticTradeOptions,
+    _balance_aware_trade_filters,
+    _build_profit_target_profile,
+    _build_symbol_focus_profile,
     _evaluate_multi_timeframe_signal,
+    _get_recent_closed_trade_feedback,
     _list_broker_symbols,
     _resolve_account_id,
     _resolve_symbol,
@@ -13,6 +17,8 @@ from scripts.synthetic_demo_trade import (
     _trade_allowed,
     _select_recent_signal,
     _synthetic_magic,
+    _trade_setup_has_blocking_warnings,
+    _trade_setup_meets_min_reward_target,
     _sync_broker_open_positions,
     _sync_closed_trades_from_mt5,
     _synthetic_model_version,
@@ -34,6 +40,119 @@ def test_resolve_symbol_finds_broker_variant_from_terms():
     resolved = _resolve_symbol("FX Vol 40", ["fx", "vol", "40"], symbols)
 
     assert resolved == "FX Vol 40"
+
+
+def test_build_symbol_focus_profile_increases_activity_when_history_is_light():
+    profile = _build_symbol_focus_profile(2, 4)
+
+    assert profile["target_daily_trades"] == 4
+    assert profile["threshold_offset"] == -0.03
+    assert profile["risk_multiplier"] == 1.03
+    assert profile["confidence_bias"] == 0.02
+
+
+def test_build_profit_target_profile_sets_safe_daily_targets():
+    profile = _build_profit_target_profile(account_balance=10.33, recent_trade_count=1)
+
+    assert profile["profit_floor"] >= 2.0
+    assert profile["daily_target"] >= 8.0
+    assert profile["daily_loss_floor"] >= 4.0
+    assert profile["threshold_offset"] >= 0.04
+    assert profile["risk_multiplier"] <= 0.9
+
+
+def test_get_recent_closed_trade_feedback_prefers_local_db_history(monkeypatch):
+    class FakeDbManager:
+        def get_closed_trades(self, symbol=None, account_id=None, days=30):
+            return [
+                type("Trade", (), {"symbol": "FX Vol 20", "profit_loss": 25.0})(),
+                type("Trade", (), {"symbol": "FX Vol 20", "profit_loss": -10.0})(),
+            ]
+
+    class FakeCollector:
+        service = object()
+
+    monkeypatch.setattr(synthetic_demo_trade, "db_manager", FakeDbManager())
+    monkeypatch.setattr(synthetic_demo_trade, "mt5_collector", FakeCollector())
+
+    feedback = _get_recent_closed_trade_feedback(
+        "FX Vol 20", "synthetic", datetime.now()
+    )
+
+    assert len(feedback) == 2
+    assert feedback[0]["profit_loss"] == 25.0
+
+
+def test_balance_aware_trade_filters_allow_focus_mode_for_small_accounts():
+    focus_profile = {"target_daily_trades": 4, "recent_trades_count": 1}
+
+    approved, reasons, profile = _balance_aware_trade_filters(
+        10.33,
+        0.49,
+        5.0,
+        1,
+        focus_profile=focus_profile,
+    )
+
+    assert approved is True
+    assert profile["tier"] == "small"
+    assert reasons == []
+
+
+def test_trade_setup_allows_minimum_volume_warnings_when_reward_target_is_still_possible():
+    blocked = _trade_setup_has_blocking_warnings(
+        [
+            "Calculated lot size is below broker minimum; rounded up to minimum",
+            "Rounded lot size risks more than planned budget",
+        ]
+    )
+
+    assert blocked is False
+
+
+def test_trade_setup_allows_clean_warnings():
+    blocked = _trade_setup_has_blocking_warnings(
+        ["Spread is above the configured maximum"]
+    )
+
+    assert blocked is False
+
+
+def test_trade_setup_meets_min_reward_target_for_two_dollar_targets():
+    trade_setup = {
+        "risk_amount": 1.0,
+        "actual_risk_amount": 1.0,
+        "risk_reward_ratio": 2.0,
+    }
+
+    assert _trade_setup_meets_min_reward_target(trade_setup, min_reward=2.0) is True
+
+
+def test_trade_setup_rejects_sub_two_dollar_reward_targets():
+    trade_setup = {
+        "risk_amount": 0.5,
+        "actual_risk_amount": 0.5,
+        "risk_reward_ratio": 2.0,
+    }
+
+    assert _trade_setup_meets_min_reward_target(trade_setup, min_reward=2.0) is False
+
+
+def test_trade_setup_uses_profit_target_profile_floor_when_higher_than_default():
+    trade_setup = {
+        "risk_amount": 1.0,
+        "actual_risk_amount": 1.0,
+        "risk_reward_ratio": 2.0,
+    }
+
+    assert (
+        _trade_setup_meets_min_reward_target(
+            trade_setup,
+            min_reward=2.0,
+            profit_target_profile={"profit_floor": 2.8},
+        )
+        is False
+    )
 
 
 def test_retcode_guard_rejects_failed_orders():
@@ -193,6 +312,77 @@ def test_sync_broker_open_positions_skips_existing_ticket(monkeypatch):
     _sync_broker_open_positions("synthetic", {"FX Vol 20"})
 
     assert inserted == []
+
+
+def test_has_open_position_detects_active_broker_position(monkeypatch):
+    class FakeCollector:
+        is_connected = True
+
+        def get_positions(self):
+            return [{"ticket": 123, "symbol": "FX Vol 20"}]
+
+    class FakeDbManager:
+        def get_open_trades(self, symbol=None, account_id=None):
+            return []
+
+    monkeypatch.setattr(synthetic_demo_trade, "mt5_collector", FakeCollector())
+    monkeypatch.setattr(synthetic_demo_trade, "db_manager", FakeDbManager())
+
+    assert synthetic_demo_trade._has_open_position("synthetic", "FX Vol 20") is True
+
+
+def test_has_open_position_ignores_stale_local_open_trades_without_active_broker_ticket(
+    monkeypatch,
+):
+    class FakeCollector:
+        is_connected = True
+
+        def get_positions(self):
+            return []
+
+    class DummyTrade:
+        id = 1
+        notes = "trade_id=123; strategy=synthetic_demo"
+        entry_price = 100.0
+
+    class FakeDbManager:
+        def __init__(self):
+            self.updated = []
+
+        def get_open_trades(self, symbol=None, account_id=None):
+            return [DummyTrade()]
+
+        def update_trade(self, trade_id, data):
+            self.updated.append((trade_id, data))
+
+    fake_db = FakeDbManager()
+    monkeypatch.setattr(synthetic_demo_trade, "mt5_collector", FakeCollector())
+    monkeypatch.setattr(synthetic_demo_trade, "db_manager", fake_db)
+
+    assert synthetic_demo_trade._has_open_position("synthetic", "FX Vol 20") is False
+    assert fake_db.updated[0][0] == 1
+    assert fake_db.updated[0][1]["status"] == "CLOSED"
+    assert fake_db.updated[0][1]["exit_reason"] == "STALE_LOCAL_RECONCILE"
+
+
+def test_has_open_position_preserves_protection_when_broker_unavailable(monkeypatch):
+    class FakeCollector:
+        is_connected = False
+
+        def get_positions(self):
+            return []
+
+    class DummyTrade:
+        notes = "trade_id=123; strategy=synthetic_demo"
+
+    class FakeDbManager:
+        def get_open_trades(self, symbol=None, account_id=None):
+            return [DummyTrade()]
+
+    monkeypatch.setattr(synthetic_demo_trade, "mt5_collector", FakeCollector())
+    monkeypatch.setattr(synthetic_demo_trade, "db_manager", FakeDbManager())
+
+    assert synthetic_demo_trade._has_open_position("synthetic", "FX Vol 20") is True
 
 
 def test_sync_closed_trades_from_mt5_updates_existing_open_trade(monkeypatch):
@@ -356,6 +546,47 @@ def test_trade_allowed_dedupes_repeated_mt5_deals(monkeypatch):
     assert allowed is False
     assert any("Daily trade cap reached" in warning for warning in warnings)
     assert any("Daily symbol cap reached" in warning for warning in warnings)
+
+
+def test_balance_aware_trade_filters_accepts_small_account_with_good_score():
+    approved, reasons, profile = synthetic_demo_trade._balance_aware_trade_filters(
+        account_balance=12.29,
+        analysis_score=0.58,
+        spread_points=12.0,
+        signal_strength=1,
+    )
+
+    assert approved is True
+    assert profile["tier"] == "small"
+    assert profile["min_score"] == 0.55
+    assert profile["risk_multiplier"] == 1.0
+    assert reasons == []
+
+
+def test_balance_aware_trade_filters_rejects_small_account_with_weak_score():
+    approved, reasons, profile = synthetic_demo_trade._balance_aware_trade_filters(
+        account_balance=12.29,
+        analysis_score=0.52,
+        spread_points=12.0,
+        signal_strength=1,
+    )
+
+    assert approved is False
+    assert "analysis below 0.55 threshold" in reasons
+    assert profile["tier"] == "small"
+
+
+def test_balance_aware_trade_filters_rejects_hold_signal_for_small_account():
+    approved, reasons, profile = synthetic_demo_trade._balance_aware_trade_filters(
+        account_balance=12.29,
+        analysis_score=0.65,
+        spread_points=12.0,
+        signal_strength=0,
+    )
+
+    assert approved is False
+    assert "signal lacked directional strength" in reasons
+    assert profile["tier"] == "small"
 
 
 def test_count_recent_mt5_activity_ignores_open_positions(monkeypatch):
