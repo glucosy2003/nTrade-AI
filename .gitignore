@@ -1,4 +1,5 @@
 .env
+repo.bundle
 venv/
 .venv*/
 .pgdata/
