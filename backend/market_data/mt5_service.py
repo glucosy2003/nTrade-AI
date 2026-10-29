@@ -1,0 +1,583 @@
+"""Direct Windows MT5 service for market data and account access."""
+
+from __future__ import annotations
+
+import logging
+from datetime import datetime, timedelta
+from typing import Any, Optional
+
+import pandas as pd
+
+try:
+    import MetaTrader5 as mt5
+except ImportError:  # pragma: no cover - dependency is installed on Windows
+    mt5 = None
+
+from backend.core.settings import settings
+
+logger = logging.getLogger(__name__)
+
+
+class MT5Service:
+    """Windows-native MetaTrader 5 service wrapper.
+
+    The service keeps MT5 access in one place so the rest of the application can
+    treat broker connectivity as a simple dependency instead of scattering
+    MetaTrader5 calls across modules.
+    """
+
+    _TIMEFRAME_MAP = {
+        1: "TIMEFRAME_M1",
+        5: "TIMEFRAME_M5",
+        15: "TIMEFRAME_M15",
+        30: "TIMEFRAME_M30",
+        60: "TIMEFRAME_H1",
+        240: "TIMEFRAME_H4",
+        1440: "TIMEFRAME_D1",
+        10080: "TIMEFRAME_W1",
+        43200: "TIMEFRAME_MN1",
+    }
+
+    _TIMEFRAME_LABELS = {
+        "M1": "TIMEFRAME_M1",
+        "M5": "TIMEFRAME_M5",
+        "M15": "TIMEFRAME_M15",
+        "M30": "TIMEFRAME_M30",
+        "H1": "TIMEFRAME_H1",
+        "H4": "TIMEFRAME_H4",
+        "D1": "TIMEFRAME_D1",
+        "W1": "TIMEFRAME_W1",
+        "MN1": "TIMEFRAME_MN1",
+    }
+
+    def __init__(
+        self,
+        *,
+        account_number: Optional[int | str] = None,
+        password: Optional[str] = None,
+        server: Optional[str] = None,
+        terminal_path: Optional[str] = None,
+        profile_name: str = "default",
+    ) -> None:
+        self.account_number = account_number
+        self.password = password
+        self.server = server
+        self.terminal_path = terminal_path
+        self.profile_name = profile_name
+        self.is_connected = False
+        self.last_error: Optional[str] = None
+
+    def connect(self) -> bool:
+        """Initialize MT5 and log in when credentials are available."""
+        if mt5 is None:
+            logger.warning("MetaTrader5 package is not installed")
+            self.last_error = "MetaTrader5 package missing"
+            return False
+
+        if self.is_connected:
+            return True
+
+        if self.profile_name != "default" and not all(
+            [self.account_number, self.password, self.server]
+        ):
+            self.last_error = f"MT5 {self.profile_name} profile is incomplete"
+            logger.error(self.last_error)
+            return False
+
+        if self.profile_name == "default":
+            account_number = self._coerce_int(
+                self.account_number or settings.mt5_account_number
+            )
+            password = self.password or settings.mt5_password
+            server = self.server or settings.mt5_server
+        else:
+            account_number = self._coerce_int(self.account_number)
+            password = self.password
+            server = self.server
+
+        # If terminal is already initialized with a different session, shut down first
+        # to allow switching accounts cleanly
+        try:
+            term_info = mt5.terminal_info()
+            if term_info is not None:
+                # Try to shut down to force clean reinitialization for account switching
+                try:
+                    mt5.shutdown()
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+        initialize_kwargs: dict[str, Any] = {}
+        if self.terminal_path:
+            initialize_kwargs["path"] = self.terminal_path
+        
+        initialized = mt5.initialize(**initialize_kwargs)
+        if not initialized:
+            self.last_error = str(mt5.last_error())
+            logger.error("MT5 initialization failed: %s", self.last_error)
+            return False
+
+        credentials_provided = bool(account_number is not None and password and server)
+        if credentials_provided:
+            if not mt5.login(login=account_number, password=password, server=server):
+                self.last_error = str(mt5.last_error())
+                logger.error(
+                    "MT5 login failed for %s profile: %s",
+                    self.profile_name,
+                    self.last_error,
+                )
+                try:
+                    mt5.shutdown()
+                except Exception:
+                    pass
+                return False
+
+        self.is_connected = True
+        self.last_error = None
+        logger.info(
+            "MT5 terminal initialized successfully for %s profile", self.profile_name
+        )
+        return True
+
+    def disconnect(self) -> None:
+        """Shut down the MT5 terminal connection."""
+        if mt5 is not None and self.is_connected:
+            mt5.shutdown()
+        self.is_connected = False
+
+    def health_check(self) -> dict[str, Any]:
+        """Return a compact MT5 readiness summary."""
+        result: dict[str, Any] = {"connected": self.connect()}
+        if not result["connected"]:
+            result["error"] = self.last_error or "MT5 unavailable"
+            return result
+
+        result["terminal"] = self.terminal_info()
+        result["account"] = self.account_info()
+        result["version"] = self.version()
+        return result
+
+    def terminal_info(self) -> Optional[dict[str, Any]]:
+        """Return MT5 terminal metadata as a dictionary."""
+        if not self.connect() or mt5 is None:
+            return None
+        info = mt5.terminal_info()
+        return info._asdict() if info is not None else None
+
+    def account_info(self) -> Optional[dict[str, Any]]:
+        """Return MT5 account metadata as a dictionary."""
+        if not self.connect() or mt5 is None:
+            return None
+        info = mt5.account_info()
+        return info._asdict() if info is not None else None
+
+    def version(self) -> Optional[tuple[int, int, int]]:
+        """Return the MT5 terminal version."""
+        if not self.connect() or mt5 is None:
+            return None
+        version_info = mt5.version()
+        return tuple(version_info) if version_info is not None else None
+
+    def symbols(self) -> list[str]:
+        """Return all available symbol names."""
+        if not self.connect() or mt5 is None:
+            return []
+
+        symbols = mt5.symbols_get(group="*")
+        if symbols is None:
+            logger.error("symbols_get failed: %s", mt5.last_error())
+            return []
+
+        return [symbol.name for symbol in symbols]
+
+    def symbol_info(self, symbol: str) -> Optional[dict[str, Any]]:
+        """Return symbol metadata."""
+        if not self.connect() or mt5 is None:
+            return None
+
+        info = mt5.symbol_info(symbol)
+        return info._asdict() if info is not None else None
+
+    def symbol_trade_context(self, symbol: str) -> Optional[dict[str, Any]]:
+        """Return broker-specific trading constraints for a symbol."""
+        symbol_info = self.symbol_info(symbol)
+        if symbol_info is None:
+            return None
+
+        tick_info = self.tick_info(symbol) or {}
+        return {
+            "symbol": symbol,
+            "trade_mode": symbol_info.get("trade_mode"),
+            "order_mode": symbol_info.get("order_mode"),
+            "filling_mode": symbol_info.get("filling_mode"),
+            "expiration_mode": symbol_info.get("expiration_mode"),
+            "volume_min": symbol_info.get("volume_min"),
+            "volume_max": symbol_info.get("volume_max"),
+            "volume_step": symbol_info.get("volume_step"),
+            "volume_limit": symbol_info.get("volume_limit"),
+            "trade_contract_size": symbol_info.get("trade_contract_size"),
+            "trade_tick_size": symbol_info.get("trade_tick_size"),
+            "trade_tick_value": symbol_info.get("trade_tick_value"),
+            "point": symbol_info.get("point"),
+            "digits": symbol_info.get("digits"),
+            "spread": tick_info.get("spread"),
+            "ask": tick_info.get("ask"),
+            "bid": tick_info.get("bid"),
+            "last": tick_info.get("last"),
+            "time": tick_info.get("time"),
+            "trade_stops_level": symbol_info.get("trade_stops_level"),
+            "trade_freeze_level": symbol_info.get("trade_freeze_level"),
+            "visible": symbol_info.get("visible"),
+        }
+
+    def estimate_order_margin(
+        self, symbol: str, volume: float, order_type: str, price: float
+    ) -> Optional[float]:
+        """Estimate required margin for a market order."""
+        if not self.connect() or mt5 is None:
+            return None
+
+        order_type_map = {
+            "BUY": getattr(mt5, "ORDER_TYPE_BUY", None),
+            "SELL": getattr(mt5, "ORDER_TYPE_SELL", None),
+        }
+        mt5_order_type = order_type_map.get(order_type.upper())
+        if mt5_order_type is None:
+            return None
+
+        try:
+            margin = mt5.order_calc_margin(mt5_order_type, symbol, volume, price)
+            return float(margin) if margin is not None else None
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("Margin estimate failed for %s: %s", symbol, exc)
+            return None
+
+    def estimate_order_profit(
+        self,
+        symbol: str,
+        volume: float,
+        order_type: str,
+        open_price: float,
+        close_price: float,
+    ) -> Optional[float]:
+        """Estimate order P/L in the account currency using MT5 contract rules."""
+        if not self.connect() or mt5 is None:
+            return None
+
+        order_type_map = {
+            "BUY": getattr(mt5, "ORDER_TYPE_BUY", None),
+            "SELL": getattr(mt5, "ORDER_TYPE_SELL", None),
+        }
+        mt5_order_type = order_type_map.get(order_type.upper())
+        if mt5_order_type is None:
+            return None
+
+        try:
+            profit = mt5.order_calc_profit(
+                mt5_order_type, symbol, volume, open_price, close_price
+            )
+            return float(profit) if profit is not None else None
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("P/L estimate failed for %s: %s", symbol, exc)
+            return None
+
+    def supported_filling_modes(self, symbol: str) -> list[int]:
+        """Return broker-supported order filling modes for a symbol.
+
+        MT5 exposes symbol filling capabilities as bit flags, while order
+        requests use a separate ORDER_FILLING_* enum. In particular, symbol
+        filling flag 1 means FOK is supported, but ORDER_FILLING_FOK is 0.
+        """
+        if not self.connect() or mt5 is None:
+            return []
+
+        symbol_info = mt5.symbol_info(symbol)
+        if symbol_info is None:
+            return []
+
+        filling_flags = int(getattr(symbol_info, "filling_mode", 0) or 0)
+        order_fok = getattr(mt5, "ORDER_FILLING_FOK", None)
+        order_ioc = getattr(mt5, "ORDER_FILLING_IOC", None)
+        symbol_fok = int(getattr(mt5, "SYMBOL_FILLING_FOK", 1))
+        symbol_ioc = int(getattr(mt5, "SYMBOL_FILLING_IOC", 2))
+
+        modes: list[int] = []
+        if order_fok is not None and filling_flags & symbol_fok:
+            modes.append(int(order_fok))
+        if order_ioc is not None and filling_flags & symbol_ioc:
+            modes.append(int(order_ioc))
+
+        return modes
+
+    def preferred_filling_mode(self, symbol: str) -> Optional[int]:
+        """Pick a broker-supported filling mode for a market order."""
+        supported_modes = self.supported_filling_modes(symbol)
+        if supported_modes:
+            return supported_modes[0]
+
+        if mt5 is None:
+            return None
+
+        for candidate in [
+            getattr(mt5, "ORDER_FILLING_FOK", None),
+            getattr(mt5, "ORDER_FILLING_IOC", None),
+            getattr(mt5, "ORDER_FILLING_RETURN", None),
+        ]:
+            if candidate is not None:
+                return int(candidate)
+
+        return None
+
+    def order_check(self, request: dict[str, Any]) -> Optional[dict[str, Any]]:
+        """Run a broker-side order check when supported."""
+        if not self.connect() or mt5 is None:
+            return None
+
+        try:
+            result = mt5.order_check(request)
+            return result._asdict() if result is not None else None
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("Order check failed: %s", exc)
+            return None
+
+    def order_send(self, request: dict[str, Any]) -> Optional[dict[str, Any]]:
+        """Submit a trading request to MT5."""
+        if not self.connect() or mt5 is None:
+            return None
+
+        try:
+            result = mt5.order_send(request)
+            return result._asdict() if result is not None else None
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("Order send failed: %s", exc)
+            return None
+
+    def tick_info(self, symbol: str) -> Optional[dict[str, Any]]:
+        """Return the latest tick metadata for a symbol."""
+        if not self.validate_symbol(symbol) or mt5 is None:
+            return None
+
+        tick = mt5.symbol_info_tick(symbol)
+        return tick._asdict() if tick is not None else None
+
+    def symbol_snapshot(self, symbol: str) -> Optional[dict[str, Any]]:
+        """Return combined symbol, tick, and price details."""
+        symbol_info = self.symbol_info(symbol)
+        if symbol_info is None:
+            return None
+
+        tick_info = self.tick_info(symbol)
+        live_price = self.get_live_price(symbol)
+        snapshot: dict[str, Any] = {
+            "symbol": symbol,
+            "available": True,
+            "live_price": live_price,
+            "symbol_info": symbol_info,
+            "tick_info": tick_info,
+        }
+
+        if tick_info is not None:
+            snapshot["bid"] = tick_info.get("bid")
+            snapshot["ask"] = tick_info.get("ask")
+            snapshot["last"] = tick_info.get("last")
+            snapshot["spread"] = tick_info.get("spread")
+            snapshot["time"] = tick_info.get("time")
+
+        return snapshot
+
+    def validate_symbol(self, symbol: str) -> bool:
+        """Ensure a symbol exists and is visible in MT5."""
+        if not self.connect() or mt5 is None:
+            return False
+
+        info = mt5.symbol_info(symbol)
+        if info is None:
+            logger.warning("Symbol %s not found on broker", symbol)
+            return False
+
+        if not info.visible and not mt5.symbol_select(symbol, True):
+            logger.warning("Symbol %s is not visible", symbol)
+            return False
+
+        return True
+
+    def get_live_price(self, symbol: str) -> Optional[float]:
+        """Return the latest tradable price for a symbol."""
+        if not self.validate_symbol(symbol) or mt5 is None:
+            return None
+
+        tick = mt5.symbol_info_tick(symbol)
+        if tick is None:
+            logger.warning("Could not get live tick for %s", symbol)
+            return None
+
+        price = tick.bid if tick.bid else tick.last
+        if not price:
+            price = tick.ask
+        return float(price) if price is not None else None
+
+    def get_historical_data(
+        self,
+        symbol: str,
+        timeframe: int | str,
+        start: Optional[datetime] = None,
+        end: Optional[datetime] = None,
+        limit: int = 1000,
+    ) -> Optional[pd.DataFrame]:
+        """Return OHLCV candles as a DataFrame."""
+        if not self.validate_symbol(symbol) or mt5 is None:
+            return None
+
+        mt5_timeframe = self._resolve_timeframe(timeframe)
+        if mt5_timeframe is None:
+            logger.error("Unsupported timeframe: %s", timeframe)
+            return None
+
+        if end is None:
+            end = datetime.utcnow()
+        if start is None:
+            start = end - timedelta(days=max(settings.historical_data_years, 1) * 365)
+
+        rates = mt5.copy_rates_range(symbol, mt5_timeframe, start, end)
+        if rates is None or len(rates) == 0:
+            rates = mt5.copy_rates_from_pos(symbol, mt5_timeframe, 0, limit)
+
+        if rates is None or len(rates) == 0:
+            logger.warning("No historical data returned for %s", symbol)
+            return None
+
+        df = pd.DataFrame(rates)
+        if df.empty:
+            return None
+
+        df["time"] = pd.to_datetime(df["time"], unit="s", utc=True).dt.tz_convert(None)
+        if "tick_volume" in df.columns:
+            df = df.rename(columns={"tick_volume": "volume"})
+
+        keep_columns = [
+            column
+            for column in ["time", "open", "high", "low", "close", "volume"]
+            if column in df.columns
+        ]
+        df = df[keep_columns].copy()
+        df["symbol"] = symbol
+        df["timeframe"] = self._timeframe_as_label(timeframe)
+        return df
+
+    def get_positions(self) -> list[dict[str, Any]]:
+        """Return the current open positions."""
+        if not self.connect() or mt5 is None:
+            return []
+
+        positions = mt5.positions_get()
+        if positions is None:
+            return []
+
+        result: list[dict[str, Any]] = []
+        for position in positions:
+            result.append(
+                {
+                    "ticket": position.ticket,
+                    "symbol": position.symbol,
+                    "type": "BUY" if position.type == 0 else "SELL",
+                    "volume": position.volume,
+                    "open_price": position.price_open,
+                    "current_price": position.price_current,
+                    "stop_loss": getattr(position, "sl", None),
+                    "take_profit": getattr(position, "tp", None),
+                    "profit": position.profit,
+                    "open_time": position.time,
+                    "comment": getattr(position, "comment", None),
+                }
+            )
+
+        return result
+
+    def get_trade_history(
+        self,
+        start: Optional[datetime] = None,
+        end: Optional[datetime] = None,
+        symbol: Optional[str] = None,
+    ) -> list[dict[str, Any]]:
+        """Return recent deal history from MT5 for the current account."""
+        if not self.connect() or mt5 is None:
+            return []
+
+        if end is None:
+            end = datetime.utcnow()
+        if start is None:
+            start = end - timedelta(hours=24)
+
+        try:
+            history = mt5.history_deals_get(start, end)
+        except Exception as exc:  # pragma: no cover - broker/library failure
+            logger.warning("Trade history lookup failed: %s", exc)
+            return []
+
+        if history is None:
+            return []
+
+        result: list[dict[str, Any]] = []
+        for deal in history:
+            deal_symbol = getattr(deal, "symbol", None)
+            if symbol and deal_symbol != symbol:
+                continue
+            result.append(
+                {
+                    "ticket": getattr(deal, "ticket", None),
+                    "symbol": deal_symbol,
+                    "type": "BUY" if getattr(deal, "type", None) == 0 else "SELL",
+                    "entry_time": getattr(deal, "time", None),
+                    "price": getattr(deal, "price", None),
+                    "volume": getattr(deal, "volume", None),
+                    "profit": getattr(deal, "profit", None),
+                    "comment": getattr(deal, "comment", None),
+                }
+            )
+
+        return result
+
+    @classmethod
+    def _resolve_timeframe(cls, timeframe: int | str) -> Optional[Any]:
+        if mt5 is None:
+            return None
+
+        if isinstance(timeframe, str):
+            timeframe_key = timeframe.strip().upper()
+            attribute_name = cls._TIMEFRAME_LABELS.get(timeframe_key)
+        else:
+            attribute_name = cls._TIMEFRAME_MAP.get(int(timeframe))
+
+        if attribute_name is None:
+            return None
+
+        return getattr(mt5, attribute_name, None)
+
+    @classmethod
+    def _timeframe_as_label(cls, timeframe: int | str) -> str:
+        if isinstance(timeframe, str):
+            return timeframe.strip().upper()
+        return {
+            1: "M1",
+            5: "M5",
+            15: "M15",
+            30: "M30",
+            60: "H1",
+            240: "H4",
+            1440: "D1",
+            10080: "W1",
+            43200: "MN1",
+        }.get(int(timeframe), str(timeframe))
+
+    @staticmethod
+    def _coerce_int(value: Optional[int | str]) -> Optional[int]:
+        if value is None or value == "":
+            return None
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return None
+
+
+mt5_service = MT5Service()
