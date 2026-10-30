@@ -66,9 +66,17 @@ class FakeInitializableMT5:
 class FakeCredentialMT5:
     def __init__(self) -> None:
         self.initialize_kwargs = None
+        self.login_kwargs = None
+
+    def terminal_info(self):
+        return None
 
     def initialize(self, **kwargs) -> bool:
         self.initialize_kwargs = kwargs
+        return True
+
+    def login(self, **kwargs) -> bool:
+        self.login_kwargs = kwargs
         return True
 
 
@@ -83,7 +91,7 @@ def test_non_default_mt5_profile_requires_own_credentials(monkeypatch):
     assert fake_mt5.initialize_called is False
 
 
-def test_mt5_service_initializes_with_selected_profile_credentials(monkeypatch):
+def test_mt5_service_logs_in_with_selected_profile_credentials(monkeypatch):
     fake_mt5 = FakeCredentialMT5()
     monkeypatch.setattr(mt5_module, "mt5", fake_mt5)
     service = MT5Service(
@@ -97,6 +105,8 @@ def test_mt5_service_initializes_with_selected_profile_credentials(monkeypatch):
     assert service.connect() is True
     assert fake_mt5.initialize_kwargs == {
         "path": "C:/MT5/terminal64.exe",
+    }
+    assert fake_mt5.login_kwargs == {
         "login": 123456,
         "password": "demo-password",
         "server": "Demo-Server",

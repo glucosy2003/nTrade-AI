@@ -60,7 +60,7 @@ class Settings:
         # For backwards compatibility
         self.VERSION = "1.0.0"
         self.TRADING_MODE = "manual"
-        self.DEFAULT_SYMBOL = "XAUUSD"
+        self.DEFAULT_SYMBOL = "FX Vol 20"
         self.RISK_PER_TRADE = 0.02
         self.DEBUG = True
 
@@ -142,7 +142,7 @@ class Settings:
 
         # Trading Settings
         self.default_symbol = data.get("default_symbol") or os.getenv(
-            "DEFAULT_SYMBOL", "XAUUSD"
+            "DEFAULT_SYMBOL", "FX Vol 20"
         )
         self.gold_history_symbol = data.get("gold_history_symbol") or os.getenv(
             "GOLD_HISTORY_SYMBOL", "XAUUSD_i"

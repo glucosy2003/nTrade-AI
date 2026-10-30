@@ -35,6 +35,8 @@ SYNTHETIC_DEMO_ONLY=true
 
 If you have more than one MT5 installation, set `SYNTHETIC_MT5_TERMINAL_PATH` to the matching `terminal64.exe`, for example `C:\Program Files\MetaTrader 5\terminal64.exe`. The server name must match the broker's MT5 login screen exactly.
 
+The generic `DEFAULT_SYMBOL` now defaults to `FX Vol 20`. `GOLD_HISTORY_SYMBOL` is retained only for the optional legacy gold-history synchronization utility; it is not used by the synthetic trading strategies or runners. There is no gold-specific strategy in the synthetic trading path.
+
 Database-backed synthetic runners also need valid PostgreSQL settings in `.env`, a running PostgreSQL server, and migrations:
 
 ```powershell

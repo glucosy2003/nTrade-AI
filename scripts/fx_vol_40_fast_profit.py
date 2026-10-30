@@ -7,7 +7,7 @@ import argparse
 import math
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -34,6 +34,8 @@ logger = setup_logger(__name__)
 
 FIXED_RISK_USD = 2.0
 FIXED_PROFIT_USD = 2.0
+POSITION_POLL_INTERVAL_SECONDS = 1.0
+TRADE_COMMENT = "fx_vol_40_fast_profit"
 
 
 def _has_sufficient_margin(free_margin: float, required_margin: float) -> bool:
@@ -47,6 +49,33 @@ def _has_sufficient_margin(free_margin: float, required_margin: float) -> bool:
 
 def _balance_supports_fixed_risk(balance: float) -> bool:
     return float(balance) >= FIXED_RISK_USD
+
+
+def _recent_trade_times(service: MT5Service, symbol: str) -> list[datetime]:
+    end = datetime.now(timezone.utc).replace(tzinfo=None)
+    history = service.get_trade_history(
+        start=end - timedelta(hours=6), end=end, symbol=symbol
+    )
+    trade_times: list[datetime] = []
+    for deal in history:
+        if deal.get("comment") != TRADE_COMMENT:
+            continue
+        entry_time = deal.get("entry_time")
+        try:
+            if isinstance(entry_time, datetime):
+                trade_time = entry_time.replace(tzinfo=None)
+            elif entry_time is not None:
+                trade_time = (
+                    datetime.fromtimestamp(float(entry_time), tz=timezone.utc)
+                    .astimezone()
+                    .replace(tzinfo=None)
+                )
+            else:
+                continue
+        except (OverflowError, OSError, TypeError, ValueError):
+            continue
+        trade_times.append(trade_time)
+    return trade_times
 
 
 def _find_cash_price(
@@ -292,6 +321,7 @@ def _load_timeframe_data(service: MT5Service, symbol: str) -> dict[str, pd.DataF
 
 
 def _close_position(service: MT5Service, symbol: str, position: dict) -> bool:
+    ticket = int(position.get("ticket") or 0)
     order_type = position.get("type", "BUY")
     close_type = "SELL" if str(order_type).upper() == "BUY" else "BUY"
     volume = float(position.get("volume") or 0.0)
@@ -299,9 +329,9 @@ def _close_position(service: MT5Service, symbol: str, position: dict) -> bool:
         position.get("current_price") or position.get("open_price") or 0.0
     )
 
-    if volume <= 0 or current_price <= 0:
+    if ticket <= 0 or volume <= 0 or current_price <= 0:
         logger.warning(
-            "Cannot close %s position %s because volume/price is invalid",
+            "Cannot close %s position %s because ticket, volume, or price is invalid",
             symbol,
             position,
         )
@@ -317,6 +347,7 @@ def _close_position(service: MT5Service, symbol: str, position: dict) -> bool:
     request = {
         "action": mt5.TRADE_ACTION_DEAL,
         "symbol": symbol,
+        "position": ticket,
         "volume": volume,
         "type": mt5.ORDER_TYPE_SELL if close_type == "SELL" else mt5.ORDER_TYPE_BUY,
         "price": current_price,
@@ -329,7 +360,12 @@ def _close_position(service: MT5Service, symbol: str, position: dict) -> bool:
 
     result = service.order_send(request)
     if _order_was_accepted(result):
-        logger.info("Closed %s %s profit-based exit: %s", symbol, close_type, result)
+        logger.info(
+            "Close request accepted for %s position #%s: %s",
+            symbol,
+            ticket,
+            result,
+        )
         return True
     logger.warning(
         "MT5 rejected close for %s: retcode=%s comment=%s",
@@ -423,10 +459,10 @@ def _run_live_cycle(
                 if str(pos.get("symbol") or "").upper() == str(symbol).upper()
             ]
             if open_positions:
-                time.sleep(interval_seconds)
+                time.sleep(POSITION_POLL_INTERVAL_SECONDS)
                 continue
 
-            recent_trade_times = []
+            recent_trade_times = _recent_trade_times(service, symbol)
             frames = _load_timeframe_data(service, symbol)
             decision = analyzer.evaluate(frames)
             if not decision.confirmed:
@@ -543,7 +579,7 @@ def _run_live_cycle(
                 "tp": float(setup["take_profit"]),
                 "deviation": 20,
                 "magic": 940040,
-                "comment": "fx_vol_40_fast_profit",
+                "comment": TRADE_COMMENT,
                 "type_time": mt5.ORDER_TIME_GTC,
                 "type_filling": filling_mode,
             }
@@ -551,6 +587,7 @@ def _run_live_cycle(
             sent = service.order_send(request)
             if _order_was_accepted(sent):
                 logger.info("FX Vol 40 %s order accepted by MT5: %s", symbol, sent)
+                time.sleep(POSITION_POLL_INTERVAL_SECONDS)
             else:
                 logger.warning(
                     "FX Vol 40 %s order rejected by MT5: retcode=%s comment=%s",
@@ -558,7 +595,7 @@ def _run_live_cycle(
                     sent.get("retcode") if sent else None,
                     sent.get("comment") if sent else "no response",
                 )
-            time.sleep(interval_seconds)
+                time.sleep(interval_seconds)
         except KeyboardInterrupt:
             logger.info("FX Vol 40 live loop interrupted by user")
             return 0

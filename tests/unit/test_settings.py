@@ -19,3 +19,11 @@ def test_load_dotenv_file_overrides_existing_environment_values(monkeypatch):
         assert os.environ["SYNTHETIC_MT5_ACCOUNT_NUMBER"] == "43065997"
     finally:
         os.unlink(dotenv_path)
+
+
+def test_default_symbol_is_synthetic_when_unconfigured(monkeypatch):
+    monkeypatch.delenv("DEFAULT_SYMBOL", raising=False)
+
+    config = settings_module.Settings()
+
+    assert config.default_symbol == "FX Vol 20"

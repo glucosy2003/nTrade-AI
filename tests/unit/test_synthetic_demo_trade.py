@@ -660,6 +660,16 @@ def test_run_trade_cycle_skips_when_trading_is_disabled(monkeypatch):
         synthetic_demo_trade, "_refresh_synthetic_mt5_context", lambda: None
     )
     monkeypatch.setattr(synthetic_demo_trade, "mt5_collector", FakeCollector())
+    monkeypatch.setattr(
+        synthetic_demo_trade,
+        "SYNTHETIC_MT5_PROFILE",
+        {
+            "account_number": 123456,
+            "password": "demo-password",
+            "server": "Demo-Server",
+            "demo_mode": True,
+        },
+    )
     monkeypatch.setattr(synthetic_demo_trade.settings, "synthetic_demo_only", True)
     monkeypatch.setattr(
         synthetic_demo_trade.settings, "synthetic_max_trades_per_day", 1
